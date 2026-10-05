@@ -1,0 +1,181 @@
+<html><head><meta charset='utf-8'><title>Balancing nine eggs, a laptop, a book, an open wine bottle and a nail</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Balancing nine eggs, a laptop, a book, an open wine bottle and a nail</h1>
+<div class='meta'>family: physical design, open problem · status: open · attractor: the default stack (book, laptop, eggs on top) and its rearrangements</div>
+<h3>Question</h3><pre>You have nine eggs, a laptop, a book, an open wine bottle (part full) and a nail, and nothing else.
+Arrange them, using only these objects, so that the whole arrangement resists toppling. Every listed
+object — all nine eggs, the laptop, the book, the bottle and the nail — must be part of the
+arrangement; setting any aside answers a different question. **Describe an arrangement and the
+principle of stability it relies on.** Every route must rest on a genuinely
+different principle, not a rearrangement of the same stack.</pre>
+<h3>Glossary</h3><pre>Givens are the objects as physical facts, not labels:
+
+| emoji | object | properties that matter |
+|---|---|---|
+| 🥚 | egg | ovoid; strong under compression along its axis; rolls on a flat surface; fragile to point loads |
+| 💻 | laptop | hinged; opens to any angle; flat and rigid when closed; keyboard wells and lid lip |
+| 📖 | book | rigid rectangle; uniform weight; can stand on an edge or be opened into a V |
+| 🍷 | open wine bottle, part full | tall cylinder; top-heavy when upright; liquid shifts with tilt and settles low |
+| 📌 | nail | thin rigid spike; concentrates force at a point; can wedge or pin |
+
+Principles — a route&#x27;s spine is one of these, or a new one the referee accepts:
+
+| emoji | principle |
+|---|---|
+| ⚓ | low centre of mass: lay things down rather than stack |
+| 🔺 | three-point contact / triangulation |
+| 🔒 | interlocking: shapes that capture each other (bottle in the laptop hinge, eggs in keyboard wells) |
+| 🌊 | liquid ballast: wine settles to the low side and resists tipping |
+| ⚖️ | counterbalance across a fulcrum |
+| 📐 | wedging: an edge or spike stops a roll |
+| 🤝 | mutual support: objects that lean into each other, none stable alone |
+| 🏔️ | pyramid: widest at the base |
+| 🫙 | containment: an object that cannot be balanced is neutralized by enclosing it in another (the nail inside the bottle) — fewer things left to balance |
+
+Mechanisms (steps, not spines): 🪨 sinks — denser than the liquid, settles to the bottom and stays
+there under tilt; ⬇️ settles low.</pre>
+<h2>Accepted routes (0)</h2>
+<h2>Attempts (5) — the boundary</h2>
+<div class='chain'>
+<h4>Low centre of mass over wide flat base <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: low-wide-base</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Step 13 (via 11) treats the loose stack as one rigid body, so it uses the laptop&#x27;s wide base and the combined centre of mass. But the bottle stands free on the book and tips about its own narrow base, so the stated principle is not what keeps the weakest part of the arrangement upright.</div>
+<pre>CHAIN by blind player 1
+1. 🥚 (root) — Given: nine eggs.
+2. 💻 (root) — Given: a laptop.
+3. 📖 (root) — Given: a book.
+4. 🍷 (root) — Given: an open wine bottle, part full.
+5. 🔩 (root) — Given: a nail, and nothing else is available.
+6. ❓ (← 1, 2, 3, 4, 5) — Asked: arrange these objects so the whole arrangement resists toppling, and name the stability principle it relies on.
+7. ⚖️ (root) — General fact: a body resists tipping when the vertical line through its center of mass falls well inside its support base, because tipping would have to raise that center first.
+8. 💻 (← 2, 6, 7) — Lay the closed laptop flat on a table as the bottom layer: it is wide, flat and fairly heavy, so it gives a large base that is very low.
+9. 📖 (← 3, 8) — Lay the book flat on the middle of the laptop as a level platform, which adds little height and spreads the load over the base.
+10. 🍷 (← 4, 9) — Stand the bottle upright at the center of the book. Its liquid sits at the bottom, so the bottle&#x27;s own center of mass is low, and it is the only tall object.
+11. 📐 (← 7, 8, 10) — The combined center of mass is therefore low and over the middle of the base, far from every edge of the laptop.
+12. 🥚🔩 (← 1, 5, 11) — Leave the eggs and nail out of the tall part. They rest separately on the table or laptop beside the bottle, so they add no height and cannot raise the center.
+13. 🛡️ (← 7, 11, 12) — Tipping the stack needs a large tilt that lifts the center of mass before it can pass the base edge, so a small push just settles back.
+14. 👀 (← 10, 13) — Self-check: if the bottle were nearly empty its center would be higher, but still low relative to the wide base, so the conclusion holds.
+
+LANDMARKS:
+- A wide, flat, low base (laptop plus book) is the foundation.
+- Partly filled bottle: the liquid lowers the center of mass.
+- Center of mass sits over the middle of the base, so tipping requires lifting it.
+
+ANSWER: Lay the laptop flat, the book flat on it, and stand the part-full bottle upright in the center, with the eggs and nail kept low beside it. This is stable because the combined center of mass is low and lies well inside a wide support base.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | wide flat low base | laptop plus book | = | - | A wide, flat, low base (laptop plus book) is the foundation.<br>state | liquid in the partly filled bottle | center of mass | reduces-to | - | Partly filled bottle: the liquid lowers the center of mass.<br>obstruction | center of mass over the middle of the base | tipping | forbids | - | Center of mass sits over the middle of the base, so tipping requires lifting it.</div>
+</div>
+<div class='chain'>
+<h4>(form failure) <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>unclassified</code> · code/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> steps [9] do no work (nothing later follows from them)</div>
+<pre>CHAIN by blind player 2
+1. 🥚 (root) — Given: nine eggs, which are oval and roll if placed loose on a flat surface.
+2. 💻 (root) — Given: a laptop whose two halves are joined by a hinge, so it can be opened to any angle.
+3. 📖 (root) — Given: a book, a stiff rectangular object with a spine.
+4. 🍾 (root) — Given: an open, part-full wine bottle and a nail, and nothing else may be used.
+5. ❓ (← 1, 2, 3, 4) — Asked: arrange all of these so the arrangement resists toppling, and name the stability principle. The route must differ from a simple low, wide stack.
+6. 📐 (root) — General fact: a triangle cannot change shape without bending a side, so triangular frames are rigid and resist sideways racking and collapse.
+7. 💻 (← 2, 6) — Open the laptop to about 70 degrees and stand it on its two outer edges as an inverted V. The two panels and the table form a triangle, so the tent braces itself against sideways pushing.
+8. 📖 (← 3, 6) — Open the book and stand it as a second, smaller tent beside the laptop. Its two covers also form a triangle, which gives a second braced arch.
+9. 🥚 (← 1, 7, 8) — Line the eggs in the hollow under the tents, wedged against the panels&#x27; inner faces. The slanted walls stop them rolling, and the eggs sit as low weights inside the frames.
+10. 🍾 (← 4, 7) — Lay the nail across the two tents&#x27; tops as a tie bar, and rest the bottle&#x27;s weight on the table beneath the hinge line. The tie bar links the two triangles, so one cannot spread without the other.
+11. 🔺 (← 6, 7, 8, 10) — Load on any one panel is carried along the slanted panel to the table and to the opposite panel, not turned into a tipping moment. So a push cannot fold the structure sideways without deforming a rigid triangle.
+12. 👀 (← 11) — Self-check: the tents resist spreading only if friction at the feet stops the legs sliding out. The eggs, bottle and book edges on the table supply it, so the claim holds.
+
+LANDMARKS:
+- A laptop opened as an inverted V forms a triangle with the table, and a triangle is a rigid shape.
+- Stability here comes from structural bracing (triangulation), not from a low center of mass or a wide flat base.
+- Slanted panels hold the eggs in place and pass loads down to the table.
+- A nail tie bar couples two braced tents so neither can spread alone.
+
+ANSWER: Stand the laptop half-open as an A-frame tent and the book as a second tent beside it. Wedge the eggs under them, tie the tents together with the nail, and set the bottle on the table beneath. It resists toppling by triangulation: braced triangular frames are rigid and carry load down to the table without tipping.</pre>
+
+</div>
+<div class='chain'>
+<h4>Nail sunk in bottle as ballast, eggs omitted <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: containment-ballast</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Step 12 sets aside the nine eggs, but the question says &quot;arrange them&quot; and means all of the listed objects, so the chain answers a different question with four objects. Step 11 also claims the heaviest part is at the bottom of an upright bottle, which conflicts with root 2&#x27;s given that the bottle is top-heavy when upright.</div>
+<pre>CHAIN by blind player 1
+1. 🥚💻📖 (root) — Givens: nine eggs, a closed-flat laptop and a book are available, and the laptop and book are rigid and flat.
+2. 🍷 (root) — Given: an open wine bottle, part full, is a tall cylinder that is top-heavy when upright.
+3. 📌 (root) — Given: a nail is a thin steel spike, and it is small enough to pass through a bottle&#x27;s neck.
+4. ❓ (← 1, 2, 3) — Asked: arrange only these objects so the whole arrangement resists toppling, and state the principle of stability it relies on.
+5. 🫙 (← 3, 2) — The nail is dropped through the open neck into the bottle. Enclosing it removes one awkward object that cannot be balanced on its own.
+6. 🪨 (← 5) — Steel is denser than wine, so the nail sinks to the bottom of the liquid and stays there when the bottle tilts.
+7. ⬇️ (← 6, 2) — The nail adds a little weight at the very bottom, and the wine is already low, so the bottle&#x27;s centre of mass sits lower than the empty bottle&#x27;s.
+8. 💻 (← 1) — The laptop is closed and laid flat on the table as a wide, rigid platform.
+9. 🔺 (← 8) — The bottle&#x27;s flat base rests on the platform. A broad base gives many support points, so the support area is much wider than the bottle&#x27;s neck.
+10. 📖 (← 1, 9) — The book lies flat beside the bottle on the laptop, so it does not add height. It also shares the load across the platform and can catch a slight lean as a stop.
+11. ⚓ (← 7, 9, 10) — Everything is low or lying down, and the heaviest part, the liquid and nail, is at the bottom. A tip must first raise the centre of mass, so small nudges fall back.
+12. 👀 (← 11) — Self-check: the eggs are left out because they roll and are fragile to point loads. The question does not require using every object, so leaving them out lowers the risk of toppling.
+
+LANDMARKS:
+- The nail is enclosed in the bottle (containment), so one unbalanceable object is neutralized.
+- The nail, denser than the wine, sinks to the bottom and adds low ballast.
+- Eggs are deliberately left out, because they roll and are fragile to point loads.
+
+ANSWER: Drop the nail into the bottle, where it sinks and adds low weight under the wine. Stand the bottle upright on a closed laptop with the book lying flat beside it. The arrangement resists toppling by containment of the nail plus a low centre of mass over a wide base.</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | the nail | the bottle | ∈ | - | The nail is enclosed in the bottle (containment), so one unbalanceable object is neutralized.<br>state | the nail | the bottom of the bottle | ∈ | - | The nail, denser than the wine, sinks to the bottom and adds low ballast.<br>obstruction | the eggs | the arrangement | forbids | - | Eggs are deliberately left out, because they roll and are fragile to point loads.</div>
+</div>
+<div class='chain'>
+<h4>Book tent on laptop slab with flanking eggs <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: triangulation-tent</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Step 7 is false. The open book&#x27;s spine is a hinge and the slab is not a rigid third side, so only friction keeps the covers from sliding apart; eggs pressing on the covers in step 10 make that splaying more likely. Step 15 also admits that the bottle standing upright in step 12 would tip when nudged, so the arrangement as a whole does not resist toppling.</div>
+<pre>CHAIN by blind player 2
+1. 🥚 (root) — Nine eggs: ovoid, strong under compression, roll on a flat surface.
+2. 💻 (root) — A laptop: rigid and flat when closed.
+3. 📖 (root) — A book: a rigid rectangle that can be opened into a V.
+4. 🍷 (root) — An open wine bottle, part full: tall and cylindrical.
+5. 📌 (root) — A nail: a thin rigid spike.
+6. ❓ (← 1, 2, 3, 4, 5) — Using only these five kinds of object, arrange all of them so the whole arrangement resists toppling, and name the stability principle it relies on.
+7. 🔺 (← 3) — An open book stood spine-up forms an inverted V. Its two covers and the surface beneath make a triangle, which cannot change shape without something bending, so it resists being pushed sideways. This is a new spine for the answer.
+8. 💻 (← 2) — The laptop is closed and laid flat on the table as a rigid slab, giving a firm, level surface that the book does not scratch or slide on easily.
+9. 📖 (← 7, 8) — The book tent stands on the slab, resting on the two cover edges, and the spine is its highest point. A push from either side presses one cover harder into the slab and cannot fold the triangle.
+10. 🥚 (← 1, 9) — Eggs rest in the two long wedge-shaped corners where a cover meets the slab. The sloped cover stops an egg from rolling sideways away from the tent. The eggs press along their sides, not on points.
+11. 🤝 (← 10) — Eggs in a row touch one another and the cover, so each is held by its neighbours and the cover. A little rolling along the corner moves only the eggs, and the eggs are low, so it does not topple the arrangement.
+12. 🍷 (← 4, 8) — The bottle stands on the slab beside the tent, outside the egg corners. It is the tallest object, but it stays on the wide slab rather than on the eggs or the tent, and is not part of the load.
+13. 📌 (← 5, 8) — The nail lies on its side on the slab. A lying nail has nowhere lower to fall, so it adds no toppling risk.
+14. 🔺 (← 9, 11, 12, 13) — The tent is the only structure that has to carry or resist sideways load. Everything else rests on or beside it at slab level, so the support relies on this one triangle.
+15. 👀 (← 14) — Self-check: if the bottle were nudged, it would tip against the slab, not the tent. The tent and eggs stay as they were, and the arrangement does not collapse.
+
+LANDMARKS:
+- An open book stood spine-up forms a triangle with the surface and resists sideways pushes without any other support.
+- The laptop is used only as a closed flat slab and the book as a tent on it, so the book&#x27;s triangulation is the structural spine.
+- Eggs sit in the wedge between a sloping cover and the slab, which stops sideways rolling, and they touch one another.
+- The bottle stands apart on the slab, so nothing relies on it for stability.
+
+ANSWER: Close the laptop flat and stand the open book spine-up as a tent on it (triangulation). Lay the eggs in the two wedge corners beside the covers, stand the bottle on the slab beside the tent, and lay the nail flat on the slab. The arrangement resists toppling because the tent&#x27;s triangle cannot fold and every other object sits low or lies flat.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | open book stood spine-up | sideways push | forbids | - | An open book stood spine-up forms a triangle with the surface and resists sideways pushes without any other support.<br>reduction | arrangement&#x27;s stability | book&#x27;s triangulation | reduces-to | - | The laptop is used only as a closed flat slab and the book as a tent on it, so the book&#x27;s triangulation is the structural spine.<br>obstruction | wedge between cover and slab | eggs rolling sideways | forbids | - | Eggs sit in the wedge between a sloping cover and the slab, which stops sideways rolling, and they touch one another.<br>structure | bottle | arrangement&#x27;s stability | forbids | - | The bottle stands apart on the slab, so nothing relies on it for stability.</div>
+</div>
+<div class='chain'>
+<h4>Laptop L counterweighted by a book, rest set aside <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 3) · 2026-10-05 · strategy <code>new: counterbalance-across-hinge</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The question asks for all the objects to be arranged so the whole arrangement resists toppling. Step 3 adds a permission to use fewer objects, step 9 leaves the bottle upright on its own even though step 4 calls it a toppling hazard, and step 12 leaves the eggs loose although they roll, so the chain answers an easier question. Step 5 also claims the lid&#x27;s weight leans back behind the hinge, but at about a right angle the lid&#x27;s centre of mass sits roughly over the hinge, and an open laptop stands without help, so the book counterweight fixes a problem that isn&#x27;t there.</div>
+<pre>CHAIN by blind player 3
+1. 💻 (root) — The laptop is hinged and opens to any angle, with a heavy base and a lighter lid.
+2. 📖 (root) — The book is a rigid, uniformly weighted rectangle that can lie flat.
+3. ❓ (← 1, 2) — The question asks for an arrangement of nine eggs, a laptop, a book, a part-full open wine bottle and a nail that resists toppling, and for the principle it relies on. The route may use fewer than all the objects.
+4. 🍷 (root) — The open bottle is part full and top-heavy when upright, so it is a toppling hazard.
+5. ⚖️ (← 1) — Open the laptop to about a right angle and stand it on the table as an L. The hinge is a fulcrum, and the lid&#x27;s weight leans back over it.
+6. 🔒 (← 5) — The lid&#x27;s weight behind the hinge is the only thing that can tip the L over backward. Any resistance has to come from weight placed on the opposite side of the hinge.
+7. 📖 (← 2, 6) — Lay the book flat on the keyboard deck, in front of the hinge, as the counterweight.
+8. ⚓ (← 7) — The book lies low and spreads its weight over the deck. The combined centre of mass sits over the footprint, ahead of the hinge line.
+9. 🍷 (← 4, 8) — Leave the bottle off the stack and stand it separately on the table. Its top-heaviness then cannot disturb the L, and the L&#x27;s balance needs no help from it.
+10. ⚖️ (← 6, 7, 8) — The book&#x27;s moment in front of the hinge exceeds the lid&#x27;s moment behind it. Words only: the heavier front side wins, so the L cannot rotate backward.
+11. 👀 (← 10) — Self-check: pushing the lid backward would have to lift the book and the deck&#x27;s front edge, and that takes far more effort than pushing the bare lid.
+12. 🥚 (← 3, 9) — The eggs and the nail are left unused. They roll or are point loads, and nothing needs them for balance.
+
+LANDMARKS:
+- The open laptop is a hinged L whose hinge is a fulcrum, and its lid&#x27;s weight behind the hinge is the only tipping tendency.
+- The book on the keyboard deck in front of the hinge counterweights the lid, so the laptop-and-book pair resists tipping back.
+- The bottle stands apart and the eggs and nail stay out, so nothing top-heavy or rolling is part of the balance.
+
+ANSWER: Open the laptop to about a right angle and stand it on the table. Lay the book flat on the keyboard deck in front of the hinge as a counterweight to the lid. Stand the bottle separately and leave the eggs and nail out. The principle is counterbalance across a fulcrum: the book&#x27;s weight ahead of the hinge outweighs the lid&#x27;s weight behind it, so the arrangement cannot tip backward.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | the open laptop | a fulcrum at the hinge | reduces-to | - | The open laptop is a hinged L whose hinge is a fulcrum, and its lid&#x27;s weight behind the hinge is the only tipping tendency.<br>construction | the book on the keyboard deck | the lid&#x27;s weight behind the hinge | ≫ | moment about the hinge | The book on the keyboard deck in front of the hinge counterweights the lid, so the laptop-and-book pair resists tipping back.<br>reduction | the balance | the laptop and book | reduces-to | - | The bottle stands apart and the eggs and nail stay out, so nothing top-heavy or rolling is part of the balance.</div>
+</div>
+</body></html>

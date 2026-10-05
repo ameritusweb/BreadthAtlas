@@ -1,0 +1,123 @@
+<html><head><meta charset='utf-8'><title>Monty Hall with five doors</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Monty Hall with five doors</h1>
+<div class='meta'>family: altered famous puzzle (parametrized sibling of monty-four-doors) · status: answered · attractor: three-door Monty Hall (2/3); the four-door sibling (3/8) · discriminator: FIVE doors and ONE opened; three closed doors remain to switch to</div>
+<h3>Question</h3><pre>Five doors hide one car and four goats. You pick a door. The host, who knows where the car is, opens
+one of the other four doors to reveal a goat, and offers you the chance to switch to one of the three
+remaining closed doors. **If you switch, what is the probability that you win the car?**</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Conserved other-group share split evenly by symmetry <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: conserved-share-symmetric-split</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Every step follows from the parents it names, there is no step-by-step state tracing, and the answer 4/15 matches the reference. Because the frontier is empty, all four landmarks are new: the host&#x27;s reveal leaves my door&#x27;s chance unchanged, the opened door&#x27;s chance moves to the three closed doors, those doors are symmetric so they split it equally, and a single switch target gets a third of four fifths.</div>
+<pre>CHAIN by duelist A
+1. 🚪 (root) — Given: there are five doors, one hiding a car and four hiding goats.
+2. 🎯 (root) — Given: I first pick one door.
+3. 🧑‍🎤 (root) — Given: the host knows where the car is, and always opens one of the other four doors to show a goat, never my door and never the car.
+4. 🔀 (root) — Given: I then switch to one of the three other closed doors, with no reason to prefer any of them.
+5. ❓ (← 1, 2, 3, 4) — Asked: the probability I win the car if I switch. This differs from the familiar version in that there are five doors and I must choose among three remaining closed doors, not one.
+6. 🎲 (← 1, 2) — Before the host acts, all doors are equally likely to hide the car. My door holds one share of the chance and the other four doors together hold four shares, so the group of other doors is four times as likely to hold the car as my door.
+7. 🛡️ (← 3, 6) — The host&#x27;s reveal never touches my door and is always a goat, so it tells me nothing new about my door, and my door&#x27;s chance stays at its small original share.
+8. 🪣 (← 3, 7) — The opened door is now known to be a goat, so it holds no chance. The big chance held by the other-door group, which is not changed by the reveal, now sits entirely on the three closed doors.
+9. ⚖️ (← 3, 8) — Nothing in the host&#x27;s rule favors any of those three closed doors over another, so they are symmetric and must share that chance equally.
+10. 🍰 (← 8, 9) — So each of the three closed doors holds an equal third of the big other-group chance.
+11. 🏁 (← 6, 7, 10) — The other-group&#x27;s chance is four fifths, so one door among the three has a third of four fifths. That is four fifteenths.
+12. 👀 (← 7, 11) — Self-check: this is better than staying, which stays at one fifth, and less than four fifths, which is the chance if I could take all the other closed doors at once. A single door out of three should land in between, and four fifteenths does.
+
+LANDMARKS:
+- The host&#x27;s reveal leaves my door&#x27;s chance unchanged, while the group of the other four doors keeps four times its chance.
+- The opened goat door&#x27;s chance moves entirely onto the three remaining closed doors.
+- By symmetry the three closed doors split the other-group&#x27;s chance equally.
+- A single switch target gets a third of four fifths, which sits between staying and taking all the other doors.
+
+ANSWER: 4/15</pre>
+
+</div>
+<div class='chain'>
+<h4>Case split on first pick, then conditional hit <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: case-split-on-first-pick</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is well-formed and contains no simulation. Its case split is structural, not a step-by-step state trace, and it reaches the correct 4/15. Its first landmark is new: switching can win only after a wrong first pick, and a right first pick makes every switch lose. Route 001 never passed through this. It moved probability onto the remaining doors instead of conditioning on whether the first pick was right.</div>
+<pre>CHAIN by duelist B
+1. 🚪 (root) — Given: there are five doors, one hiding a car and four hiding goats.
+2. 🎯 (root) — Given: I first pick one door.
+3. 🧑‍🎤 (root) — Given: the host knows where the car is and opens one of the other four doors, always showing a goat and never the car.
+4. 🔀 (root) — Given: I switch to one of the three remaining closed doors, picking among them at random.
+5. ❓ (← 1, 2, 3, 4) — Asked: the probability I win the car if I switch. This differs from the familiar version in that there are five doors and three closed doors to choose among, not one.
+6. 🎲 (← 1, 2, 5) — Split into two cases by whether my first pick was right. It was wrong four times out of five and right one time in five, so wrong is the far more common case.
+7. ❌ (← 6) — Case &quot;first pick right&quot;: the car is behind my door, so every door I could switch to hides a goat and switching surely loses.
+8. ✅ (← 3, 6) — Case &quot;first pick wrong&quot;: the car is among the other four doors, and the host opened a goat, so the car must be behind one of the three closed doors.
+9. 🎰 (← 4, 8) — In the wrong-pick case, exactly one of the three closed doors holds the car, and I choose among them at random, so I hit it one time in three.
+10. 🧩 (← 7, 9) — Switching can win only in the wrong-pick case, and even there it wins only one time in three. So my win chance is one third of the wrong-pick case&#x27;s chance.
+11. 🏁 (← 6, 10) — The wrong-pick case has chance four fifths, so one third of it gives four fifteenths.
+12. 👀 (← 11) — Self-check: four fifteenths is a bit more than staying (one fifth) and well below the wrong-pick case&#x27;s four fifths. It is also under one third, as it must be, since I win only part of the time within one case.
+
+LANDMARKS:
+- Switching can only win if my first pick was wrong, and a right first pick makes every switch lose.
+- Given a wrong first pick, the car is certainly among the three closed doors, because the host never reveals it.
+- Within that case a random closed door hits the car one time in three, so the answer is that fraction of the wrong-pick case&#x27;s chance.
+
+ANSWER: 4/15</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | switching winning | a wrong first pick | reduces-to | - | Switching can only win if my first pick was wrong, and a right first pick makes every switch lose.<br>state | the car | the three closed doors | ∈ | - | Given a wrong first pick, the car is certainly among the three closed doors, because the host never reveals it.<br>share | a single switch target&#x27;s chance | the wrong-pick case&#x27;s chance | = | one in three | Within that case a random closed door hits the car one time in three, so the answer is that fraction of the wrong-pick case&#x27;s chance.</div>
+</div>
+<div class='chain'>
+<h4>Weigh locations by how well each explains the reveal <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: likelihood-weighting (Bayes by explanatory power)</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is correct. It weighs each possible car location by how likely the host was to make this particular opening (one in four if the car is behind my door, one in three if it is behind a given closed door), which gives weights of 3:4:4:4:0 and the answer 4/15. Its first two landmarks are new: the host-likelihood comparison and the four-to-three weighting. No earlier chain uses how likely the host&#x27;s opening was. The &quot;fifteen parts&quot; sum is no more calculation than route 001&#x27;s &quot;a third of four fifths&quot;, so it passes the no-calculation rule.</div>
+<pre>CHAIN by duelist B
+1. 🚪 (root) — Given: there are five doors, one hiding a car and four hiding goats.
+2. 🎯 (root) — Given: I first pick one door, and before anything happens every door is equally likely to hide the car.
+3. 🧑‍🎤 (root) — Given: the host knows where the car is and opens one of the other four doors, always showing a goat, never my door and never the car.
+4. 🔀 (root) — Given: I then switch to one of the three remaining closed doors, picking among them with no preference.
+5. ❓ (← 1, 2, 3, 4) — Asked: the probability I win the car if I switch. This differs from the familiar version in that there are five doors and three closed doors to choose among, not one.
+6. 👁️ (← 3, 5) — I have seen the host open one particular goat door, so I ask, for each place the car could be, how likely the host was to make exactly this opening.
+7. 🏠 (← 2, 6) — If the car is behind my door, the host could have opened any of four other doors. Opening this particular one was only one choice among four, so it was fairly unlikely.
+8. 🚫 (← 3, 6) — The car cannot be behind the opened door, because the host never reveals the car. That location is ruled out entirely.
+9. 🔍 (← 3, 6) — If the car is behind one particular closed door, the host could not open my door or that door. His choice was then among only three doors, so this particular opening was more likely than in the case where my door holds the car.
+10. ⚖️ (← 1, 7, 9) — All locations started equally likely, so after the sighting the weights differ only by how well each explains it. Each closed door beats my door in the ratio four to three.
+11. 🧱 (← 8, 10) — In equal-sized parts, my door holds three, each of the three closed doors holds four, and the opened door holds none.
+12. 🏁 (← 4, 11) — All parts together make fifteen, and switching to one closed door gets four of them, so my chance is four fifteenths.
+13. 👀 (← 12) — Self-check: a closed door is a bit better than my door, which is about one fifth, and far below all three closed doors together. Four fifteenths is just above one fifth, as expected.
+
+LANDMARKS:
+- The host&#x27;s particular opening is less likely when the car is behind my door, since he had four options, than when it is behind a given closed door, where he had three.
+- Each closed door therefore outweighs my door in the ratio four to three, and the opened door has no weight.
+- The weights split into equal parts, three for my door and four for each closed door, so one switch target holds four of the fifteen parts.
+
+ANSWER: 4/15</pre>
+<div class="meta"><b>typed landmarks</b><br>rate | the host&#x27;s particular opening given the car behind my door | the host&#x27;s particular opening given the car behind a closed door | ≪ | - | The host&#x27;s particular opening is less likely when the car is behind my door, since he had four options, than when it is behind a given closed door, where he had three.<br>share | each closed door&#x27;s weight | my door&#x27;s weight | = | four to three | Each closed door therefore outweighs my door in the ratio four to three, and the opened door has no weight.<br>share | a single switch target&#x27;s chance | all the weight | = | fifteen equal parts | The weights split into equal parts, three for my door and four for each closed door, so one switch target holds four of the fifteen parts.</div>
+</div>
+<h2>Attempts (1) — the boundary</h2>
+<div class='chain'>
+<h4>Conserve total chance, then split leftover symmetrically <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: conserve-and-split</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> This is the same route as route 001. The first landmark here (my door keeps a fifth, the opened door has none, so the three closed doors hold four fifths) matches route 001 landmarks 1–2 in substance. The second (an equal symmetric split, so one target gets a third) matches route 001 landmarks 3–4; calling it &quot;adding up to certainty&quot; instead of &quot;chance moving over&quot; is only a change of wording.</div>
+<pre>CHAIN by duelist A
+1. 🚪 (root) — Given: there are five doors, one hiding a car and four hiding goats.
+2. 🎯 (root) — Given: I first pick one door.
+3. 🧑‍🎤 (root) — Given: the host knows where the car is and opens one of the other four doors, always a goat, never my door and never the car.
+4. 🔀 (root) — Given: I switch to one of the three other closed doors, with no reason to prefer any of them.
+5. ❓ (← 1, 2, 3, 4) — Asked: the probability I win the car if I switch. This differs from the familiar version in that there are five doors and I must choose one of three closed doors, not one.
+6. 🎲 (← 1, 2) — At the start every door is equally likely to hide the car, so my door holds a small fifth of the certainty.
+7. 🛡️ (← 3, 6) — The host never opens my door and never shows the car, so his reveal cannot tell me anything about my door. My door stays at its fifth.
+8. 🕳️ (← 3) — The opened door is known to be a goat, so it holds no chance of the car at all.
+9. 🧮 (← 1, 8) — Exactly one car exists, so the chances across all five doors must together make up certainty, with nothing lost and nothing extra.
+10. 🥧 (← 7, 8, 9) — My door holds a fifth and the opened door holds nothing. Whatever certainty remains must sit on the three closed doors, which is four fifths of it.
+11. ⚖️ (← 3, 4) — The host&#x27;s rule gives no door among the three closed ones any special status, so by symmetry they hold equal shares.
+12. 🍰 (← 10, 11) — Splitting the remaining four fifths into three equal shares gives each closed door the same slice, a third of four fifths.
+13. 🏁 (← 5, 12) — Switching to one closed door wins with the chance of that one slice, which is four fifteenths.
+14. 👀 (← 7, 13) — Self-check: this beats staying at one fifth, and it is below all three closed doors together at four fifths, so it lands in the right range.
+
+LANDMARKS:
+- All door chances must add up to certainty: my door keeps one fifth and the opened door has none, so the three closed doors hold the remaining four fifths.
+- That leftover is divided equally among the three closed doors by symmetry, so one switch target gets a third of it.
+
+ANSWER: 4/15</pre>
+<div class="meta"><b>typed landmarks</b><br>share | the three closed doors | all the weight | = | four fifths | All door chances must add up to certainty: my door keeps one fifth and the opened door has none, so the three closed doors hold the remaining four fifths.<br>symmetry | a single switch target&#x27;s chance | the three closed doors | = | one in three | That leftover is divided equally among the three closed doors by symmetry, so one switch target gets a third of it.</div>
+</div>
+</body></html>

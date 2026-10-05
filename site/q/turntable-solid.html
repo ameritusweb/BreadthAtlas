@@ -1,0 +1,121 @@
+<html><head><meta charset='utf-8'><title>The solid behind four turntable views</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The solid behind four turntable views</h1>
+<div class='meta'>family:  · status: answered · attractor: </div>
+<h3>Question</h3><pre>The image shows four orthographic views (A, B, C and D) of a single solid sitting on a turntable that
+rotates about a vertical axis. Sixteen labelled points are plotted in every view, drawn as filled dots
+when visible and hollow dots when hidden. Only View A&#x27;s angle is given (θ = 30°); the angles of Views
+B, C and D are unknown. **What is the 3-D solid?**
+
+State the answer as the solid&#x27;s faces, each as the list of point labels around it.</pre>
+
+<h2>Accepted routes (2)</h2>
+<div class='chain'>
+<h4>Outer and inner rings, notches, order from midpoint tracking <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>opus (blind player 1) · 2026-10-05 · strategy <code>new: ring-separation-and-midpoint-interpolation</code> · depth 1 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> All the readings hold in the image (step 4&#x27;s vertical pairings, step 6&#x27;s swapping and mirroring of the outer slots, step 8&#x27;s leaning toward a midpoint in all four views, step 11&#x27;s hidden HW in View A), and the ten faces are the correct star-slab answer. New landmarks are: two rings with very different reach; the inner ring sitting inside the tips&#x27; square, which makes the solid a non-convex four-pointed star; and the order fixed by each inner point following the midpoint of its neighbouring tips. No earlier chain passed through any of these.</div><div class='meta'><b>note:</b> re-judged 2026-10-05 from attempt 003 (ILL-FORMED: step 1 performs arithmetic: &#x27;Four orthographic turntable views (A at θ = 30°; B, C and D …&#x27;)</div>
+<pre>CHAIN by blind player 1
+1. 🖼️ (root) — Four orthographic turntable views (A at θ = 30°; B, C and D at unknown angles) show sixteen labelled points of one solid, with filled dots for visible points and hollow dots for hidden ones.
+2. 📏 (root) — In every view, eight labels sit on an upper line and eight on a lower line, and their horizontal positions always come from the same eight slots: a far pair, a second pair, an inner pair and a near-centre pair, mirrored about the axis.
+3. ❓ (← 1, 2) — What is the solid, given as each face&#x27;s list of point labels? The angles of three views are unknown, and the solid need not be a convex prism.
+4. 🔗 (← 2) — In every view, each upper label shares its horizontal slot with one fixed lower label (NZ–UF, EV–CY, QA–HE, QN–EL, XS–WA, HW–CZ, GD–AZ, KA–KL), so these pairs are vertical edges and the solid is a straight extrusion.
+5. 🪐 (← 2) — In all four views, NZ, EV, KA and GD only ever take the far and second slots, and QA, QN, HW and XS only ever take the inner and near-centre slots, so they form an outer ring and an inner ring that reaches less than half as far.
+6. ✚ (← 5) — Within the outer ring, NZ and EV swap between the far and second slots from view to view, and KA and GD always mirror them; this is how two equal arms at right angles behave, so the outer four are the tips of a square cross.
+7. 🎯 (← 5, 6) — A square&#x27;s edges pass the centre at about seven-tenths of its tip distance, but the inner ring sits at less than half that distance, so the inner points lie well inside the outer square and must be notches.
+8. 🧭 (← 5, 6) — In every view, QA leans the same way as the midpoint of NZ and EV: strongly when both lean the same way, and weakly when they disagree. QN does the same with NZ and GD, so QA sits between NZ and EV, and QN between GD and NZ.
+9. 🔄 (← 6, 8) — Because the cross mirrors through the centre, XS sits between EV and KA, and HW between KA and GD, which gives the cyclic order NZ, QA, EV, XS, KA, HW, GD, QN.
+10. ⭐ (← 7, 9) — The cross-section alternates outer tips with inner notches, so it is a non-convex four-pointed star, not a convex octagon.
+11. 👀 (← 9, 10) — Check: in View A, HW is hidden while its flanking tips GD and KA are both visible. That is impossible for a convex prism, but it is exactly what a notch tucked between two tips produces.
+12. 🏗️ (← 4, 9, 10) — Joining the star outline on top to its partner outline below gives two star-shaped caps and eight rectangular side walls, one for each star edge.
+LANDMARKS:
+- The outer labels (NZ, EV, KA, GD) always take the outer slots and the inner labels (QA, QN, HW, XS) always take the inner slots, so there are two rings with very different reach.
+- The inner ring lies well inside the square formed by the outer tips, so the cross-section is non-convex: a four-pointed star.
+- Each inner point follows the midpoint of two neighbouring tips across the views (QA follows NZ and EV, QN follows GD and NZ), which fixes the order NZ, QA, EV, XS, KA, HW, GD, QN.
+- HW is hidden between two visible tips in View A, which confirms that it is a notch.
+ANSWER: A four-pointed-star prism. Faces: top [NZ, QA, EV, XS, KA, HW, GD, QN]; bottom [UF, HE, CY, WA, KL, CZ, AZ, EL]; sides [NZ, QA, HE, UF], [QA, EV, CY, HE], [EV, XS, WA, CY], [XS, KA, KL, WA], [KA, HW, CZ, KL], [HW, GD, AZ, CZ], [GD, QN, EL, AZ], [QN, NZ, UF, EL].</pre>
+<div class="meta"><b>typed landmarks</b><br>share | outer labels | outer slots | invariant | inner slots | The outer labels (NZ, EV, KA, GD) always take the outer slots and the inner labels (QA, QN, HW, XS) always take the inner slots, so there are two rings with very different reach.<br>structure | inner ring | outer tip square | ≪ | edge distance | The inner ring lies well inside the square formed by the outer tips, so the cross-section is non-convex: a four-pointed star.<br>structure | inner ring | outer labels | alternates | cyclic order | Each inner point follows the midpoint of two neighbouring tips across the views (QA follows NZ and EV, QN follows GD and NZ), which fixes the order NZ, QA, EV, XS, KA, HW, GD, QN.<br>obstruction | HW | convex prism | forbids | - | HW is hidden between two visible tips in View A, which confirms that it is a notch.</div>
+</div>
+<div class='chain'>
+<h4>Work out the view angles from the tips, then place the inner corners <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>opus (blind player 2) · 2026-10-05 · strategy <code>new: calibrate-then-place</code> · depth 2 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The chain is sound and its answer matches the ten faces in the reference. Its second landmark is new: it uses the four tips to work out the unknown angles of Views B, C and D (B is a small turn from A, then C and D each follow a further right angle). No earlier binding chain did this. The other two landmarks repeat route 001&#x27;s landmarks 7–10.</div><div class='meta'><b>note:</b> re-judged 2026-10-05 from attempt 004 (ILL-FORMED: step 1 performs arithmetic: &#x27;Four orthographic views (A, B, C, D) show one solid on a tur…&#x27;; step 6 performs arithmetic:)</div>
+<pre>CHAIN by blind player 2
+1. 🖼️ (root) — Four orthographic views (A, B, C, D) show one solid on a turntable that spins about a vertical axis; View A is at θ = 30° and the other three angles are unknown.
+2. ⚫ (root) — Sixteen labelled points appear in every view, filled when visible and hollow when hidden, and u is the horizontal screen position while v is the height.
+3. ❓ (← 1, 2) — What is the solid? Give each face as the list of point labels around it, even though only one view angle is known.
+4. 📏 (← 2) — In every view the points sit on just two heights, the same eight top labels sit at v = +1, and each bottom label (UF, CY, HE, EL, WA, CZ, AZ, KL) always shares its u with one fixed top partner (NZ, EV, QA, QN, XS, HW, GD, KA), so the solid is a straight vertical prism.
+5. 🎯 (← 4) — Across the four views, NZ, EV, GD and KA are the only labels that ever take the widest positions near ±1.73, while QA, QN, XS and HW always stay close to the axis, so the top outline has four far &quot;tip&quot; corners and four near &quot;inner&quot; corners.
+6. 🧭 (← 1, 5) — If the tips are all the same distance from the axis, NZ at the far left and EV a little closer at θ = 30° means NZ and EV sit a quarter-turn apart, NZ pointing one way along a world axis and EV along the perpendicular axis, with KA and GD directly opposite them.
+7. 🔄 (← 6, 5) — With the tips fixed, matching their widest and second-widest positions in B, C and D shows those views were taken a little past A, about a right angle past B, and a further right angle past C, and this is the only setting that fits all four.
+8. ✳️ (← 7, 5) — Feeding those angles back in, the inner points QA and HW move by equal amounts in A and B, so they lie on a diagonal, as do QN and XS on the other diagonal, each much closer to the axis than any tip.
+9. ⭐ (← 6, 8) — Going round the axis, the corners alternate tip, inner, tip, inner: KA, HW, GD, QN, NZ, QA, EV, XS. That outline is a four-pointed star with notches cut in, not a convex octagon.
+10. 🕳️ (← 9, 1) — In View A the viewer looks in from the side between GD and NZ, so the inner corner HW, which sits in the notch between KA and GD, is blocked by the GD arm, and the far-side corners EV, QA and XS lie behind the solid.
+11. 👀 (← 10, 2) — This matches View A exactly: NZ, QN, GD and KA are filled while EV, QA, XS and HW are hollow, so the star reading agrees with the visibility data.
+12. 🧱 (← 9, 4) — Each top star edge drops straight down to the matching bottom edge, giving eight vertical rectangles plus the star-shaped top and bottom faces.
+13. 📋 (← 12) — Reading those faces off with their partner labels gives the face list.
+
+LANDMARKS:
+- Only NZ, EV, GD and KA ever reach the widest positions, so they are the star&#x27;s tips on two perpendicular world axes, and QA, QN, XS and HW are inner corners on the diagonals, much closer to the axis.
+- The unknown views are fixed by the tips: B is a little past A, C is about a right angle past B, and D is about a right angle past C.
+- The cross-section is a concave four-pointed star in the order KA, HW, GD, QN, NZ, QA, EV, XS. The hidden HW in View A is explained by the GD arm blocking the notch.
+
+ANSWER: Top [KA, HW, GD, QN, NZ, QA, EV, XS]; Bottom [KL, CZ, AZ, EL, UF, HE, CY, WA]; Sides [KA, HW, CZ, KL], [HW, GD, AZ, CZ], [GD, QN, EL, AZ], [QN, NZ, UF, EL], [NZ, QA, HE, UF], [QA, EV, CY, HE], [EV, XS, WA, CY], [XS, KA, KL, WA]. This is a four-pointed-star prism.</pre>
+<div class="meta"><b>typed landmarks</b><br>share | outer labels | inner ring | ≫ | distance from axis | Only NZ, EV, GD and KA ever reach the widest positions, so they are the star&#x27;s tips on two perpendicular world axes, and QA, QN, XS and HW are inner corners on the diagonals, much closer to the axis.<br>reduction | unknown view angles | outer labels | reduces-to | right angle | The unknown views are fixed by the tips: B is a little past A, C is about a right angle past B, and D is about a right angle past C.<br>structure | inner ring | outer labels | alternates | cyclic order | The cross-section is a concave four-pointed star in the order KA, HW, GD, QN, NZ, QA, EV, XS. The hidden HW in View A is explained by the GD arm blocking the notch.</div>
+</div>
+<h2>Attempts (2) — the boundary</h2>
+<div class='chain'>
+<h4>Read the ring order from one view&#x27;s dots <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: single-view-angular-ordering</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Step 7 does not follow from its parents. Horizontal position plus filled/hollow in one view cannot give the cyclic order of a star whose vertices alternate between tips and inner corners, because position depends on radius and angle together and a hollow dot can be an inner corner on the front hidden by a tip; the chain also files the star as a plain octagonal prism, and its order puts the antipodal pair NZ/KA three places apart instead of four. (I judged this without the image because permission to open puzzle.png was denied.)</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: no ❓ step stating what is asked</div>
+<pre>CHAIN by blind player 1
+1. 🧊 (root) — Given: the same sixteen labelled points appear in every view, so the views show one rigid solid turned about a vertical axis.
+2. ↕️ (← 1) — A turntable axis is vertical, so each point keeps its height v in every view. Only its horizontal position u changes.
+3. 📏 (← 2) — In every view, eight points sit at height plus one and eight at height minus one. The solid therefore has a top layer and a bottom layer.
+4. 🔗 (← 3) — Each top point shares its horizontal position with one bottom point in every view. Pairs: NZ–UF, EV–CY, QA–HE, QN–EL, XS–WA, HW–CZ, GD–AZ, KA–KL. These pairs are vertical edges.
+5. 🔄 (← 4) — Because the pairs are vertical edges and the layers are parallel, the solid is a prism.
+6. ⚫ (← 1) — In View A, the filled (front) top points are NZ, QN, GD and KA. The hollow (back) ones are EV, QA, XS and HW.
+7. 🧭 (← 2, 6) — A point&#x27;s horizontal position reflects its angle around the axis, and filled versus hollow says which side it is on. Reading View A this way, the top points go around the ring in the order KA, GD, QN, NZ, EV, QA, XS, HW.
+8. 🔷 (← 5, 7) — The top face is the eight-sided polygon KA, GD, QN, NZ, EV, QA, XS, HW. The bottom face has the paired labels in the same order: KL, AZ, EL, UF, CY, HE, WA, CZ.
+9. 🟦 (← 4, 8) — Each side face joins two neighbouring top points to their paired bottom points. That gives eight quadrilateral faces.
+10. 👀 (← 8) — Self-check: Views B, C and D show the same eight pairings, so the prism structure holds.
+11. 🏁 (← 8, 9) — Ten faces in all: two octagons and eight rectangles-like side faces.
+
+LANDMARKS:
+- The points split into a top ring and a bottom ring, and each top point lies directly above a partner with the same horizontal position.
+- The solid is an octagonal prism whose cyclic order is read from the filled and hollow dots.
+- The faces are two octagons and eight vertical quadrilaterals.
+ANSWER: Top: KA-GD-QN-NZ-EV-QA-XS-HW; Bottom: KL-AZ-EL-UF-CY-HE-WA-CZ; Sides: KA-GD-AZ-KL, GD-QN-EL-AZ, QN-NZ-UF-EL, NZ-EV-CY-UF, EV-QA-HE-CY, QA-XS-WA-HE, XS-HW-CZ-WA, HW-KA-KL-CZ</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | top ring | bottom ring | bijects | horizontal position | The points split into a top ring and a bottom ring, and each top point lies directly above a partner with the same horizontal position.<br>structure | octagonal prism | cyclic order | exists | - | The solid is an octagonal prism whose cyclic order is read from the filled and hollow dots.<br>structure | faces | - | = | face count | The faces are two octagons and eight vertical quadrilaterals.</div>
+</div>
+<div class='chain'>
+<h4>Antipodal pairs plus silhouette neighbours fix ring order <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: symmetry-then-silhouette-ordering</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Steps 7–8 fail. They put tips next to each other (NZ–EV, KA–GD), but the four views fix the true ring order as KA, XS, EV, QA, NZ, QN, GD, HW: a four-pointed star whose tips alternate with inner corners. The chain&#x27;s cycle NZ, EV, QA, XS, … crosses itself in the plane, so its two caps and eight side faces don&#x27;t match the solid.</div>
+<pre>CHAIN by blind player 2
+1. 🧭 (root) — Given: each view is an orthographic projection of one solid on a turntable, and u is the horizontal screen coordinate.
+2. 🔁 (root) — Given: sixteen points are plotted in every view, and rotating the solid only changes each point&#x27;s u. Its height v stays fixed.
+3. ⬆️⬇️ (← 2) — Every point has v at either the upper level or the lower level, so the points form two rings of eight. The labels line up in matching screen positions, so each upper point pairs with the lower point directly beneath it. The pairs are NZ/UF, EV/CY, QA/HE, QN/EL, XS/WA, HW/CZ, GD/AZ and KA/KL.
+4. 🪞 (← 2) — Tracking one label across the four views shows that some labels always have exactly opposite u. NZ and KA are one such pair, and the same holds for EV and GD, QA and HW, and QN and XS. Each of these pairs is antipodal about the axis.
+5. ⚖️ (← 4) — With four antipodal pairs, the eight-point ring is centrally symmetric about the turntable axis. In its cyclic order, each point sits four steps from its antipode.
+6. 👁️ (← 1, 2) — The filled and hollow dots show which points face the viewer in each view. This hints at which points are neighbours along the silhouette. For example, the filled points in a view run along the front edge and the hollow ones along the back.
+7. 🔗 (← 5, 6) — Neighbours that recur across views are NZ–EV, EV–QA, KA–GD, QN–GD or QN–NZ, and HW–XS or HW–QN. These recurring neighbours are the ring edges.
+8. 🧩 (← 5, 7) — Combining the antipodal rule with the recurring neighbours gives one cycle: NZ, EV, QA, XS, KA, GD, HW, QN. The pairs NZ/KA, EV/GD, QA/HW and XS/QN each sit four steps apart. Every edge in this cycle shows up as a neighbour in at least one view.
+9. 👀 (← 8, 4) — Self-check: the opposite points in this cycle are exactly the four antipodal pairs from step 4, and no label is used twice. The cycle passes.
+10. 🧱 (← 3, 8) — The lower ring follows the same order through the partners from step 3: UF, CY, HE, WA, KL, AZ, CZ, EL. The two rings together bound a straight prism.
+11. 📐 (← 10) — The faces are the top octagon, the bottom octagon, and one quadrilateral for each ring edge. Each quadrilateral takes two adjacent top points and their two partners below.
+12. ✅ (← 9, 11) — All sixteen points are used, and every point lies on three faces. This gives the final face list.
+
+LANDMARKS:
+- Several label pairs always have exactly opposite horizontal positions in all four views, so they are antipodal. This means the ring is centrally symmetric (NZ/KA, EV/GD, QA/HW, QN/XS).
+- Visible/hidden silhouette neighbours recur across views, and combined with the antipodal rule they fix a single cyclic order: NZ, EV, QA, XS, KA, GD, HW, QN.
+- The lower ring is the partner of each upper point in the same order, giving a prism with a symmetric octagonal cross-section.
+
+ANSWER: Octagonal prism with faces: top [NZ, EV, QA, XS, KA, GD, HW, QN]; bottom [UF, CY, HE, WA, KL, AZ, CZ, EL]; sides [NZ, EV, CY, UF], [EV, QA, HE, CY], [QA, XS, WA, HE], [XS, KA, KL, WA], [KA, GD, AZ, KL], [GD, HW, CZ, AZ], [HW, QN, EL, CZ], [QN, NZ, UF, EL]</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | antipodal label pairs | turntable axis | invariant | horizontal screen coordinate | Several label pairs always have exactly opposite horizontal positions in all four views, so they are antipodal. This means the ring is centrally symmetric (NZ/KA, EV/GD, QA/HW, QN/XS).<br>structure | silhouette neighbours | antipodal label pairs | = | cyclic order | Visible/hidden silhouette neighbours recur across views, and combined with the antipodal rule they fix a single cyclic order: NZ, EV, QA, XS, KA, GD, HW, QN.<br>construction | lower ring | upper ring | bijects | - | The lower ring is the partner of each upper point in the same order, giving a prism with a symmetric octagonal cross-section.</div>
+</div>
+</body></html>

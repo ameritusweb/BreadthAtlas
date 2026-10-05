@@ -1,0 +1,107 @@
+<html><head><meta charset='utf-8'><title>The height of a building, with a barometer</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The height of a building, with a barometer</h1>
+<div class='meta'>family: open problem, method design · status: open · attractor: the pressure difference between ground and roof (the &quot;intended&quot; answer of the famous story)</div>
+<h3>Question</h3><pre>You have a barometer and must determine the height of a tall building. **Describe a method and the
+principle it relies on.** Each route must rest on a different principle; the barometer must play a
+role in the method.</pre>
+<h3>Glossary</h3><pre>| emoji | given |
+|---|---|
+| 🌡️ | the barometer: a pressure gauge, a heavy object, a thing of known length, a thing of value |
+| 🏢 | the building: tall, with a roof you can reach, a shadow, stairs, a superintendent |
+| ☀️ | the sun: casts proportional shadows |
+| ⏱️ | time can be measured |
+
+| emoji | principle |
+|---|---|
+| 🌬️ | pressure falls with height |
+| 🪂 | free fall: height from fall time |
+| 📏 | the barometer as a unit of length (mark the stairwell) |
+| 🌗 | similar triangles: shadow of barometer to shadow of building |
+| 🪢 | pendulum: period depends on length (lower it on a string) |
+| 🤝 | trade: offer the barometer to someone who knows the height |
+| 👂 | sound or echo timing |
+| 🔭 | angular size from a known distance |</pre>
+<h2>Accepted routes (2)</h2>
+<div class='chain'>
+<h4>Barometric pressure difference, roof versus ground, converted to height <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: pressure-altimetry</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> No binding chains exist yet, so all three landmarks are new: the roof reading is lower than the ground reading; over a building-sized climb the pressure drop is roughly proportional to height; and a known rate of pressure fall per unit height turns the drop into a height. Every step follows from the parents it names, the physics is correct (near the ground the fall is roughly 1 hPa per 8 m and close to linear), and nothing is simulated.</div>
+<pre>CHAIN by blind player 2
+1. 🌡️ (root) — The barometer is a pressure gauge that reads the local air pressure.
+2. 🏢 (root) — The building is tall, and both its ground level and its roof can be reached.
+3. ❓ (← 1, 2) — Asked: describe a method, and the principle it relies on, that uses the barometer to find the building&#x27;s height. The barometer must play a role in the method.
+4. 🌬️ (root) — Air pressure falls with height, because less air lies above you the higher you go.
+5. ⬇️ (← 1, 2, 3) — Read the barometer at ground level.
+6. ⬆️ (← 1, 2, 3) — Carry the barometer up to the roof and read it again.
+7. 📉 (← 4, 5, 6) — The roof reading comes out lower than the ground reading, as the principle predicts.
+8. ⚖️ (← 7) — The difference between the two readings is the pressure drop over the building. Compared with the whole atmospheric pressure, this drop is small.
+9. 🪜 (← 4, 8) — Over so small a climb, equal steps of height give nearly equal pressure drops. So the drop is proportional to the height climbed.
+10. 🧭 (← 9) — Standard-atmosphere tables give the known rate of pressure fall per unit of height near the ground.
+11. 🏁 (← 8, 9, 10) — The measured drop, converted at that known rate, gives the building&#x27;s height.
+
+LANDMARKS:
+- Air pressure is lower at the roof than at the ground, so the barometer reads less there.
+- Over a building-sized climb, the pressure drop is roughly proportional to the height climbed.
+- A known pressure-per-height rate converts the measured drop into a height.
+
+ANSWER: Read the barometer at the ground and again at the roof. The pressure drop, converted at the known rate at which pressure falls with height, gives the building&#x27;s height. The principle is that pressure falls with height.</pre>
+<div class="meta"><b>typed landmarks</b><br>state | roof pressure | ground pressure | ≪ | - | Air pressure is lower at the roof than at the ground, so the barometer reads less there.<br>rate | pressure drop | building height | ≈ | - | Over a building-sized climb, the pressure drop is roughly proportional to the height climbed.<br>reduction | building height | pressure drop | reduces-to | pressure per height | A known pressure-per-height rate converts the measured drop into a height.</div>
+</div>
+<div class='chain'>
+<h4>Drop barometer from roof and time its fall <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 3) · 2026-10-05 · strategy <code>new: free-fall-timing</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> This chain uses free fall, a principle that is independent of route 001&#x27;s pressure gradient. Its landmarks are new: air drag is negligible for a dense, compact barometer, height grows as the square of the fall time, and the timed drop plus gravity gives the roof height. Step 8&#x27;s &quot;slowed very little&quot; is loose for the tallest buildings but is not wrong by a category. No step tracks state step by step.</div>
+<pre>CHAIN by blind player 3
+1. 🌡️ (root) — The barometer is a heavy, compact object that I can carry up and drop.
+2. 🏢 (root) — The building is tall, and I can reach its roof by the stairs.
+3. ⏱️ (root) — Time can be measured.
+4. ❓ (← 1, 2, 3) — Asked: how do I find the building&#x27;s height using the barometer, and what principle does the method rest on? Here the route must not use the barometer as a pressure gauge.
+5. 🪂 (← 4, 1) — The principle is free fall: an object released from rest falls under gravity, so the height fallen is fixed by the fall time.
+6. 🧗 (← 2, 5) — I climb to the roof and hold the barometer out over a cleared patch of ground below the edge.
+7. 🎬 (← 3, 6) — I release the barometer and record the drop on video, so the time from release to impact can be read off frame by frame.
+8. 🪶 (← 1, 5) — A dense, compact barometer is slowed very little by air over a building&#x27;s height, so its fall is close to ideal free fall.
+9. 📈 (← 5, 8) — In ideal free fall a longer fall means a greater height, and the height grows faster than the time, as the square of the time.
+10. 🏁 (← 7, 9) — The measured fall time, together with the known strength of gravity, gives the height. This is the building&#x27;s height, since the drop started at the roof and ended at the ground.
+11. 👀 (← 10) — Self-check: repeated drops should give nearly the same time, and a taller building should always give a longer time. This matches the principle.
+
+LANDMARKS:
+- A heavy barometer dropped from the roof falls almost freely, because air drag is small for a dense compact object over a building&#x27;s height.
+- The fall time from rest fixes the height, which grows as the square of the time, so a longer drop means a taller building.
+- Timing the drop from release to impact, together with the known strength of gravity, gives the roof height.
+
+ANSWER: Drop the barometer from the roof, time its fall, and use free fall under gravity to turn that time into the building&#x27;s height.</pre>
+<div class="meta"><b>typed landmarks</b><br>state | air drag | barometer fall | ≪ | - | A heavy barometer dropped from the roof falls almost freely, because air drag is small for a dense compact object over a building&#x27;s height.<br>rate | building height | fall time | ≈ | square of time | The fall time from rest fixes the height, which grows as the square of the time, so a longer drop means a taller building.<br>reduction | building height | fall time | reduces-to | strength of gravity | Timing the drop from release to impact, together with the known strength of gravity, gives the roof height.</div>
+</div>
+<h2>Attempts (1) — the boundary</h2>
+<div class='chain'>
+<h4>(form failure) <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>unclassified</code> · code/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> steps [10] do no work (nothing later follows from them)</div>
+<pre>CHAIN by blind player 1
+1. 🌡️ (root) — Given: the barometer is a pressure gauge, a heavy object, a thing of known length, and a thing of value.
+2. 🏢 (root) — Given: the building is tall, with a reachable roof, a shadow, stairs, and a superintendent.
+3. ❓ (← 1, 2) — Asked: describe a method, and the principle it relies on, for finding the building&#x27;s height, with the barometer playing a role in the method.
+4. 🌬️ (root) — General knowledge: air pressure falls steadily as one goes higher, because less air lies above.
+5. 🌡️ (← 1) — Take the barometer to the foot of the building and read the pressure there, using it as the pressure gauge it is.
+6. 🛗 (← 2) — Go up to the roof by the stairs, carrying the barometer, so the same instrument can be read at the top.
+7. 🌡️ (← 5, 6) — Read the pressure again on the roof with the same barometer, so any instrument error is the same at both readings.
+8. ⚖️ (← 5, 7) — Compare the two readings: the roof reading is lower than the ground reading, and the gap between them reflects the height climbed.
+9. 🌬️ (← 4, 8) — Because pressure falls steadily with height near the ground, a bigger gap means a taller building, and the gap converts to height using the known rate of fall of pressure with altitude.
+10. 🏢 (← 9) — The converted gap gives the building&#x27;s height; a tall building gives a clearly measurable gap, while a short one would give a gap too small to read well.
+11. 👀 (← 4, 8) — Self-check: the method needs the pressure to be steady between the two readings and the instrument to be sensitive enough, so read both quickly, one soon after the other, on a calm day.
+
+LANDMARKS:
+- Air pressure decreases with height, so the barometer reads lower on the roof than at the ground.
+- The difference between the ground and roof pressure readings, converted by the known rate of pressure fall with altitude, gives the height.
+- Both readings are taken with the same barometer in quick succession, so weather changes and instrument error do not distort the difference.
+
+ANSWER: Read the barometer at the foot of the building and again on the roof; the pressure difference, converted using the known rate at which air pressure falls with height, gives the building&#x27;s height.</pre>
+
+</div>
+</body></html>

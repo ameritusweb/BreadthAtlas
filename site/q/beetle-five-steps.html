@@ -1,0 +1,120 @@
+<html><head><meta charset='utf-8'><title>The beetle&#x27;s five steps</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The beetle&#x27;s five steps</h1>
+<div class='meta'>family: state tracking, two cases · status: answered · attractor: none</div>
+<h3>Question</h3><pre>A beetle starts at a corner of a cube and walks along exactly five edges, moving to a new corner with
+each edge. **Can it finish at its starting corner?** Answer the same question for an octahedron.</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Checkerboard parity blocks cube; explicit octahedron five-loop <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: parity-colouring-plus-witness</code> · depth 1 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Every landmark is new because the frontier is empty: the two-colouring of the cube&#x27;s corners forces even-length closed walks, and the explicit five-edge loop top → middle → bottom → adjacent middle → adjacent middle → top closes on the octahedron. Both the cube obstruction and the octahedron construction are sound, and the answer matches exactly.</div>
+<pre>CHAIN by duelist A
+1. 🧊 (root) — Given: a cube has corners joined by edges, and each edge joins two corners.
+2. 🪲 (root) — Given: a beetle starts at a corner and walks exactly five edges, moving to a new corner with each edge.
+3. ❓ (← 1, 2) — Asked: can the beetle end at its starting corner on the cube, and likewise on an octahedron?
+4. 🎨 (← 1) — The cube&#x27;s corners can be painted in two colours, like a checkerboard, so that every edge joins two differently coloured corners.
+5. 🔀 (← 2, 4) — Every step along an edge therefore switches the beetle&#x27;s corner colour.
+6. 5️⃣ (← 5) — Five steps is an odd number of switches, so the beetle ends on the colour opposite to where it began.
+7. 🚫 (← 6) — A corner of the opposite colour cannot be the starting corner, so the cube walk cannot close.
+8. 🔷 (root) — Given: an octahedron has six corners, a top, a bottom, and four forming a square around the middle.
+9. 🔗 (← 8) — Each middle corner touches both the top and the bottom and its two square neighbours, while the top and bottom do not touch each other.
+10. 🛤️ (← 3, 9) — Try the route top, middle one, bottom, middle two, middle three, back to top.
+11. 👀 (← 9, 10) — Self-check: every hop in this route joins touching corners, and the five corners visited are all different.
+12. ✅ (← 10, 11) — The route is a valid five-edge walk that returns to its start, so the octahedron allows it.
+13. 🏁 (← 7, 12) — Combining the two cases: the cube says no and the octahedron says yes.
+
+LANDMARKS:
+- The cube&#x27;s corners can be two-coloured so that every edge switches colour, so any closed walk on the cube has even length.
+- An odd number of steps cannot return to the starting colour, so five steps on the cube fail.
+- The octahedron has an explicit five-corner loop, going via the top, a middle corner, the bottom, and two adjacent middle corners.
+ANSWER: Cube: no. Octahedron: yes.</pre>
+<div class="meta"><b>typed landmarks</b><br>invariant | cube corners | closed walk length | invariant | parity | The cube&#x27;s corners can be two-coloured so that every edge switches colour, so any closed walk on the cube has even length.<br>obstruction | five-step walk | cube closed walk | forbids | parity | An odd number of steps cannot return to the starting colour, so five steps on the cube fail.<br>construction | octahedron five-cycle | octahedron closed walk | exists | - | The octahedron has an explicit five-corner loop, going via the top, a middle corner, the bottom, and two adjacent middle corners.</div>
+</div>
+<div class='chain'>
+<h4>Per-coordinate flip parity on cube; spoke-ring pentagon on octahedron <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: coordinate-parity-invariant</code> · depth 2 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The chain is sound. Its first landmark is new: each cube edge flips exactly one of three position choices, and a return needs every choice flipped an even number of times. That tracks three separate parities, a different intermediate claim from route 001&#x27;s single two-colouring. Its octahedron loop is also different: it uses the top and four ring corners and never passes through the bottom.</div>
+<pre>CHAIN by duelist B
+1. 🧊 (root) — Given: each cube corner is fixed by three binary choices (left or right, front or back, up or down), and each edge joins two corners.
+2. 🪲 (root) — Given: a beetle starts at a corner and walks exactly five edges, moving to a new corner with each edge.
+3. ❓ (← 1, 2) — Asked: can the beetle finish at its starting corner on the cube, and also on an octahedron?
+4. 🧭 (← 1) — Walking along one cube edge changes exactly one of the three binary choices and leaves the other two alone.
+5. 🔁 (← 4) — To end at the starting corner, each of the three choices must be changed an even number of times, so that each returns to its original value.
+6. ➕ (← 5) — Three even tallies of changes add up to an even total, so any closed walk on the cube has an even number of edges.
+7. 5️⃣ (← 2, 6) — Five edges is odd, so the beetle cannot be back at its start on the cube.
+8. 🔷 (root) — Given: an octahedron has six corners, and each corner touches every other corner except its single opposite corner.
+9. 🎡 (← 8) — Take the top corner and the four middle corners. The top touches all four, and the four middle corners form a square ring.
+10. 🛤️ (← 3, 9) — Walk from the top to a middle corner, then around three sides of the ring to the middle corner next to where you began, then up to the top. That is two spokes and three ring edges, five edges in all.
+11. 👀 (← 9, 10) — Self-check: every hop joins touching corners, and the five corners visited before returning are all different.
+12. ✅ (← 10, 11) — This is a legitimate five-edge walk that returns to its start, so the octahedron allows it.
+13. 🏁 (← 7, 12) — Combining the two cases: the cube cannot, the octahedron can.
+
+LANDMARKS:
+- Each cube edge changes exactly one of the three position choices, and a return needs each choice changed an even number of times, so closed cube walks have even length.
+- On the octahedron, the top corner touches all four corners of the middle square ring.
+- Two spokes from the top plus three ring edges make a five-edge closed walk on the octahedron.
+ANSWER: Cube: no. Octahedron: yes.</pre>
+<div class="meta"><b>typed landmarks</b><br>invariant | cube corners | closed walk length | invariant | parity | Each cube edge changes exactly one of the three position choices, and a return needs each choice changed an even number of times, so closed cube walks have even length.<br>structure | top corner | middle square ring | = | - | On the octahedron, the top corner touches all four corners of the middle square ring.<br>construction | octahedron five-cycle | octahedron closed walk | exists | - | Two spokes from the top plus three ring edges make a five-edge closed walk on the octahedron.</div>
+</div>
+<div class='chain'>
+<h4>Even face outlines force even closed walks <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: face-parity (closed walks built from even face boundaries)</code> · depth 3 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The first landmark is new: every cube face has an even outline, and closed walks on the cube&#x27;s surface are built from face outlines, so every closed walk has even length. No earlier chain used this argument. The octahedron fan outline (spoke, three ring edges, spoke) matches route 002&#x27;s landmark 6 in substance, but one new landmark is enough to make the chain VALID.</div>
+<pre>CHAIN by duelist B
+1. 🧊 (root) — Given: a cube has six square faces, each edge joins two corners, and each edge borders exactly two faces.
+2. 🪲 (root) — Given: a beetle starts at a corner and walks exactly five edges, moving to a new corner with each edge.
+3. ❓ (← 1, 2) — Asked: can the beetle finish at its starting corner on the cube, and also on an octahedron?
+4. ⬜ (← 1) — Every cube face is bounded by exactly four edges, an even number.
+5. 🧩 (← 1, 4) — The cube&#x27;s surface has no holes, so the edges that a closed walk uses an odd number of times can be built by combining face outlines, where shared edges cancel in pairs.
+6. 🔢 (← 4, 5) — Combining even-sized outlines with cancelling pairs always leaves an even number of edges, so the odd-use edges are even in number, and so is the total walk length.
+7. 5️⃣ (← 2, 6) — Five edges is odd, so the beetle cannot be back at its start on the cube.
+8. 🔷 (root) — Given: an octahedron has six corners and eight triangular faces, and four triangles meet at each corner.
+9. 🔺 (← 8) — Around the top corner, take three triangles in a row, each sharing a spoke with the next.
+10. 🧵 (← 3, 9) — The outer edge of this three-triangle fan is a spoke, three ring edges, and a second spoke, which is a closed route of five edges.
+11. 👀 (← 9, 10) — Self-check: each hop lies on a triangle, so it is a real edge, and the five corners visited are all different.
+12. ✅ (← 10, 11) — This is a legitimate five-edge walk that returns to its start, so the octahedron allows it.
+13. 🏁 (← 7, 12) — Combining the two cases: the cube cannot, the octahedron can.
+
+LANDMARKS:
+- Every cube face has an even number of edges, and closed walks on the cube&#x27;s surface are built from face outlines, so every closed walk on the cube has even length.
+- Three triangular faces in a row around one octahedron corner have an outline of exactly five edges.
+- That fan outline is a closed five-edge walk on the octahedron.
+ANSWER: Cube: no. Octahedron: yes.</pre>
+<div class="meta"><b>typed landmarks</b><br>invariant | cube corners | closed walk length | invariant | parity | Every cube face has an even number of edges, and closed walks on the cube&#x27;s surface are built from face outlines, so every closed walk on the cube has even length.<br>structure | three-triangle fan | fan outline | = | edges | Three triangular faces in a row around one octahedron corner have an outline of exactly five edges.<br>construction | octahedron five-cycle | octahedron closed walk | exists | - | That fan outline is a closed five-edge walk on the octahedron.</div>
+</div>
+<h2>Attempts (1) — the boundary</h2>
+<div class='chain'>
+<h4>Distance-parity on cube, five-cycle through octahedron pairs <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: parity-obstruction-plus-construction</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The cube landmark is route 001&#x27;s two-colouring in other words: colouring each corner by whether its distance from the start is even or odd gives that colouring, and the edge argument repeats route 002&#x27;s landmark 4. The octahedron landmarks repeat route 002&#x27;s landmark 5 (by symmetry, each corner touches every corner except its opposite) and routes 001 and 002&#x27;s explicit five-edge loop (landmarks 3 and 6), since A, B, C, A′, B′ is the same five-cycle up to symmetry.</div>
+<pre>CHAIN by duelist A
+1. 🧊 (root) — Given: a cube has corners and edges, each edge joins two corners, and each corner is fixed by three binary choices (left or right, front or back, up or down).
+2. 🪲 (root) — Given: a beetle starts at a corner and walks exactly five edges, moving to a new corner with each edge.
+3. ❓ (← 1, 2) — Asked: can the beetle finish at its starting corner on the cube, and likewise on an octahedron?
+4. 📏 (← 1) — Measure how far a corner is from the start by counting how many of the three choices differ from the start&#x27;s. Walking one edge flips exactly one choice, so this distance changes by exactly one, up or down.
+5. 🔀 (← 2, 4) — Every step therefore flips the parity of the beetle&#x27;s distance, from even to odd or from odd to even.
+6. 5️⃣ (← 5) — After five steps, an odd number of flips, the distance is odd.
+7. 🚫 (← 6) — The start has distance zero, which is even, so the beetle cannot be back at its start after five steps on the cube.
+8. 🔷 (root) — Given: an octahedron has six corners in three opposite pairs, and each corner touches every other corner except its own opposite.
+9. 🔗 (← 8) — Call the pairs A and A′, B and B′, C and C′. Any two corners from different pairs touch.
+10. 🛤️ (← 3, 9) — Try the route A, B, C, A′, B′, and back to A.
+11. 👀 (← 9, 10) — Self-check: the hops A–B, B–C, C–A′, A′–B′ and B′–A each join corners from different pairs, so each is an edge, and the five corners visited are all different.
+12. ✅ (← 10, 11) — This is a valid five-edge walk that returns to its start, so the octahedron allows it.
+13. 🏁 (← 7, 12) — Combining the two cases: the cube cannot, the octahedron can.
+
+LANDMARKS:
+- On the cube, the distance from the start (the number of position choices that differ) changes by exactly one on every edge, so its parity flips each step and five steps leave an odd, nonzero distance.
+- On the octahedron, any two corners that are not opposite touch, so a walk can hop freely between the three opposite pairs.
+- The route A, B, C, A′, B′, back to A is a five-edge closed walk on the octahedron.
+
+ANSWER: Cube: no. Octahedron: yes.</pre>
+<div class="meta"><b>typed landmarks</b><br>invariant | cube corners | closed walk length | invariant | parity | On the cube, the distance from the start (the number of position choices that differ) changes by exactly one on every edge, so its parity flips each step and five steps leave an odd, nonzero distance.<br>structure | octahedron corners | opposite pairs | = | - | On the octahedron, any two corners that are not opposite touch, so a walk can hop freely between the three opposite pairs.<br>construction | octahedron five-cycle | octahedron closed walk | exists | - | The route A, B, C, A′, B′, back to A is a five-edge closed walk on the octahedron.</div>
+</div>
+</body></html>

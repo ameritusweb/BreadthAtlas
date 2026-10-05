@@ -1,0 +1,117 @@
+<html><head><meta charset='utf-8'><title>The third-to-last passenger</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The third-to-last passenger</h1>
+<div class='meta'>family: altered famous puzzle (parametrized sibling of plane-seat-99) · status: answered · attractor: the lost-boarding-pass problem, last passenger, answer 1/2; and the sibling&#x27;s 2/3 · discriminator: the passenger of interest is the third-to-last, so there are FOUR decisive seats (1, 98, 99, 100)</div>
+<h3>Question</h3><pre>One hundred passengers board a full plane in order. The first has lost their boarding pass and sits in
+a random seat. Each later passenger takes their own seat if it is free, otherwise a random free seat.
+**What is the probability that passenger 98 — the third-to-last — ends up in their own seat?**</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Four decisive seats, symmetric first hit <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: decisive-seats-symmetry</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound and it uses no simulation. It identifies the four decisive seats (1, 98, 99, 100) and argues by symmetry that each is equally likely to be taken first, so the answer is 3/4. All three landmarks are new because the frontier was empty.</div>
+<pre>CHAIN by duelist A
+1. ✈️ (root) — One hundred passengers board a full plane in order, one seat each.
+2. 🎲 (root) — The first passenger sits in a random seat. Each later passenger takes their own seat if it is free, and otherwise a random free seat.
+3. ❓ (← 1, 2) — What is the probability that passenger 98, the third-to-last, ends up in their own seat?
+4. 🪑 (← 2) — Passenger 98 loses their seat only if someone takes it before they board, and only a random chooser can do that.
+5. 🔗 (← 2, 4) — Chaos is carried by a chain of displaced people. Each random chooser takes a seat, and that seat&#x27;s owner is displaced when they board, so the chain continues.
+6. 1️⃣ (← 5) — The chain ends the moment someone takes seat 1, because passenger 1 has already boarded and nobody is displaced.
+7. 🎯 (← 4, 5, 6) — Four seats matter before passenger 98 boards: seat 1, seat 98, seat 99 and seat 100. Seat 1 ends the chaos, and the other three are the seats we care about.
+8. ⚖️ (← 2, 7) — Every random chooser picks uniformly among free seats. Seats 98, 99 and 100 and seat 1 are treated alike by a chooser, so each of the four is equally likely to be the first of them taken.
+9. 🧯 (← 5, 7, 8) — If seat 99 or seat 100 is taken first, its owner boards after passenger 98, so no one before 98 is displaced and the chaos stops. Seat 98 stays free.
+10. ✅ (← 6, 8) — If seat 1 is taken first, the chaos also stops and seat 98 stays free.
+11. 💥 (← 8, 9, 10) — Only &quot;seat 98 is taken first&quot; ruins passenger 98. That is one of four equally likely outcomes, and the other three leave them safe.
+12. 🧮 (← 11) — Three of the four equally likely outcomes are good for passenger 98, so they sit in their own seat three times out of four.
+13. 👀 (← 12) — Self-check: the same argument for the last passenger has two relevant seats, seat 1 and seat 100. That gives one half, which is the known answer for the last passenger, so the method is consistent.
+
+LANDMARKS:
+- Chaos ends as soon as seat 1 is taken, or when a taken seat&#x27;s owner boards after passenger 98.
+- Among seat 1 and seats 98, 99 and 100, each is equally likely to be the first one taken, by symmetry.
+- Passenger 98 is displaced only if seat 98 is the first of those four seats taken, which is one case in four.
+ANSWER: 3/4</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | chaos | seat 1 taken | reduces-to | - | Chaos ends as soon as seat 1 is taken, or when a taken seat&#x27;s owner boards after passenger 98.<br>symmetry | seat 1 and seats 98, 99 and 100 | decisive seats | invariant | first one taken | Among seat 1 and seats 98, 99 and 100, each is equally likely to be the first one taken, by symmetry.<br>share | passenger 98 displaced | decisive seats | reduces-to | one case in four | Passenger 98 is displaced only if seat 98 is the first of those four seats taken, which is one case in four.</div>
+</div>
+<div class='chain'>
+<h4>Count free seats when passenger 98 boards <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: pigeonhole-at-boarding</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Every step holds and 3/4 is correct. Step 5 states a simple count in words (&quot;three free&quot;), which is not simulation. The first two landmarks are new to this question: when passenger 98 boards, seats 2 to 97 are all occupied, so exactly one of seats 1, 98, 99 and 100 is taken. Route 001 instead tracked the first of those seats to be taken. The third landmark matches route 001&#x27;s landmark 3 in substance and adds nothing new.</div>
+<pre>CHAIN by duelist A
+1. ✈️ (root) — One hundred passengers board a full plane in order, one seat each.
+2. 🎲 (root) — The first passenger sits in a random seat. Each later passenger takes their own seat if it is free, and otherwise a random free seat.
+3. ❓ (← 1, 2) — What is the probability that passenger 98, the third-to-last, ends up in their own seat?
+4. 🧱 (← 2) — Before passenger 98 boards, each of passengers 2 to 97 has either sat in their own seat or been displaced. A displaced passenger&#x27;s seat was already taken, so every seat from 2 to 97 is occupied.
+5. 🔢 (← 1, 4) — Ninety-seven passengers are seated and the plane has one hundred seats, so exactly three seats are free when passenger 98 boards.
+6. 🧺 (← 4, 5) — Seats 2 to 97 are all full, so the three free seats must come from the four seats 1, 98, 99 and 100. Exactly one of those four is occupied.
+7. 🕳️ (← 6) — Passenger 98 is displaced exactly when the one occupied seat among the four is seat 98. If it is seat 1, 99 or 100, seat 98 is free.
+8. 🙋 (← 2, 6) — Passengers 99 and 100 have not boarded yet, so no one has sat in seats 99 or 100 by choosing their own seat. Only a random chooser could have taken the single occupied seat among the four.
+9. ⚖️ (← 2, 8) — A random chooser treats seats 1, 98, 99 and 100 identically, since all are free and nobody has a reason to prefer one. So each of the four is equally likely to be the one occupied seat.
+10. 🧮 (← 7, 9) — The one occupied seat is seat 98 in one case out of four. In the other three cases seat 98 is free and passenger 98 sits in their own seat.
+11. 👀 (← 10) — Self-check: for the last passenger, one seat is free and it is either seat 1 or seat 100, equally likely. That gives one half, the known answer, so the counting method is consistent.
+
+LANDMARKS:
+- When passenger 98 boards, every seat from 2 to 97 is already occupied, so exactly three seats are free.
+- Those three free seats are three of the four seats 1, 98, 99 and 100, so exactly one of those four is occupied.
+- Passenger 98 is displaced only if the one occupied seat of the four is seat 98, which is one case in four.
+ANSWER: 3/4</pre>
+<div class="meta"><b>typed landmarks</b><br>state | seats 2 to 97 | free seats | = | three free seats | When passenger 98 boards, every seat from 2 to 97 is already occupied, so exactly three seats are free.<br>structure | seat 1 and seats 98, 99 and 100 | free seats | ∈ | one occupied seat | Those three free seats are three of the four seats 1, 98, 99 and 100, so exactly one of those four is occupied.<br>share | passenger 98 displaced | decisive seats | reduces-to | one case in four | Passenger 98 is displaced only if the one occupied seat of the four is seat 98, which is one case in four.</div>
+</div>
+<div class='chain'>
+<h4>Middle pick restarts problem; induct down to four seats <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: restart-recursion-induction</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is correct. Step 9 states the result for any number of middle passengers without spelling out the weighted average, but the claim is true: each restart is a uniform pick among the same four decisive seats or another restart, so the bad chance stays one in four. No earlier binding chain uses the restart recursion (landmark 1) or the claim that the answer does not depend on the number of middle passengers (landmark 2), although landmark 3 repeats attempt 001&#x27;s four-seat collapse.</div>
+<pre>CHAIN by duelist B
+1. ✈️ (root) — One hundred passengers board a full plane in order, one seat each.
+2. 🎲 (root) — The first passenger sits in a random seat, and each later passenger takes their own seat if it is free, otherwise a random free seat.
+3. ❓ (← 1, 2) — What is the probability that passenger 98, the third-to-last, ends up in their own seat?
+4. 🎬 (← 2) — Split on the first passenger&#x27;s seat. Everything that follows depends on where that single random pick lands.
+5. 🏠 (← 4) — If the first passenger picks their own seat 1, nobody is ever displaced, so passenger 98 is fine.
+6. 🔚 (← 4) — If the first passenger picks seat 99 or seat 100, those owners board after passenger 98. Seat 98 is untouched and passenger 98 is fine.
+7. 💺 (← 4) — If the first passenger picks seat 98, passenger 98 is displaced. This case is bad.
+8. 🔁 (← 2, 4) — If the first passenger picks a seat from 2 to 97, that owner is displaced and chooses at random among the free seats. This is the same situation as the start, with the displaced passenger as the new &quot;lost-pass&quot; passenger, and seat 1 now counts as a free seat that ends the chaos.
+9. 🪞 (← 8) — The restarted problem has the same four relevant seats and the same three outcomes (good, good, bad) as before, but fewer passengers in the middle. So the chance of a bad ending does not depend on how many passengers sit between the chooser and passenger 98.
+10. 0️⃣ (← 7, 9) — Because the bad chance does not depend on the middle passengers, we may take the case with none. Then the plane has only the four seats 1, 98, 99 and 100, and the first passenger picks uniformly among them, so the bad pick is one of four.
+11. 🧮 (← 5, 6, 10) — Three of those four equally likely outcomes leave passenger 98 in their own seat, so the answer is three quarters.
+12. 👀 (← 11) — Self-check: for the last passenger the same argument leaves a two-seat plane, giving one half, the known answer.
+
+LANDMARKS:
+- Splitting on the first passenger&#x27;s pick, a pick in the middle just restarts the same problem with a displaced passenger as the new chooser.
+- The chance that passenger 98 is displaced does not depend on how many passengers sit between the chooser and passenger 98.
+- With no middle passengers the plane has four seats, and the bad pick is one of four.
+ANSWER: 3/4</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | first passenger&#x27;s pick | restarted problem | reduces-to | - | Splitting on the first passenger&#x27;s pick, a pick in the middle just restarts the same problem with a displaced passenger as the new chooser.<br>symmetry | passenger 98 displaced | middle passengers | invariant | - | The chance that passenger 98 is displaced does not depend on how many passengers sit between the chooser and passenger 98.<br>share | passenger 98 displaced | decisive seats | reduces-to | one case in four | With no middle passengers the plane has four seats, and the bad pick is one of four.</div>
+</div>
+<h2>Attempts (1) — the boundary</h2>
+<div class='chain'>
+<h4>Reduce to four decisive seats, symmetry gives three-quarters <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: decisive-seat-reduction</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Chain 2 is the same route as route 001. Its &quot;collapse to a four-seat plane&quot; is route 001&#x27;s reduction to the decisive seats (landmark 1). Its &quot;single uniform choice among four seats&quot; is route 001&#x27;s symmetry over which decisive seat is taken first (landmark 2, which step 8 states almost word for word). Its &quot;only seat 98 is bad&quot; is route 001&#x27;s one case in four (landmark 3). Deleting passengers who sit in their own seat is only how the reduction is reached, not a new claim about the problem.</div>
+<pre>CHAIN by duelist B
+1. ✈️ (root) — One hundred passengers board a full plane in order, one seat each.
+2. 🎲 (root) — The first passenger sits in a random seat, and each later passenger takes their own seat if it is free, otherwise a random free seat.
+3. ❓ (← 1, 2) — What is the probability that passenger 98, the third-to-last, ends up in their own seat?
+4. 🙂 (← 2) — A passenger whose own seat is free simply sits there, so they change nothing for anyone else.
+5. 🧩 (← 4) — Passengers who sit in their own seat can be deleted from the story. Only the displaced passengers and their random choices shape what happens.
+6. 🔍 (← 2, 5) — Whenever a random chooser picks among the free seats, the only picks that matter to passenger 98 are seat 1, seat 98, seat 99 and seat 100. Any other pick just displaces someone who then chooses again in the same way.
+7. 🗜️ (← 5, 6) — So the hundred-seat plane collapses to a four-seat plane with only the first passenger, passenger 98, passenger 99 and passenger 100. The first passenger&#x27;s one random choice stands in for the whole chain of displacements.
+8. 🪑 (← 7) — In the small plane the first passenger picks uniformly among the four seats. The first of the four relevant seats to be hit in the big plane is hit with the same fairness.
+9. 🏠 (← 8) — If the pick is the first passenger&#x27;s own seat, nobody is displaced, so passenger 98 is seated correctly.
+10. ⏭️ (← 8) — If the pick is seat 99 or seat 100, that owner boards after passenger 98, so seat 98 is still free when passenger 98 boards.
+11. 💺 (← 8) — If the pick is seat 98, passenger 98 is displaced. This is the only bad case.
+12. ⚖️ (← 9, 10, 11) — Three of the four equally likely picks are good for passenger 98 and only one is bad, so passenger 98 is seated correctly three times out of four.
+13. 👀 (← 12) — Self-check: collapsing the same way for the last passenger gives a two-seat plane, so one half, which matches the known answer.
+
+LANDMARKS:
+- Passengers who sit in their own seat can be deleted, so the hundred-seat plane collapses to a four-seat plane of the first passenger and passengers 98, 99 and 100.
+- In the collapsed plane, the first passenger&#x27;s single uniform choice among four seats decides everything.
+- Only the pick of seat 98 displaces passenger 98, and the other three picks leave them in their seat.
+ANSWER: 3/4</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | hundred-seat plane | four-seat plane | reduces-to | - | Passengers who sit in their own seat can be deleted, so the hundred-seat plane collapses to a four-seat plane of the first passenger and passengers 98, 99 and 100.<br>symmetry | first passenger&#x27;s pick | decisive seats | invariant | - | In the collapsed plane, the first passenger&#x27;s single uniform choice among four seats decides everything.<br>share | passenger 98 displaced | decisive seats | reduces-to | one case in four | Only the pick of seat 98 displaces passenger 98, and the other three picks leave them in their seat.</div>
+</div>
+</body></html>

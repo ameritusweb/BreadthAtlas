@@ -1,0 +1,115 @@
+<html><head><meta charset='utf-8'><title>The second-to-last passenger</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The second-to-last passenger</h1>
+<div class='meta'>family: altered famous puzzle · status: answered · attractor: the lost-boarding-pass problem, last passenger, answer 1/2 · discriminator: the passenger of interest is the second-to-last, so there are THREE decisive seats (1, 99, 100), not two</div>
+<h3>Question</h3><pre>One hundred passengers board a full plane in order. The first has lost their boarding pass and sits in
+a random seat. Each later passenger takes their own seat if it is free, otherwise a random free seat.
+**What is the probability that passenger 99 — the second-to-last — ends up in their own seat?**</pre>
+
+<h2>Accepted routes (4)</h2>
+<div class='chain'>
+<h4>First-occupied of three decisive seats is uniform <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: decisive-set symmetry</code> · depth 1 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The chain is sound: seats 2–98 must be filled before passenger 99 boards, which leaves exactly one of seats 1, 99 and 100 occupied, and by symmetry each is equally likely to be that seat, so the answer is 2/3. The frontier was empty, so all three landmarks are new: the filled block of seats 2–98, the single occupied seat among the three being equally likely to be any of them, and the one-in-three chance that it is seat 99.</div>
+<pre>CHAIN by duelist A
+1. 🪑 (root) — Given: 100 seats and 100 passengers, and passenger 1 sits randomly, which may be their own seat 1.
+2. 🔁 (root) — Given: each later passenger takes their own seat if it is free, otherwise a uniformly random free seat.
+3. 🧍 (← 1, 2) — When passenger 99 boards, 98 people are seated, so exactly two seats are free.
+4. 🧱 (← 2, 3) — Every passenger from 2 to 98 ends up seated, and none of them can be left without a seat. This means seats 2 through 98 are all occupied by the time 99 boards.
+5. 🎯 (← 3, 4) — Of the three seats 1, 99 and 100, exactly one is occupied by then, because 98 are seated and seats 2–98 account for 97.
+6. 🧩 (← 5) — Passenger 99 sits in their own seat unless the one occupied seat among the three is seat 99.
+7. 🎲 (← 1, 2) — Whenever someone picks a random seat while seats 1, 99 and 100 are all still free, those three seats are equally likely picks.
+8. 🔗 (← 2, 7) — Nobody ever takes seat 99 or seat 100 except by a random pick, since their owners board later. Seat 1 is taken only by passenger 1&#x27;s own random pick or by a later random pick.
+9. 🥇 (← 5, 7, 8) — The first of the three seats to be occupied is therefore equally likely to be seat 1, 99 or 100.
+10. ☝️ (← 5, 9) — Only one of the three is occupied when 99 boards, so that first-occupied seat is the only one.
+11. ⅓ (← 6, 10) — Passenger 99 is displaced only if that single seat is 99, which is one case out of three equally likely cases.
+12. 👀 (← 11) — Self-check: by the same reasoning, passenger 100 gets their seat in one of two equally likely cases when only seats 1 and 100 are in play, which matches the known one-half. So the method is consistent.
+13. ✅ (← 11, 12) — The chance of the own seat is the remainder, two cases out of three.
+
+LANDMARKS:
+- When passenger 99 boards, exactly two seats are free, and seats 2–98 are all already filled.
+- Exactly one of seats 1, 99 and 100 is occupied at that moment, and each of the three is equally likely to be that one.
+- Passenger 99 is displaced only if that occupied seat is seat 99, which is a one-in-three chance.
+
+ANSWER: 2/3</pre>
+<div class="meta"><b>typed landmarks</b><br>state | seats 2–98 | passenger 99 boarding | = | two free seats | When passenger 99 boards, exactly two seats are free, and seats 2–98 are all already filled.<br>symmetry | occupied seat among 1, 99, 100 | seats 1, 99, 100 | bijects | 1/3 each | Exactly one of seats 1, 99 and 100 is occupied at that moment, and each of the three is equally likely to be that one.<br>share | passenger 99 displacement | occupied seat among 1, 99, 100 | = | 1/3 | Passenger 99 is displaced only if that occupied seat is seat 99, which is a one-in-three chance.</div>
+</div>
+<div class='chain'>
+<h4>Displacement relay; first touch on seats 1, 99, 100 <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: displacement-relay-first-hit</code> · depth 2 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Every step follows from its parents and the answer 2/3 is correct. Chain 2 brings two new landmarks: displaced passengers form a forward-moving relay that stops at seat 1, and a pick of seat 100 never harms passenger 99. Its third landmark, about which seat the relay touches first, is close to route 001&#x27;s landmark 2 but is a separate claim about the process rather than about the seats when passenger 99 boards.</div>
+<pre>CHAIN by duelist B
+1. 🪑 (root) — Given: 100 seats and 100 passengers, and passenger 1 picks a seat at random, possibly their own.
+2. 🔁 (root) — Given: each later passenger takes their own seat if it is free, otherwise a uniformly random free seat.
+3. 🪢 (← 1, 2) — Only a displaced passenger ever makes a random pick, so the trouble travels as a relay: passenger 1 picks a seat, its owner is bumped and picks, and so on.
+4. ➡️ (← 2, 3) — Each bump goes to a later passenger than the one before, because a seat that is still free belongs to someone who has not yet boarded.
+5. 🛑 (← 2, 3) — If anyone in the relay picks seat 1, the relay ends, because every remaining passenger finds their own seat free.
+6. 🚪 (← 4, 5) — If the relay picks seat 100, passenger 100 is bumped, but that comes after passenger 99 has already sat, so passenger 99 is unaffected.
+7. 🔔 (← 4) — Passenger 99 is bumped only if some relay member picks seat 99, since nobody else takes it.
+8. ⚖️ (← 2, 3) — Until the relay touches one of them, seats 1, 99 and 100 are all free at every pick, so each pick is equally likely to land on any of the three.
+9. 🥊 (← 5, 6, 8) — The first of those three seats that the relay touches is equally likely to be seat 1, 99 or 100, and only seat 99 bumps passenger 99.
+10. ⅓ (← 7, 9) — Passenger 99 is therefore bumped in exactly one of three equally likely cases.
+11. 👀 (← 10) — Self-check: on a three-seat plane the middle passenger is bumped only if passenger 1 picks the middle seat, which is one of three equal picks, matching this result.
+12. ✅ (← 10, 11) — Passenger 99 keeps their own seat in the remaining two of the three cases.
+LANDMARKS:
+- Displaced passengers form a forward-moving relay of random picks, and the relay stops the moment someone picks seat 1.
+- Picking seat 100 only affects passenger 100, who boards after passenger 99, so it never harms passenger 99.
+- The first relay pick to touch seat 1, seat 99 or seat 100 is equally likely to be any of the three.
+ANSWER: 2/3</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | displaced passengers | seat 1 | forbids | - | Displaced passengers form a forward-moving relay of random picks, and the relay stops the moment someone picks seat 1.<br>state | seat 100 pick | passenger 99 | forbids | - | Picking seat 100 only affects passenger 100, who boards after passenger 99, so it never harms passenger 99.<br>symmetry | occupied seat among 1, 99, 100 | seats 1, 99, 100 | bijects | 1/3 each | The first relay pick to touch seat 1, seat 99 or seat 100 is equally likely to be any of the three.</div>
+</div>
+<div class='chain'>
+<h4>Work back from passenger 100&#x27;s known half <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: bootstrap-from-known-answer</code> · depth 3 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The new landmark is the second one: passenger 100&#x27;s losing half splits into the whole seat-100 case plus half of the seat-99 case, using the famous ½ answer for the last passenger. No earlier chain passed through this claim. The other two landmarks repeat route 001&#x27;s landmarks 2–3, and every step is sound, giving the correct 2/3.</div>
+<pre>CHAIN by duelist A
+1. 🪑 (root) — Given: 100 seats and 100 passengers, and passenger 1 sits at random, possibly in their own seat 1.
+2. 🔁 (root) — Given: each later passenger takes their own seat if it is free, otherwise a uniformly random free seat.
+3. 🧍 (← 1, 2) — When passenger 99 boards, 98 people are seated, so exactly two seats are free.
+4. 🧱 (← 2, 3) — Passengers 2 to 98 all sit in their own seats or are displaced into some other seat, so seats 2–98 are all full, which leaves exactly one of seats 1, 99 and 100 occupied.
+5. 🅰️ (← 4) — That gives three exclusive cases, &quot;seat 1 is the occupied one&quot;, &quot;seat 99 is the occupied one&quot; and &quot;seat 100 is the occupied one&quot;, and passenger 99 is displaced only in the seat-99 case.
+6. 👯 (← 2, 4) — Before passenger 99 boards, seats 99 and 100 are only ever taken by random picks, because their owners board later, so the two seats are interchangeable and the seat-99 case is as likely as the seat-100 case.
+7. 📚 (root) — Given from general knowledge: the last passenger in this puzzle gets their own seat exactly half the time, and loses it the other half.
+8. 🛎️ (← 4, 5) — Passenger 100 loses their seat only if seat 100 was already occupied when 99 boarded, or if 99 was displaced and then picked seat 100.
+9. 🪙 (← 2, 5) — A displaced passenger 99 faces exactly two free seats, 1 and 100, and picks between them by a fair coin, so half of the seat-99 case reaches seat 100.
+10. ⚖️ (← 6, 7, 8, 9) — Passenger 100&#x27;s losing half is made of the whole seat-100 case plus half of the seat-99 case, and since those two cases are equal in size, one and a half such cases fill exactly half of everything.
+11. ⅓ (← 5, 10) — So the seat-99 case, the only one that displaces passenger 99, is one third of the possibilities.
+12. 👀 (← 5, 11) — Self-check: the seat-99 case and the seat-100 case are each one third, which leaves one third for the seat-1 case, and that matches the earlier equal-picks reasoning.
+13. ✅ (← 11, 12) — Passenger 99 keeps their own seat in the remaining two thirds.
+LANDMARKS:
+- Seats 99 and 100 are interchangeable before passenger 99 boards, so &quot;seat 99 is the occupied one&quot; and &quot;seat 100 is the occupied one&quot; are equally likely.
+- Passenger 100 loses their seat half the time, and that half is the whole seat-100 case plus half of the seat-99 case, because a displaced passenger 99 picks between seats 1 and 100 by a fair coin.
+- Matching those two facts shows the seat-99 case is exactly one third of the possibilities.
+ANSWER: 2/3</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | seat 99 | seat 100 | bijects | equally likely occupied | Seats 99 and 100 are interchangeable before passenger 99 boards, so &quot;seat 99 is the occupied one&quot; and &quot;seat 100 is the occupied one&quot; are equally likely.<br>share | passenger 100 losing seat | seat-100 case plus half of seat-99 case | = | 1/2 | Passenger 100 loses their seat half the time, and that half is the whole seat-100 case plus half of the seat-99 case, because a displaced passenger 99 picks between seats 1 and 100 by a fair coin.<br>share | passenger 99 displacement | occupied seat among 1, 99, 100 | = | 1/3 | Matching those two facts shows the seat-99 case is exactly one third of the possibilities.</div>
+</div>
+<div class='chain'>
+<h4>Shrink the plane recursively, induct from three seats <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: self-similar-reduction</code> · depth 4 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The chain&#x27;s landmarks are new against routes 001–003: a middle first pick reduces the problem to a smaller plane with the same second-to-last passenger, and the two-in-three chance holds on every plane size by induction from the three-seat plane. Its landmarks listed as 10–12 come from this same chain&#x27;s earlier play, so they are not an earlier route; the steps are sound and the answer 2/3 is correct.</div><div class='meta'><b>note:</b> re-judged 2026-10-05 from attempt 001 (ILL-FORMED: no ❓ step stating what is asked)</div>
+<pre>CHAIN by duelist B
+1. 🪑 (root) — Given: 100 seats and 100 passengers, and passenger 1 picks a seat at random, possibly their own.
+2. 🔁 (root) — Given: each later passenger takes their own seat if it is free, otherwise a uniformly random free seat.
+3. 🧭 (← 1, 2) — Suppose passenger 1 lands in seat k, and every passenger before k then finds their own seat free and sits in it undisturbed.
+4. 🔄 (← 2, 3) — If k is strictly between seat 1 and seat 99, passenger k is the first one bumped and picks among seat 1 and the seats after k, so seat 1 now plays the role of the seat that is &quot;lost&quot; and the game is the same puzzle on a smaller plane.
+5. 📉 (← 4) — In that smaller puzzle the second-to-last passenger is still passenger 99, so for these first picks the answer equals the answer for a shorter plane.
+6. 🧪 (← 2) — On the smallest plane, with three seats, the middle passenger loses their seat only if passenger 1 picks the middle seat, which is one of three equally likely picks, so they keep it in two of three cases.
+7. 🪜 (← 5, 6) — Climbing from the three-seat plane upward, every shorter plane gives the same two-in-three chance, so each reduced case after a middle first pick is also two-in-three.
+8. 🎯 (← 3) — Passenger 1 picking seat 1, seat 99 or seat 100 are equally likely, and seats 1 and 100 leave passenger 99 safe while seat 99 bumps them, so those three picks are two-thirds safe in ratio.
+9. 🧮 (← 7, 8) — The special picks are two-thirds safe in ratio and every other pick is two-thirds safe by the shorter-plane result, so blending them keeps the whole at two-thirds.
+10. 👀 (← 9) — Self-check: on the three-seat plane there are no middle first picks to reduce, only the special picks, and they give two-thirds directly, so the blending agrees with the base case.
+11. ✅ (← 9, 10) — Passenger 99 therefore keeps their own seat in two of three cases.
+LANDMARKS:
+- After passenger 1 takes a seat strictly between seat 1 and seat 99, the rest of the boarding is the same puzzle on a smaller plane with the same second-to-last passenger.
+- The chance for the second-to-last passenger is the same on every plane size, matching the three-seat plane where only the middle seat pick harms them.
+- First picks of seats 1, 99 and 100 are two-thirds safe in ratio, and the reduced cases are also two-thirds safe, so the blend stays two-thirds.
+ANSWER: 2/3</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | passenger 1 middle pick | smaller plane puzzle | reduces-to | - | After passenger 1 takes a seat strictly between seat 1 and seat 99, the rest of the boarding is the same puzzle on a smaller plane with the same second-to-last passenger.<br>reduction | passenger 99 keeping seat | three-seat plane | invariant | 2/3 | The chance for the second-to-last passenger is the same on every plane size, matching the three-seat plane where only the middle seat pick harms them.<br>share | passenger 99 keeping seat | seats 1, 99, 100 | = | 2/3 | First picks of seats 1, 99 and 100 are two-thirds safe in ratio, and the reduced cases are also two-thirds safe, so the blend stays two-thirds.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

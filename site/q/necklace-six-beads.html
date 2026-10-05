@@ -1,0 +1,117 @@
+<html><head><meta charset='utf-8'><title>Six-bead necklaces in two colours</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Six-bead necklaces in two colours</h1>
+<div class='meta'>family: counting under symmetry · status: answered · attractor: none</div>
+<h3>Question</h3><pre>A necklace has six beads, each black or white. Two necklaces count as the same if one can be turned
+around the ring, or flipped over, to look like the other. **How many different necklaces are there?**</pre>
+
+<h2>Accepted routes (4)</h2>
+<div class='chain'>
+<h4>Split by black count, pair complements, count gaps <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: invariant-partition-with-complement-pairing</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound and reaches 13. The final tally adds up already-counted cases, which is counting and not simulation or arithmetic, and no step snapshots any state. With the frontier empty, all three landmarks are new: the black-count invariant split, the colour-swap pairing of complementary groups, and the gap-pattern counts for two and three black beads (three each, with flipping merging the two-one-none orders).</div>
+<pre>CHAIN by duelist A
+1. 🔴 (root) — A necklace is a ring of six beads, each black or white.
+2. 🔄 (root) — Necklaces count as the same if turning the ring or flipping it over makes one look like the other.
+3. ❓ (← 1, 2) — How many different necklaces are there, with turning and flipping counted as the same?
+4. ⚫ (← 1) — Sort the necklaces by how many beads are black. Turning and flipping never change that number, so necklaces with different counts can never be the same.
+5. 🪞 (← 3, 4) — Swapping black and white maps the necklaces with k black beads one-to-one onto those with k white beads. So the group with four black mirrors the group with two black, five mirrors one, and six mirrors none.
+6. 0️⃣ (← 4) — With no black bead, or with exactly one, there is just one necklace each. All positions of a lone bead look alike after turning.
+7. ✌️ (← 4) — With two black beads, the only thing that matters is how far apart they sit: touching, one bead between, or opposite. That gives three necklaces.
+8. 🔱 (← 4) — With three black beads, the three white beads fall into the three gaps between them. They can all be in one gap, split as two, one and none (flipping makes the two orders the same), or spread one in each gap. That gives three necklaces.
+9. 🔗 (← 5, 6, 7) — By the colour-swap mirror, four black beads gives as many necklaces as two black (three). Five black gives as many as one black (one), and six black gives as many as none (one).
+10. 🧩 (← 6, 7, 8, 9) — Put the groups together. Zero and six black give one each, one and five black give one each, two and four black give three each, and three black gives three. The total is thirteen.
+11. 👀 (← 10) — Self-check: these are the binary bracelets of length six, a known family whose sequence runs 2, 3, 4, 6, 8, 13 and so gives thirteen at length six.
+
+LANDMARKS:
+- The number of black beads is unchanged by turning and flipping, so it splits the necklaces into separate groups.
+- Swapping colours pairs the groups: four black with two, five with one, six with none.
+- Two black beads give three necklaces, by the gap between them. Three black beads give three, by how the whites fall in the gaps.
+ANSWER: 13</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | black-bead count | turning and flipping | invariant | - | The number of black beads is unchanged by turning and flipping, so it splits the necklaces into separate groups.<br>symmetry | k-black necklaces | (6−k)-black necklaces | bijects | - | Swapping colours pairs the groups: four black with two, five with one, six with none.<br>reduction | two- and three-black necklaces | gap between blacks and white placement in gaps | reduces-to | - | Two black beads give three necklaces, by the gap between them. Three black beads give three, by how the whites fall in the gaps.</div>
+</div>
+<div class='chain'>
+<h4>Classify necklaces by number of one-colour runs <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: invariant-partition-by-run-count</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The new landmark is landmark 1: the chain sorts necklaces by the number of black runs, which turning and flipping preserve, instead of by black-bead count (route 001). The family counts (two, five, five and one) are each correct, the one-of-each case in step 10 correctly treats the two mirror-image forms as one necklace, and the total of 13 matches the reference, with no step-by-step state snapshots.</div>
+<pre>CHAIN by duelist B
+1. 🔴 (root) — A necklace is a ring of six beads, each black or white.
+2. 🔄 (root) — Two necklaces are the same if turning the ring or flipping it over makes one look like the other.
+3. ❓ (← 1, 2) — How many different necklaces are there, with turning and flipping counted as the same?
+4. 🧱 (← 1) — Read around the ring and group beads into runs of one colour. Unless the ring is a single colour, black runs and white runs alternate, so there are equally many of each.
+5. 🔒 (← 2, 4) — Turning and flipping never change how many black runs there are, so the necklaces split into separate families by that count. A single-colour ring has no runs of the other colour and forms its own family.
+6. ⬛ (← 5) — The single-colour family is all black or all white, which gives two necklaces.
+7. 1️⃣ (← 5) — With one black run and one white run, the necklace is fixed by the length of the black run, from one to five. Flipping changes nothing here, so this family has five necklaces.
+8. 3️⃣ (← 5) — With three black runs and three white runs, all six runs are one bead long, so beads simply alternate. That gives one necklace.
+9. 2️⃣ (← 5) — With two black runs and two white runs, the four runs alternate around the ring. The two spare beads beyond one per run must be placed.
+10. 🎯 (← 9) — If both spare beads go in one run, it is either a black run or a white run, which gives two necklaces. If they go in two different runs, the pair is both black, both white, or one of each, which gives three necklaces. In the one-of-each case every black run touches every white run, so the position is forced. The family has five necklaces.
+11. 🧩 (← 6, 7, 8, 10) — Add the families: two single-colour, five with one black run, five with two, one with three. The total is thirteen.
+12. 👀 (← 11) — Self-check: six runs is the most that fit in six beads, so no family with four or more black runs exists and nothing is missed.
+
+LANDMARKS:
+- Necklaces are sorted by the number of one-colour runs around the ring, which turning and flipping preserve, rather than by the number of black beads.
+- One black run gives five necklaces, set by the run length. Two black runs give five, by where two spare beads go among four alternating runs.
+- Three black runs force perfect alternation, giving one necklace, and the single-colour rings give two.
+ANSWER: 13</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | black-run count | turning and flipping | invariant | - | Necklaces are sorted by the number of one-colour runs around the ring, which turning and flipping preserve, rather than by the number of black beads.<br>reduction | one- and two-black-run necklaces | run length and spare-bead placement among alternating runs | reduces-to | - | One black run gives five necklaces, set by the run length. Two black runs give five, by where two spare beads go among four alternating runs.<br>reduction | three-black-run and single-colour necklaces | single-colour, alternating and three-bead-block rings | reduces-to | - | Three black runs force perfect alternation, giving one necklace, and the single-colour rings give two.</div>
+</div>
+<div class='chain'>
+<h4>Split by shortest repeating block, then subtract periodic cases <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: primitive-period-decomposition</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound and correct: there are 5 periodic necklaces (two single-colour, one alternating, BBW-repeat and BWW-repeat) and 8 aperiodic ones (1+2+2+2+1), with no step-by-step state snapshots. Steps 10 and 11 refer to steps 7 and 6 without tagging them, but that is acceptable because the periodicity of those cases follows from the step 4 definition they inherit. The new landmarks are the split by shortest repeating block, which no earlier binding chain used (route 001 used black count, route 002 used runs), and the count of five periodic necklaces that comes from it.</div>
+<pre>CHAIN by duelist A
+1. 🔴 (root) — A necklace is a ring of six beads, each black or white.
+2. 🔄 (root) — Two necklaces are the same if turning the ring or flipping it over makes one look like the other.
+3. ❓ (← 1, 2) — How many different necklaces are there, with turning and flipping counted as the same?
+4. 🔁 (← 1, 2) — Call a ring periodic if it is just a shorter block repeated around the ring. The block length must divide six, so it is one, two or three beads. Turning and flipping keep this property, so periodic and aperiodic rings never get confused.
+5. ⚪ (← 4) — A block of one bead means a single-colour ring, either all black or all white. That gives two necklaces.
+6. ➰ (← 4) — A shortest block of two beads must be one black and one white, which gives strict alternation. That gives one necklace.
+7. 🔺 (← 4) — A shortest block of three beads must use both colours, and a block that is not purely alternating can only be two of one colour and one of the other, so it is two black then one white, or one black then two white. Repeating either gives a ring, and the two rings are different. That gives two necklaces.
+8. 🧮 (← 5, 6, 7) — Together the periodic rings make up five necklaces.
+9. 🌀 (← 1, 4) — Now take the aperiodic rings, where no shorter block repeats, and sort them by number of black beads. A lone black bead gives one ring, and a lone white bead gives one ring.
+10. ✌️ (← 9) — With two black beads, the pair is touching, one bead apart, or opposite. Opposite is the three-bead repeat from step 7, so it is already counted, which leaves two aperiodic rings. Swapping colours gives two more rings with four black beads.
+11. 🔱 (← 9) — With three black beads, either all three touch, or two touch and one stands apart. The alternating ring is already counted as periodic, so two aperiodic rings remain.
+12. 🧩 (← 9, 10, 11) — Adding the aperiodic rings gives one with a lone black bead, two with two black, two with three black, two with four black and one with five black. That makes eight aperiodic necklaces.
+13. 🏁 (← 3, 8, 12) — Every ring is either periodic or aperiodic, and never both. The five periodic and eight aperiodic necklaces together make thirteen.
+14. 👀 (← 13) — Self-check: thirteen matches the known count of two-colour bracelets of length six.
+
+LANDMARKS:
+- Rings are split by whether they are periodic, meaning a shorter block of one, two or three beads repeats, rather than by black count or runs.
+- The periodic rings are the two single-colour rings, the alternating ring, and two three-bead-block rings, giving five.
+- The aperiodic rings number eight, found by excluding the periodic cases from each count of black beads.
+ANSWER: 13</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | periodicity | turning and flipping | invariant | - | Rings are split by whether they are periodic, meaning a shorter block of one, two or three beads repeats, rather than by black count or runs.<br>reduction | periodic necklaces | single-colour, alternating and three-bead-block rings | reduces-to | - | The periodic rings are the two single-colour rings, the alternating ring, and two three-bead-block rings, giving five.<br>reduction | aperiodic necklaces | black-bead count | reduces-to | - | The aperiodic rings number eight, found by excluding the periodic cases from each count of black beads.</div>
+</div>
+<div class='chain'>
+<h4>Rotation classes first, then flips merge chiral pairs <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: refine-then-quotient (count under subgroup, merge by mirror pairs)</code> · depth 4 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Two landmarks are new. One counts turning alone first, giving fourteen classes, and then lets flipping merge them. The other says every ring except one handed pair is its own mirror image, and that pair is the two three-black rings with a touching pair and a separate bead. No earlier route went through either claim, and the chain contains no state snapshots.</div>
+<pre>CHAIN by duelist B
+1. 🔴 (root) — A necklace is a ring of six beads, each black or white.
+2. 🔄 (root) — Two necklaces are the same if turning the ring or flipping it over makes one look like the other.
+3. ❓ (← 1, 2) — How many different necklaces are there, with turning and flipping counted as the same?
+4. 🔃 (← 1, 2) — Handle the two moves in stages: first count rings up to turning alone, then see how flipping merges some of those classes.
+5. ⚫ (← 4) — Turning never changes the number of black beads, so sort the turning-only classes by that number. With none, one, five or six black beads there is a single class each, since a lone odd bead can only sit in one place up to turning.
+6. ✌️ (← 5) — With two black beads, the turning classes are set by the gap between them: touching, one between, or opposite. That gives three classes, and by colour swap four black beads also give three.
+7. 🔱 (← 5) — With three black beads, the turning classes are: all three together, alternating, and two patterns where a pair touches and one bead stands apart. The two apart-patterns differ in which way round the lone bead sits. That gives four classes.
+8. 🧮 (← 5, 6, 7) — Gathering the groups gives fourteen classes under turning alone.
+9. 🪞 (← 2, 4) — Flipping can only merge a class with another class if the ring looks different from its own mirror image. A ring that matches its mirror image stays alone.
+10. 🙂 (← 5, 6, 9) — Every class with zero, one, two, four, five or six black beads is its own mirror image. The two-black gap patterns are left-right symmetric, and colour swap carries this to four black.
+11. 🤝 (← 7, 9) — With three black beads, the all-together ring and the alternating ring are their own mirror images. The two apart-patterns are mirror images of each other but are different by turning, so flipping merges them into one.
+12. 🧩 (← 8, 10, 11) — Exactly one pair of classes merges. The fourteen turning classes therefore drop by one, to thirteen.
+13. 👀 (← 12) — Self-check: thirteen is one below the fourteen turning-only classes, and the single handed pair is the only difference.
+
+LANDMARKS:
+- Count rings up to turning alone first, giving fourteen classes, then let flipping merge classes afterwards.
+- Every ring except one pair is its own mirror image, so flipping merges only a single pair of turning classes.
+- That one handed pair is the two three-black rings with a touching pair and a separate bead, which are mirror images but not turnings of each other.
+ANSWER: 13</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | necklaces | turning-only classes | reduces-to | - | Count rings up to turning alone first, giving fourteen classes, then let flipping merge classes afterwards.<br>symmetry | turning-only classes | mirror image | invariant | - | Every ring except one pair is its own mirror image, so flipping merges only a single pair of turning classes.<br>structure | three-black rings with a touching pair and a separate bead | mirror image | bijects | - | That one handed pair is the two three-black rings with a touching pair and a separate bead, which are mirror images but not turnings of each other.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

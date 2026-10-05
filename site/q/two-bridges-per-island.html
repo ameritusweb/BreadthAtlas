@@ -1,0 +1,90 @@
+<html><head><meta charset='utf-8'><title>Does local redundancy guarantee global redundancy?</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Does local redundancy guarantee global redundancy?</h1>
+<div class='meta'>family: connectivity, counterexample · status: answered · attractor: at least two bridges per island means no single point of failure</div>
+<h3>Question</h3><pre>A finite connected undirected network has at least two distinct bridges incident to every island. No bridge joins an island to itself, and there are no parallel bridges. Must the network remain connected after any single bridge closes? Give a concrete counterexample if the answer is no.</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Two triangles joined by a single cut bridge <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: explicit-minimal-counterexample</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The counterexample is correct and meets every condition, and nothing here simulates the network step by step. The frontier was empty, so all three landmarks are new: minimum degree two is a local condition that cycles joined by a single link can satisfy, two triangles joined by one bridge meet every given, and that linking bridge is a cut bridge that splits the network. Step 10 is the stated conclusion and does work in the argument, so having no later step cite it is not a form failure.</div>
+<pre>CHAIN by blind player 1
+1. 🏝️ (root) — The network is finite, connected, undirected, with no self-bridges and no parallel bridges.
+2. 🌉🌉 (root) — Every island has at least two bridges touching it.
+3. ❓ (← 1, 2) — Must closing any single bridge leave the network connected? If not, give a concrete counterexample.
+4. 🔺 (← 2) — A triangle of three islands gives each of them two bridges inside the triangle, using only simple bridges.
+5. 🔺🔺 (← 4) — Take two separate triangles. Every island already has two bridges, but the pair is not connected to each other.
+6. 🔗 (← 5, 1) — Add one bridge between one island of each triangle. The whole network is now connected.
+7. ✅ (← 6, 2) — Every island still has two or three bridges, and there are no self-bridges or parallel bridges, so all the givens hold.
+8. ✂️ (← 6) — Close the linking bridge.
+9. 💔 (← 5, 8) — No other bridge joins the two triangles, so they are now cut apart and the network is disconnected.
+10. 🚫 (← 7, 9) — A network meeting every given can become disconnected after one closure, so the answer is no.
+11. 👀 (← 9) — Self-check: closing any triangle bridge keeps its triangle connected by the other two sides, so only the linking bridge is the weak point.
+
+LANDMARKS:
+- Having at least two bridges at every island is a local condition, and it can be met by cycles that are joined only by a single link.
+- Two triangles joined by one bridge give a connected simple network with every island having at least two bridges.
+- That single linking bridge is a cut bridge, and closing it splits the network into two triangles.
+ANSWER: No. Two triangles joined by one extra bridge between one island of each is a counterexample, because closing that bridge disconnects the network.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | minimum degree two at every island | cycles joined by a single link | exists | - | Having at least two bridges at every island is a local condition, and it can be met by cycles that are joined only by a single link.<br>construction | two triangles joined by one bridge | minimum degree two at every island | exists | - | Two triangles joined by one bridge give a connected simple network with every island having at least two bridges.<br>obstruction | linking bridge | network connectivity after one closure | forbids | - | That single linking bridge is a cut bridge, and closing it splits the network into two triangles.</div>
+</div>
+<div class='chain'>
+<h4>Degree-two connector island whose both bridges are cut bridges <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: degree-two-cut-vertex-counterexample</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The counterexample is correct and simple, and no step is a state snapshot. It adds two landmarks that route 001 lacks: an island with exactly two bridges can have both of them be cut bridges (each is the sole link to one side), and the degree condition cannot force a bridge to lie on a cycle. Route 001 used a single direct link between two cycles instead.</div>
+<pre>CHAIN by blind player 2
+1. 🏝️ (root) — Given: the network is finite, connected, undirected, with no self-bridges and no parallel bridges.
+2. 🌉 (root) — Given: every island has at least two bridges touching it.
+3. ❓ (← 1, 2) — Asked: must the network stay connected after any single bridge closes, and if not, what is a concrete counterexample?
+4. 🔲 (← 1, 2) — Build a left square of four islands joined in a ring; each island has two bridges, with no loops or parallels.
+5. 🔳 (← 4) — Build a second, separate right square in the same way.
+6. 🧍 (← 2) — Add one middle island M with exactly two bridges: one to a corner of the left square and one to a corner of the right square.
+7. 🔗 (← 4, 5, 6) — The combined network is connected and simple, and every island has at least two bridges (M and the plain square islands have two, the two joined corners have three).
+8. ✂️ (← 6, 7) — Close the bridge between M and the left square&#x27;s corner.
+9. 🧱 (← 4, 8) — That bridge was the only link between the left square and everything else, so the left square is now cut off from M and the right square.
+10. ⛔ (← 3, 7, 9) — A network meeting the premises became disconnected after one closure, so the answer is no.
+11. 👀 (← 10) — Self-check: the squares and the two M bridges contain no loops or parallel bridges, and the closed bridge really was the only crossing, so the counterexample holds.
+
+LANDMARKS:
+- A connector island with exactly two bridges, one into each of two separate squares, satisfies the at-least-two condition while each of its bridges is the sole link to one side.
+- Closing either bridge at the connector island leaves a whole square cut off.
+- Each square is internally robust, but nothing makes the connector&#x27;s bridges lie on a cycle.
+
+ANSWER: No. Take two disjoint four-island squares and a middle island joined by one bridge to a corner of each square. Every island has at least two bridges, but closing the bridge between the middle island and the left square disconnects the network.</pre>
+<div class="meta"><b>typed landmarks</b><br>construction | connector island with exactly two bridges | minimum degree two at every island | exists | - | A connector island with exactly two bridges, one into each of two separate squares, satisfies the at-least-two condition while each of its bridges is the sole link to one side.<br>obstruction | connector island&#x27;s bridges | network connectivity after one closure | forbids | - | Closing either bridge at the connector island leaves a whole square cut off.<br>structure | minimum degree two at every island | connector island&#x27;s bridges lying on a cycle | forbids | - | Each square is internally robust, but nothing makes the connector&#x27;s bridges lie on a cycle.</div>
+</div>
+<div class='chain'>
+<h4>Squeeze robust clusters to a point; the skeleton is a tree <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (extender) · 2026-10-05 · strategy <code>new: contract-to-cluster-tree</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound: three triangles joined in a row are a simple, connected network with at least two bridges per island, and either linking bridge disconnects it. Nothing in it is a step-by-step simulation, and step 12 states the conclusion, so it does work. It introduces new landmarks 1 and 2. Landmark 1 squeezes each robust cluster to a point and notes that the at-least-two condition puts no limit on the skeleton, which can be a tree. Landmark 2 says every link of a tree skeleton is a cut bridge. Neither route 001 nor route 002 went through a cluster skeleton or a tree argument.</div>
+<pre>CHAIN by extender
+1. 🏝️ (root) — Given: the network is finite, connected and undirected, with no self-bridges and no parallel bridges.
+2. 🌉🌉 (root) — Given: every island has at least two bridges touching it.
+3. ❓ (← 1, 2) — Asked: must the network stay connected after any single bridge closes, and if not, what is a concrete counterexample?
+4. 🔺 (← 1, 2) — A triangle is a small cluster that is robust inside. Every island in it has two bridges, and there are no loops or parallels.
+5. 🔺🔺🔺 (← 4) — Take three separate triangles, called left, middle and right. Each cluster is robust inside itself.
+6. 🗜️ (← 5) — Imagine squeezing each triangle into a single dot. The network becomes three dots, and only the bridges between triangles are left.
+7. 🔗🔗 (← 6) — Link left to middle with one bridge and middle to right with one bridge. The squeezed picture is a path of three dots, which is a tree with no cycle.
+8. ✅ (← 2, 5, 7) — The real network is connected and simple. Every island has two bridges, and the three linked corners have three. All the givens hold.
+9. 🌳 (← 7) — In a tree, every link is the only route between its two sides. So each of the two linking bridges is the sole connection between the clusters it joins.
+10. ✂️ (← 8, 9) — Close the bridge between the left and middle triangles.
+11. 💔 (← 9, 10) — Nothing else connects the left triangle to the others, so the network falls apart into two pieces.
+12. 🚫 (← 3, 8, 11) — A network meeting every given became disconnected after one closure, so the answer is no.
+13. 👀 (← 11) — Self-check: closing a bridge inside a triangle leaves the other two sides, so only the two linking bridges are weak points. That matches the tree picture.
+
+LANDMARKS:
+- Squeezing each internally robust cluster to a single point turns the network into a skeleton of clusters. The at-least-two condition says nothing about that skeleton, which can be a tree.
+- A tree skeleton with at least two clusters has every link as a sole connection, so each such link is a bridge whose closure disconnects the network.
+- The counterexample is a chain of three triangles joined in a row by two linking bridges. Both linking bridges are cut bridges.
+
+ANSWER: No. Take three disjoint triangles in a row, with one bridge from the left triangle to the middle one and one from the middle triangle to the right one. Every island has at least two bridges, but closing either linking bridge disconnects the network.</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | network | skeleton of clusters | reduces-to | - | Squeezing each internally robust cluster to a single point turns the network into a skeleton of clusters. The at-least-two condition says nothing about that skeleton, which can be a tree.<br>obstruction | tree skeleton link | network connectivity after one closure | forbids | - | A tree skeleton with at least two clusters has every link as a sole connection, so each such link is a bridge whose closure disconnects the network.<br>construction | three triangles joined in a row | minimum degree two at every island | exists | - | The counterexample is a chain of three triangles joined in a row by two linking bridges. Both linking bridges are cut bridges.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

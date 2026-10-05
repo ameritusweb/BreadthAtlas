@@ -1,0 +1,17 @@
+# Core: play, referee parsing, leaderboard, site, dataset export, form tests.
+# (Standard library only — nothing to install. Playing also needs the Claude Code CLI on PATH:
+#  https://docs.claude.com/en/docs/claude-code — `claude -p` is the model backend.)
+
+# Image questions (regenerating puzzles under provenance/generators/):
+Pillow>=10
+
+# so-answer-quality empirical referee and its mechanism scorers:
+numpy>=1.26
+scikit-learn>=1.4
+
+# Only for rebuilding components_cache.npz from the wave_vector checkpoint
+# (python questions/so-answer-quality/scorers/poc4_components.py build):
+# torch>=2.2
+
+# warp-one-chess empirical referee: no extra packages, but needs the Warp 1 engine checkout
+# (see external.example.json).

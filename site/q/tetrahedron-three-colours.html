@@ -1,0 +1,123 @@
+<html><head><meta charset='utf-8'><title>Three-colour tetrahedra up to rotation</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Three-colour tetrahedra up to rotation</h1>
+<div class='meta'>family: counting under symmetry · status: answered · attractor: none</div>
+<h3>Question</h3><pre>Each of the four faces of a regular tetrahedron is painted one of three colours. Two painted
+tetrahedra count as the same if one can be rotated to look like the other (no reflections).
+**How many different painted tetrahedra are there?**</pre>
+
+<h2>Accepted routes (4)</h2>
+<div class='chain'>
+<h4>Split by colour-count pattern, count orbits per pattern <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: case-split-by-invariant-pattern</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Every step holds, and the count of 15 matches the reference. Step 10 is right: the twelve rotations act freely on the twelve labelled two-one-one placements, and the half-turn through the doubled pair&#x27;s shared edge swaps both pairs. The frontier is empty, so all three landmarks are new: rotation group = even face permutations preserving colour counts; split by colour pattern into 3/6/3/3; and the half-turn merging the two-one-one singletons.</div>
+<pre>CHAIN by duelist A
+1. 🔺 (root) — A regular tetrahedron has four faces.
+2. 🎨 (root) — Each face gets one of three colours, and two paintings are the same if a rotation, with no reflection, turns one into the other.
+3. ❓ (← 1, 2) — How many different painted tetrahedra are there up to rotation?
+4. 🔄 (← 1) — Any rotation of the tetrahedron permutes the faces, and every even permutation of the four faces is realised by a rotation. The rotation group is therefore the even permutations, which has twelve elements.
+5. 🧮 (← 3, 4) — Instead of averaging, sort the paintings by how many faces each colour gets. Rotations never change those counts, so each pattern can be counted on its own.
+6. 🟦 (← 2, 5) — Pattern &quot;all four faces one colour&quot;: there is one painting per colour, so three in total.
+7. 🧩 (← 4, 5) — Pattern &quot;three faces one colour, one face another&quot;: the lone face can be rotated to any position, so one picture per ordered pair of colours. That gives six.
+8. ⚖️ (← 4, 5) — Pattern &quot;two faces and two faces&quot;: the two colours form a pair, and the two faces of one colour sit on an edge. All such placements are equivalent under rotation, so there is one picture per pair of colours, three in total.
+9. 🔀 (← 4, 5) — Pattern &quot;two, one, one&quot;: the doubled colour can be chosen in three ways, and the other two colours are then forced.
+10. 🧷 (← 4, 9) — The labelled placements of this pattern fall into a single orbit, because the twelve rotations act without fixed points on them. Swapping the two single faces can be done by a rotation that also swaps the doubled pair, so there is one picture per doubled colour, three in total.
+11. 🚫 (← 2, 5) — The pattern &quot;all four different&quot; cannot occur, because only three colours exist, so nothing is added for it.
+12. ➕ (← 6, 7, 8, 10, 11) — Adding the pattern totals gives all the distinct paintings.
+13. 👀 (← 12) — Self-check: the pattern sizes of 1, 4, 6 and 12 labelled paintings per pattern are consistent with orbits of at most twelve, and the total is a plausible fraction of the eighty-one labelled paintings.
+
+LANDMARKS:
+- The rotation group is the even permutations of the four faces, so rotation preserves each colour&#x27;s face count.
+- Sorting paintings by colour-count pattern gives 3 (all one colour), 6 (three and one), 3 (two and two) and 3 (two, one, one), with no all-different pattern.
+- In the two, one, one pattern, a rotation can swap the two single faces while swapping the doubled pair, so there is only one picture per doubled colour.
+ANSWER: 15</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | rotation group | count of faces per colour | invariant | - | The rotation group is the even permutations of the four faces, so rotation preserves each colour&#x27;s face count.<br>reduction | painted tetrahedra | colour-count patterns | reduces-to | - | Sorting paintings by colour-count pattern gives 3 (all one colour), 6 (three and one), 3 (two and two) and 3 (two, one, one), with no all-different pattern.<br>symmetry | rotation group | two, one, one paintings | exists | - | In the two, one, one pattern, a rotation can swap the two single faces while swapping the doubled pair, so there is only one picture per doubled colour.</div>
+</div>
+<div class='chain'>
+<h4>2-transitivity, then count by colours actually used <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: transitivity-collapse-by-colours-used</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound. The even permutations of four faces form a 2-transitive group, so it gives 3 + 9 + 3 = 15 with no snapshots or arithmetic. Two of its landmarks are new against route 001: the rotations are 2-transitive on faces, and a two-colour painting is fixed by its colour counts. Its decomposition by the set of colours used, rather than by colour-count pattern, is also new.</div>
+<pre>CHAIN by duelist B
+1. 🔺 (root) — A regular tetrahedron has four faces.
+2. 🎨 (root) — Each face is painted one of three colours, and two paintings are the same if a rotation (no reflection) turns one into the other.
+3. ❓ (← 1, 2) — How many different painted tetrahedra are there up to rotation?
+4. 🔄 (← 1) — Rotations permute the four faces, and the rotations realise exactly the even permutations of the faces.
+5. 🤝 (← 4) — The even permutations can carry any pair of faces to any other pair, and any trio to any other trio, so the rotations are 2-transitive on faces.
+6. 🧱 (← 5) — With two colours, choose which faces get the first colour. Any chosen set of a given size is equivalent to any other of that size, so a two-colour painting is fixed by how many faces get each colour.
+7. 🎯 (← 2, 6) — For one chosen pair of colours, this gives one picture for each count of the first colour from none to all four, including the two single-colour paintings.
+8. 🗂️ (← 2, 7) — Sort every painting by the set of colours it actually uses. This gives three kinds: one colour, exactly two colours, all three colours.
+9. 1️⃣ (← 7, 8) — Using one colour gives one painting per colour, which is three.
+10. 2️⃣ (← 7, 8, 9) — For each pair of colours, remove the two single-colour cases from step 7. The remaining counts (one–three, two–two, three–one) give three pictures per pair, and there are three pairs of colours.
+11. 3️⃣ (← 2, 5, 8) — Using all three colours forces one colour on two faces and the others on one face each. The doubled pair sits on an edge, and by 2-transitivity every such placement is equivalent, so each choice of doubled colour gives one picture.
+12. ➕ (← 9, 10, 11) — The three kinds (one colour, exactly two colours, all three colours) do not overlap and together cover everything, so we add their sizes.
+13. 👀 (← 12) — Self-check: the two-colour counts of five per pair, with the shared single-colour paintings counted once, agree with this total.
+
+LANDMARKS:
+- The rotation group is 2-transitive on the faces, so any set of faces of a given size can be moved to any other such set.
+- With two colours, a painting is determined by how many faces get each colour.
+- Sorting by the set of colours used gives one colour, exactly two colours, and all three colours, each counted separately.
+ANSWER: 15</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | rotation group | sets of faces of a given size | invariant | - | The rotation group is 2-transitive on the faces, so any set of faces of a given size can be moved to any other such set.<br>reduction | two-colour paintings | count of faces per colour | bijects | - | With two colours, a painting is determined by how many faces get each colour.<br>reduction | painted tetrahedra | set of colours used | reduces-to | - | Sorting by the set of colours used gives one colour, exactly two colours, and all three colours, each counted separately.</div>
+</div>
+<div class='chain'>
+<h4>Repeated colour absorbs parity, then stars and bars <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: parity-absorption-reduction-to-multisets</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The argument is sound, with no calculation and no simulation. Every painting has a repeated colour, so its stabiliser in the full group of face rearrangements contains a transposition; that makes orbits under the even permutations the same as orbits under all rearrangements, the classes are exactly the multisets, and two dividers in six slots give 15. The new landmarks are the parity-absorption step (rotations are as good as all rearrangements because a repeated colour supplies an odd symmetry) and the stars-and-bars count of multisets; neither appears in routes 001 or 002.</div>
+<pre>CHAIN by duelist A
+1. 🔺 (root) — A regular tetrahedron has four faces.
+2. 🎨 (root) — Each face gets one of three colours, and two paintings are the same if a rotation, with no reflection, turns one into the other.
+3. ❓ (← 1, 2) — How many different painted tetrahedra are there up to rotation?
+4. 🔄 (← 1) — Rotations realise exactly the even permutations of the four faces, which is half of all the ways to rearrange the faces.
+5. 🕊️ (← 1, 2) — Four faces and only three colours means by pigeonhole that some colour is used on at least two faces.
+6. 🔁 (← 5) — Swapping two equally coloured faces is an odd rearrangement, yet it leaves the painting looking exactly the same.
+7. 🧲 (← 4, 6) — Any odd rearrangement equals an even one followed by that swap. So rearranging faces in any way gives nothing beyond what rotations give, and two paintings with the same colours are rotation-equivalent.
+8. 🧺 (← 3, 7) — A painted tetrahedron up to rotation is therefore determined by its multiset of colours, meaning how many faces get each colour.
+9. 🧱 (← 4, 8) — Conversely, rotations only move faces around, so paintings with different multisets can never be equivalent. Pictures correspond exactly to multisets of four colours drawn from three.
+10. 📏 (← 2, 9) — Count these multisets by lining up the four faces in a row and inserting two dividers to cut the row into a first-colour block, a second-colour block and a third-colour block (blocks may be empty).
+11. 🎲 (← 10) — Each multiset corresponds to exactly one placement of the dividers among the six slots in the row of faces and dividers. The count is the number of ways to choose which two of the six slots hold dividers.
+12. ➕ (← 11) — That choice of two slots among six gives the total number of pictures.
+13. 👀 (← 12) — Self-check: sorting the multisets by pattern (all four equal, three and one, two and two, two one one) reproduces the same total, so the two ways of counting agree.
+
+LANDMARKS:
+- Because four faces and three colours force a repeated colour, swapping two equal faces absorbs any odd rearrangement, so rotations are as good as all rearrangements.
+- Hence a painting up to rotation is exactly a multiset of four colours from three.
+- Multisets are counted by placing two dividers among six slots in a row of faces.
+ANSWER: 15</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | rotation group | all rearrangements of faces | = | - | Because four faces and three colours force a repeated colour, swapping two equal faces absorbs any odd rearrangement, so rotations are as good as all rearrangements.<br>reduction | painted tetrahedra | multisets of four colours from three | bijects | - | Hence a painting up to rotation is exactly a multiset of four colours from three.<br>construction | multisets of four colours from three | placements of two dividers among six slots | bijects | - | Multisets are counted by placing two dividers among six slots in a row of faces.</div>
+</div>
+<div class='chain'>
+<h4>Multisets counted by deleting a colour, recursing on size <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: deletion-recursion-on-multiset-size</code> · depth 4 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Steps 4–7 re-reach route 003&#x27;s reduction to multisets of four colours from three, but the counting is new. Deleting one C-face gives a reversible recursion on multiset size, which differs from route 003&#x27;s dividers among six slots and is not a change of yardstick. The other new landmarks are the doubled/mixed split of pairs and the with-C/without-C splits at sizes three and four. Every step is sound and the answer 15 is exact.</div>
+<pre>CHAIN by duelist B
+1. 🔺 (root) — A regular tetrahedron has four faces.
+2. 🎨 (root) — Each face is painted one of three colours, A, B or C, and two paintings are the same if a rotation (no reflection) turns one into the other.
+3. ❓ (← 1, 2) — How many different painted tetrahedra are there up to rotation?
+4. 🔄 (← 1) — Rotations realise exactly the even permutations of the four faces, which is half of all rearrangements.
+5. 🕊️ (← 1, 2) — Four faces and three colours force some colour onto at least two faces, by pigeonhole.
+6. 🧲 (← 4, 5) — Swapping two equally coloured faces is an odd rearrangement that changes nothing. So any rearrangement can be replaced by a rotation, and paintings with the same colour counts are equivalent.
+7. 🧺 (← 3, 6) — A painting up to rotation is exactly a multiset of four colours drawn from three, and different multisets are never equivalent.
+8. ✂️ (← 2, 7) — Split the multisets by whether colour C appears at all, giving two disjoint families that together cover everything.
+9. 🅰️ (← 7, 8) — With C absent, a multiset of four from A and B is fixed by how many faces are A, which can be none through four, so there are five.
+10. 🔻 (← 7, 8) — With C present, delete one C-face. This is a reversible correspondence with multisets of three colours from the three colours, since adding a C back undoes it.
+11. 🔁 (← 10) — Split those size-three multisets the same way. With C absent, they are multisets of three from A and B, fixed by the A count from none to three, so there are four.
+12. 🪓 (← 10, 11) — With C present among the three, delete another C. This leaves multisets of two colours from the three colours.
+13. 👯 (← 12) — A pair either repeats a colour, which can be done in three ways, or uses two different colours, which can also be done in three ways. So there are six pairs.
+14. 🧮 (← 11, 13) — The size-three multisets are the four without C plus the six with C, which gives ten.
+15. ➕ (← 9, 10, 14) — The size-four multisets are the five without C plus the ten with C, which gives the total number of pictures.
+16. 👀 (← 15) — Self-check: the total agrees with the counts by pattern (three single-colour, six three-and-one, three two-and-two, three two-one-one).
+
+LANDMARKS:
+- Removing one face of a chosen colour is a reversible correspondence between multisets of four with that colour present and multisets of three, so the count follows a recursion on size.
+- Multisets of two colours from three split into three doubled and three mixed, giving six.
+- Size-three multisets split into four without C and six with C, and size-four multisets into five without C and ten with C.
+ANSWER: 15</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | multisets of four colours from three | multisets of three colours from three | reduces-to | - | Removing one face of a chosen colour is a reversible correspondence between multisets of four with that colour present and multisets of three, so the count follows a recursion on size.<br>size | multisets of two colours from three | - | = | - | Multisets of two colours from three split into three doubled and three mixed, giving six.<br>size | multisets of four colours from three | multisets of three colours from three | = | - | Size-three multisets split into four without C and six with C, and size-four multisets into five without C and ten with C.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

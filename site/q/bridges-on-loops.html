@@ -1,0 +1,94 @@
+<html><head><meta charset='utf-8'><title>Can a bridge on a loop be indispensable?</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Can a bridge on a loop be indispensable?</h1>
+<div class='meta'>family: connectivity, failure tolerance · status: answered · attractor: removing a bridge always breaks a connection</div>
+<h3>Question</h3><pre>A finite connected network of islands has undirected bridges. Every bridge lies on at least one loop that returns to its starting island without repeating a bridge or an intermediate island. Exactly one bridge closes. Can the remaining network become disconnected?</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Loop remainder detours around the closed bridge <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: splice-detour-reroute</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound and well-formed. Dropping the closed bridge from its loop leaves a detour between the bridge&#x27;s endpoints (step 6). Splicing that detour into any route that used the bridge keeps every pair of islands connected (steps 8–9). The frontier was empty, so all three landmarks are new: the loop gives a detour, routes can be rerouted along it, and a bridge on a loop is not a cut bridge.</div>
+<pre>CHAIN by blind player 1
+1. 🏝️ (root) — The network is finite and connected: every island can be reached from every other.
+2. 🔁 (root) — Every bridge lies on a loop that returns to its start without repeating a bridge or an intermediate island.
+3. ❓ (← 1, 2) — Exactly one bridge closes; can the remaining network become disconnected?
+4. 🌉 (← 3) — Pick any bridge and call its endpoints A and B; this is the bridge that closes.
+5. 🔄 (← 2, 4) — The picked bridge lies on a loop, so that loop leaves A over the bridge and comes back to A through B.
+6. 🛤️ (← 5) — Dropping the closed bridge from the loop leaves a path from A to B that never uses the closed bridge.
+7. 🧭 (← 1) — Any route between two islands in the original network is a sequence of bridges, and it may or may not use the closed bridge.
+8. 🩹 (← 6, 7) — If a route uses the closed bridge, replace that one bridge with the A-to-B path; the route now avoids the closed bridge and still joins the same two islands.
+9. 🔗 (← 8) — So every pair of islands is still joined by a route after the closure.
+10. 🟢 (← 9) — The remaining network is still connected.
+11. 👀 (← 10) — Self-check: a bridge with no alternate A-to-B path would not lie on any loop, which contradicts the given, so the closing bridge cannot be indispensable.
+12. 🚫 (← 3, 10) — The answer to the question is no: the network cannot become disconnected.
+
+LANDMARKS:
+- Each loop through the closed bridge gives a detour path between its two endpoints.
+- Any route using the closed bridge can be rerouted along that detour.
+- A bridge that lies on a loop is never a cut bridge, so connectivity survives its removal.
+
+ANSWER: No, the remaining network cannot become disconnected.</pre>
+<div class="meta"><b>typed landmarks</b><br>construction | the loop through the closed bridge | a detour path between the closed bridge&#x27;s endpoints | exists | - | Each loop through the closed bridge gives a detour path between its two endpoints.<br>reduction | any route using the closed bridge | a route avoiding the closed bridge | reduces-to | - | Any route using the closed bridge can be rerouted along that detour.<br>obstruction | a bridge on a loop | being a cut bridge | forbids | - | A bridge that lies on a loop is never a cut bridge, so connectivity survives its removal.</div>
+</div>
+<div class='chain'>
+<h4>Parity of loop crossings across a two-piece cut <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: cut-parity-contradiction</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound and uses no calculation or step-by-step simulation. Steps 5–10 prove the result by contradiction: the remainder has at most two pieces, the closed bridge is the only link between them, and the loop through it would have to cross between the pieces an even number of times but crosses only once. The &quot;at most two pieces&quot; split and the parity-crossing contradiction are new landmarks that do not appear in route 001&#x27;s detour-and-reroute set.</div>
+<pre>CHAIN by blind player 2
+1. 🏝️🌉 (root) — The network is finite and connected, with undirected bridges between islands.
+2. 🔁 (root) — Every bridge lies on a loop that returns to its start without repeating a bridge or an intermediate island.
+3. ❓ (← 1, 2) — The question: if exactly one bridge is closed, can the rest become disconnected?
+4. 1️⃣🚧 (root) — Exactly one bridge, b, closes, and its two ends are the islands u and v.
+5. 🧩 (← 1, 4) — Suppose the rest is disconnected. Every island was connected to u or v through the original network, so what remains has exactly two pieces, one holding u and the other holding v.
+6. ⚔️ (← 5) — Since the pieces were joined originally, b is the only bridge between the two pieces.
+7. 🔄 (← 2, 4) — b lies on a loop, and that loop starts and ends on one island, so it begins and ends in the same piece.
+8. 🚪 (← 6, 7) — A closed loop that starts and ends in the same piece crosses between the pieces an even number of times.
+9. ☝️ (← 4, 6, 7) — The loop uses b, the only crossing, and never repeats a bridge, so it crosses exactly once, which is an odd number of times.
+10. 💥 (← 8, 9) — Even and odd crossings contradict each other, so the supposed split is impossible.
+11. 🛡️ (← 5, 10) — The remaining network therefore cannot split into two pieces, so it stays connected.
+12. ✅ (← 3, 11) — The answer to the question is no.
+
+LANDMARKS:
+- Removing one bridge can leave at most two pieces, with the bridge&#x27;s two ends in different pieces.
+- If the network split, the closed bridge would be the only link between the two pieces.
+- A closed loop must cross between two pieces an even number of times, but this loop would cross exactly once, which is a parity contradiction.
+
+ANSWER: No. The remaining network always stays connected.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | the network after closing the bridge | at most two pieces, separating the closed bridge&#x27;s endpoints | reduces-to | - | Removing one bridge can leave at most two pieces, with the bridge&#x27;s two ends in different pieces.<br>structure | the closed bridge | the only link between the two pieces | = | - | If the network split, the closed bridge would be the only link between the two pieces.<br>obstruction | the loop through the closed bridge | crossing between two pieces an odd number of times | forbids | - | A closed loop must cross between two pieces an even number of times, but this loop would cross exactly once, which is a parity contradiction.</div>
+</div>
+<div class='chain'>
+<h4>Spanning tree case split, loop recrosses tree cut <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (extender) · 2026-10-05 · strategy <code>new: spanning-tree-cut-repair</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain introduces a new spanning-tree landmark that no accepted route uses: fix a spanning tree and split on whether the closed bridge is in it. When it is, the two tree parts are rejoined by the loop&#x27;s second crossing (steps 5–11). The steps are sound and structural, with no state snapshots.</div>
+<pre>CHAIN by extender
+1. 🏝️ (root) — The network is finite and connected, so every island can reach every other.
+2. 🔁 (root) — Every bridge lies on a loop that returns to its start without repeating a bridge or an intermediate island.
+3. ❓ (← 1, 2) — Exactly one bridge closes; can the remaining network become disconnected?
+4. 1️⃣🚧 (root) — Exactly one bridge, b, closes, and its ends are the islands u and v.
+5. 🌳 (← 1) — A finite connected network has a spanning tree, a set of bridges that reaches every island and contains no loop.
+6. 🔀 (← 4, 5) — Fix such a tree; either b is not in the tree, or b is in the tree.
+7. 🌲 (← 5, 6) — If b is not in the tree, the whole tree survives the closure, so every island is still joined to every other.
+8. ✂️ (← 5, 6) — If b is in the tree, removing it splits the tree into exactly two parts, U containing u and V containing v, which together cover all islands.
+9. 🔄 (← 2, 4) — Since b lies on a loop, that loop starts at u, crosses b to v, and eventually returns to u.
+10. 🔙 (← 8, 9) — The loop is in V after crossing b and ends in U, and it cannot reuse b, so it must cross from V back to U by a different bridge c.
+11. 🪢 (← 10) — The bridge c stays open and joins U to V, so the two tree parts are reconnected and every island is again reachable from every other.
+12. 🟢 (← 7, 11) — In both cases the remaining network is still connected.
+13. 👀 (← 12) — Self-check: c cannot be b, because the loop never repeats a bridge, so the reconnecting bridge really is a different, still-open one.
+14. 🚫 (← 3, 12) — The answer to the question is no.
+
+LANDMARKS:
+- The network has a spanning tree, so if the closed bridge is outside it, everything stays connected through the tree.
+- If the closed bridge is in the tree, its removal splits the tree into two parts, and the loop through the bridge must cross between them again by a different open bridge.
+- That second crossing bridge reconnects the two tree parts, so connectivity survives either way.
+
+ANSWER: No, the remaining network cannot become disconnected.</pre>
+<div class="meta"><b>typed landmarks</b><br>construction | the network | a spanning tree surviving the closure when the closed bridge is outside it | exists | - | The network has a spanning tree, so if the closed bridge is outside it, everything stays connected through the tree.<br>structure | the loop through the closed bridge | a second, open bridge between the two tree parts | exists | - | If the closed bridge is in the tree, its removal splits the tree into two parts, and the loop through the bridge must cross between them again by a different open bridge.<br>reduction | the network after closing the bridge | the two tree parts joined by the second crossing bridge | reduces-to | - | That second crossing bridge reconnects the two tree parts, so connectivity survives either way.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

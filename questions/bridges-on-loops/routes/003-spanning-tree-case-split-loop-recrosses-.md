@@ -1,0 +1,40 @@
+---
+id: 003
+question: bridges-on-loops
+title: Spanning tree case split, loop recrosses tree cut
+strategy: new: spanning-tree-cut-repair
+contributor: sonnet (extender)
+date: 2026-10-05
+depth: 3
+referee: opus/v2
+criterion: v2
+verdict: VALID
+reason: The chain introduces a new spanning-tree landmark that no accepted route uses: fix a spanning tree and split on whether the closed bridge is in it. When it is, the two tree parts are rejoined by the loop's second crossing (steps 5–11). The steps are sound and structural, with no state snapshots.
+discriminator_depicted: yes
+typed_1: construction | the network | a spanning tree surviving the closure when the closed bridge is outside it | exists | - | The network has a spanning tree, so if the closed bridge is outside it, everything stays connected through the tree.
+typed_2: structure | the loop through the closed bridge | a second, open bridge between the two tree parts | exists | - | If the closed bridge is in the tree, its removal splits the tree into two parts, and the loop through the bridge must cross between them again by a different open bridge.
+typed_3: reduction | the network after closing the bridge | the two tree parts joined by the second crossing bridge | reduces-to | - | That second crossing bridge reconnects the two tree parts, so connectivity survives either way.
+---
+
+CHAIN by extender
+1. 🏝️ (root) — The network is finite and connected, so every island can reach every other.
+2. 🔁 (root) — Every bridge lies on a loop that returns to its start without repeating a bridge or an intermediate island.
+3. ❓ (← 1, 2) — Exactly one bridge closes; can the remaining network become disconnected?
+4. 1️⃣🚧 (root) — Exactly one bridge, b, closes, and its ends are the islands u and v.
+5. 🌳 (← 1) — A finite connected network has a spanning tree, a set of bridges that reaches every island and contains no loop.
+6. 🔀 (← 4, 5) — Fix such a tree; either b is not in the tree, or b is in the tree.
+7. 🌲 (← 5, 6) — If b is not in the tree, the whole tree survives the closure, so every island is still joined to every other.
+8. ✂️ (← 5, 6) — If b is in the tree, removing it splits the tree into exactly two parts, U containing u and V containing v, which together cover all islands.
+9. 🔄 (← 2, 4) — Since b lies on a loop, that loop starts at u, crosses b to v, and eventually returns to u.
+10. 🔙 (← 8, 9) — The loop is in V after crossing b and ends in U, and it cannot reuse b, so it must cross from V back to U by a different bridge c.
+11. 🪢 (← 10) — The bridge c stays open and joins U to V, so the two tree parts are reconnected and every island is again reachable from every other.
+12. 🟢 (← 7, 11) — In both cases the remaining network is still connected.
+13. 👀 (← 12) — Self-check: c cannot be b, because the loop never repeats a bridge, so the reconnecting bridge really is a different, still-open one.
+14. 🚫 (← 3, 12) — The answer to the question is no.
+
+LANDMARKS:
+- The network has a spanning tree, so if the closed bridge is outside it, everything stays connected through the tree.
+- If the closed bridge is in the tree, its removal splits the tree into two parts, and the loop through the bridge must cross between them again by a different open bridge.
+- That second crossing bridge reconnects the two tree parts, so connectivity survives either way.
+
+ANSWER: No, the remaining network cannot become disconnected.

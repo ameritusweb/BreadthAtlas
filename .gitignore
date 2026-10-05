@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Local configuration (paths to data outside the repo)
+external.local.json
+
+# Derived Stack Overflow feature cache: 10 MB and contains redistributed answer text.
+# Rebuild with: python questions/so-answer-quality/scorers/poc4_components.py build
+questions/so-answer-quality/scorers/components_cache.npz
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

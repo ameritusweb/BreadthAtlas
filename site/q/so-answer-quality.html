@@ -1,0 +1,384 @@
+<html><head><meta charset='utf-8'><title>Mechanisms that rank the better Stack Overflow answer</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Mechanisms that rank the better Stack Overflow answer</h1>
+<div class='meta'>family: prediction, empirical referee, computable novelty · status: answered · attractor: answer length (and its costumes: token count, code lines, number of paragraphs)</div>
+<h3>Question</h3><pre>Pairs of answers to the same Stack Overflow question are given, one scored at least three points
+above the other. **Name a mechanism by which the better answer can be told from the worse, show it
+as a chain, and prove it with a scorer** — a function from (question, answer) to a number — run on
+the shared held-out pairs. Each route must rest on a mechanism whose margins do not merely track an
+accepted route&#x27;s.
+
+Answer format (parsed by the code referee — exact): `ANSWER: mechanism &lt;name&gt;; scorer
+scorers/&lt;file&gt;.py`. The scorer file defines `score(question: str, answer: str) -&gt; float` (the margin
+is the difference of the two answers&#x27; scores) or, for pair-trained readers, `score_pair(question,
+high, low) -&gt; float`. It may read `scorers/poc4_components.py` for the trained model&#x27;s component
+features (fitted on the train split only). The referee runs it on 4,000 held-out pairs: accuracy
+below 0.60 is WRONG; margins correlating ≥ 0.80 with an accepted route&#x27;s are DUPLICATE (and supersede
+it if ≥ 0.05 more accurate); 0.50–0.80 is referred to the model referee with the number.</pre>
+<h3>Glossary</h3><pre>See SCOPE.md — domain concepts (📐 structure, 🎯 relevance, ✅ correctness, 🔗 coherence,
+📏 completeness, 🪞 examples, ⚠️ caveats, ⏳ timing) and mechanism concepts (🔤 lexical, 🌀 latent,
+🌊 field evolution, ⊥ orthogonality, 💥 residual, 🌳 NODE routing, 📊 geometry, 🔍 eigen, 🌲 GBM,
+⚖️ margin) on equal footing.</pre>
+<h2>Accepted routes (4)</h2>
+<div class='chain'>
+<h4>The longer answer is the better one <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed, hand-written) · 2026-10-05 · strategy <code>new: dominant-surface-proxy</code> · depth 1 · code/so_referee v0 (acc floor 0.60, dup ρ 0.80) / criterion v2</div>
+<div class='meta'><b>reason:</b> </div><div class='meta'><b>empirical:</b> valid acc=0.664 rho_max=0.00 (n=4000)</div><div class='meta'><b>note:</b> The attractor route, seeded so the correlation test has a reference. Its accuracy is level with the NODE-flowtron variant (poc4_large, 0.661) and 1.5 points under the transformer baseline (0.679); the triangulation+GBM pipeline is measured separately by the mechanism routes.</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers to it.
+3. 🏆 (root) — Given: one answer&#x27;s score is at least three above the other&#x27;s.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the higher-scored answer be told from the lower?
+5. ✍️ (← 2) — An answer that explains more, shows more code and covers more cases is, other things equal, longer.
+6. 👍 (← 3, 5) — Voters reward explanation, code and coverage, so the rewarded answer tends to be the longer one.
+7. 📏 (← 5, 6) — Therefore sheer length is a proxy for the things voters reward.
+8. ⚖️ (← 7) — Mechanism: score each answer by its length; the margin is the difference.
+9. 👀 (← 8) — Self-check: the proxy must fail on padded or rambling answers, so it cannot be perfect — a real but weak signal.
+10. 🏁 (← 8, 9) — Conclusion: length ranks the better answer well above chance, and the scorer proves it.
+
+LANDMARKS:
+- Effort and coverage both grow with length, so length tracks quality.
+- Length alone ranks the better answer about two times in three.
+
+ANSWER: mechanism sheer length; scorer scorers/length_chars.py</pre>
+<div class="meta"><b>typed landmarks</b><br>share | answer length | answer quality | ≈ | characters | Effort and coverage both grow with length, so length tracks quality.<br>bound | sheer length | - | exists | pairwise accuracy | Length alone ranks the better answer about two times in three.</div>
+</div>
+<div class='chain'>
+<h4>The network&#x27;s own verdict: latent routing, geometry and eigen structure read by the quality head <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed; scorer reads the trained poc4 model, no fitting) · 2026-10-05 · strategy <code>new: learned-representation-reader</code> · depth 2 · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> </div><div class='meta'><b>empirical:</b> valid acc=0.653 rho_max=0.42 vs length-chars (n=4000); best instance: gbm-all-families acc=0.766 (attempt 005 supersedes)</div><div class='meta'><b>note:</b> Second mechanism on the question. ρ 0.42 against length — a different signal, not a costume. The triangulation-features reader (attempt 004, ρ 0.93) and the all-families GBM (attempt 005, ρ 0.86, acc 0.766) are the same mechanism read differently; the GBM is its best instance.</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the better answer be told from the worse?
+5. 🔤 (← 2) — Each answer is tokenized by its distinctive words.
+6. 🌀 (← 5) — A VAE compresses the token sequence into a latent representation.
+7. 🌊 (← 6) — Three orthogonal fields evolve from the latent and route its mass across a grid.
+8. 📊 (← 7) — The routing has a geometry — how concentrated, how anisotropic, how it drifts — and an eigen structure.
+9. ⚖️ (← 7, 8) — A trained head reads routing, latent and eigen features together into a single score; the margin is the difference of the two answers&#x27; scores.
+10. 👀 (← 9) — Self-check: this signal must differ from length in which pairs it gets right, or it is length in a costume; the correlation test decides.
+11. 🏁 (← 9, 10) — Conclusion: the learned representation ranks the better answer above chance through a mechanism distinct from length.
+
+LANDMARKS:
+- The answer is compressed to a latent that fields then evolve.
+- Where the evolved fields route mass, and its geometry, tracks quality.
+- The learned reader ranks the better answer about as often as length does, but on different pairs.
+
+ANSWER: mechanism learned routing geometry; scorer scorers/mech_quality_head.py</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | answer text | latent representation | reduces-to | VAE | The answer is compressed to a latent that fields then evolve.<br>share | routing distribution | answer quality | ≈ | - | Where the evolved fields route mass, and its geometry, tracks quality.<br>bound | learned reader | sheer length | ≈ | pairwise accuracy | The learned reader ranks the better answer about as often as length does, but on different pairs.</div>
+</div>
+<div class='chain'>
+<h4>train-weighted sign vote over field-evolution components <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>opus (blind player 2) · 2026-10-05 · strategy <code>new: per-component-weighted-sign-vote</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> [EMPIRICAL: ambiguous acc=0.641 rho=0.64 vs length-chars — model referee decides] The chain matches the scorer step by step: it uses only the tri_evo_ components, takes each component&#x27;s direction and |win−0.5| weight from train pairs, and sums sign-weighted percentiles from pooled train answers. It scores 0.641 accuracy. Its margins correlate 0.64 with length-chars, which is below the duplicate threshold and leaves enough independent signal to count as a distinct mechanism. No accepted chain binds yet, so its landmarks (field-evolution magnitudes alone carry the signal; a per-component weighted vote from train win-rates; percentile scaling with no fitted direction) are new.</div><div class='meta'><b>note:</b> re-judged 2026-10-05 from attempt 008 (WRONG: Step 12 and the ANSWER line point to `scorers/evo_sign_vote.py`, but that file does not exist. The empirical referee the)</div>
+<pre>Note: I wasn&#x27;t allowed to write `scorers/evo_sign_vote.py`, so the file does not exist yet and the referee can&#x27;t run this route until it&#x27;s saved. This is the intended content:
+
+```python
+&quot;&quot;&quot;Field-evolution sign vote: each tri_evo_* component casts a train-fitted, weighted vote.&quot;&quot;&quot;
+import numpy as np
+from poc4_components import load_cache, val_row, family_columns
+
+FAMILY = &quot;tri_evo_&quot;
+_model = None
+
+def _fit():
+    global _model
+    if _model is None:
+        c = load_cache()
+        cols = family_columns(c[&quot;names&quot;].tolist(), FAMILY)
+        th, tl = c[&quot;train_h&quot;][:, cols], c[&quot;train_l&quot;][:, cols]
+        win = (th &gt; tl).mean(axis=0)
+        _model = dict(cols=cols, sign=np.where(win &gt;= 0.5, 1.0, -1.0), weight=np.abs(win - 0.5),
+                      pooled=np.sort(np.vstack([th, tl]), axis=0))
+    return _model
+
+def score(question: str, answer: str) -&gt; float:
+    m = _fit(); c = load_cache()
+    try:
+        row, side = val_row(answer)
+    except KeyError:
+        return 0.0
+    x = (c[&quot;val_h&quot;] if side == &quot;h&quot; else c[&quot;val_l&quot;])[row, m[&quot;cols&quot;]]
+    n = m[&quot;pooled&quot;].shape[0]
+    pct = np.array([np.searchsorted(m[&quot;pooled&quot;][:, j], x[j]) / n for j in range(len(x))])
+    return float(np.sum(m[&quot;weight&quot;] * m[&quot;sign&quot;] * pct))
+```
+
+CHAIN by blind player 2
+1. 📚 (root) — Each pair has two answers to one Stack Overflow question, and one answer scored at least three points higher than the other.
+2. 🧠 (root) — A trained triangulation model exposes per-answer component features, fitted on the train split only. One family of these features, 🌊 field evolution, records how far the answer&#x27;s latent fields move from stage to stage.
+3. ❓ (← 1, 2) — Which mechanism separates the better answer from the worse one? It must be shown by a scorer that gets at least 0.60 accuracy on 4,000 held-out pairs, and its margins must not merely track another route&#x27;s.
+4. 🌊 (← 2) — Use only the field-evolution magnitudes, meaning how much the answer&#x27;s representation is reworked as it passes through the stages.
+5. 🔗 (← 4) — A coherent answer that builds an argument should push its fields through steadier, more purposeful movement than a scattered or off-target one, so evolution size should carry a quality signal.
+6. 🗳️ (← 1, 5) — On the train pairs, check each evolution component on its own: how often does the better answer have the larger value? That fraction gives the component&#x27;s preferred direction.
+7. ⚖️ (← 6) — A component&#x27;s vote weight is how far its train win-rate sits from a coin flip, so components that barely tell the answers apart count for almost nothing.
+8. 📶 (← 4) — Replace each raw value with its percentile among the pooled train answers. All components then share one ordinal scale without dividing by any spread.
+9. ➕ (← 6, 7, 8) — An answer&#x27;s score is the weighted sum of its percentiles, each multiplied by the sign of its component&#x27;s vote. This is a committee of independent votes, not one fitted direction.
+10. 🎯 (← 1, 9) — Because both answers share the same question, the pair margin is just the difference of the two vote totals. The better answer should win whenever most of the confident components side with it.
+11. 👀 (← 7, 9) — Self-check: if every component were a coin flip, all weights would be near zero and the margins would collapse toward zero instead of inventing a signal.
+12. 🏁 (← 10) — The mechanism is a train-weighted sign vote over field-evolution components, ranked by percentile. It is run as the scorer evo_sign_vote.
+LANDMARKS:
+- Field-evolution magnitudes alone, meaning how much an answer&#x27;s latent fields are reworked across stages, carry a quality signal.
+- Each component votes on its own, with a direction and a confidence weight taken from its train win-rate against a coin flip.
+- Percentile ranks among pooled train answers put the components on a common scale without any spread-based rescaling or fitted direction.
+ANSWER: mechanism field-evolution sign vote; scorer scorers/evo_sign_vote.py</pre>
+
+</div>
+<div class='chain'>
+<h4>capped presence count of distinct content kinds <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>opus (blind player 2) · 2026-10-05 · strategy <code>new: content-kind-coverage</code> · depth 4 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> [EMPIRICAL: ambiguous acc=0.669 rho=0.67 vs length-chars — model referee decides] The new landmark is the first: completeness measured as a capped count of distinct content kinds, with each kind counted once. That measures presence across kinds, not bulk, and the second landmark is the matching new claim that it differs from length and from component votes. On the referral, ρ 0.67 against length-chars shows real overlap, but the count ignores how much of any one kind there is, so it is a different mechanism with 0.669 accuracy. The chain has no calculation or step-by-step state snapshots, and the earlier rejected record of this same attempt does not bind it.</div><div class='meta'><b>note:</b> re-judged 2026-10-05 from attempt 009 (ILL-FORMED: only 0 emoji steps; at least 10 required; no ❓ step stating what is asked)</div>
+<pre>CHAIN by blind player 2
+1. 📊 (root): We get pairs of answers to the same Stack Overflow question, and one answer in each pair scored at least three points above the other.
+2. 🗳️ (root): Voters reward an answer that gives them more of what they need in one place.
+3. 📐 (root): An answer is built from distinct kinds of content: explaining prose, code blocks, inline code, links, lists, emphasis or headings, caveats, stated reasons, and examples.
+4. ❓ (← 1, 2): The question asks for a mechanism that tells the better answer from the worse, proven by a scorer whose ⚖️ margins are run on the held-out pairs.
+5. 📏 (← 2, 3): I read completeness as breadth, meaning how many distinct kinds of content an answer covers rather than how much of any one kind it has.
+6. 🪞 (← 3, 5): Code and examples each count once no matter how much there is, so an answer can&#x27;t win just by pasting a large block of code.
+7. ⚠️ (← 3, 5): Caveats and explicit &quot;because&quot; reasons each count as one kind, so the score credits an answer that warns the reader and explains why.
+8. 🔗 (← 3, 5): A link to documentation or a source counts as one more kind, because it ties the answer to outside evidence.
+9. ⊥ (← 5, 6, 7, 8): Since each kind is counted once, the score is a capped count of coverage, which is a different quantity from bulk length or from votes over trained latent components.
+10. 🔤 (← 5): Many pairs have the same count of kinds, so a small lexical term based on vocabulary size breaks those ties.
+11. 👀 (← 9, 10): Self-check: the tie-break term always stays below one kind, so it can only decide between answers with equal coverage.
+12. ⚖️ (← 4, 9, 10): The margin is the difference between the two answers&#x27; coverage scores, and the answer that covers more kinds ranks higher.
+13. ✅ (← 1, 12): Running this coverage scorer on the shared pairs tests the claim that higher-voted answers cover more distinct kinds of content.
+
+LANDMARKS:
+- Completeness counted as breadth: how many distinct kinds of content an answer covers (prose, code, links, lists, caveats, reasons, examples), each counted once and capped, not how much of any one kind.
+- The coverage count uses no training and no model components, and it measures something different from length or from per-component votes.
+- Vocabulary size works only as a bounded tie-break, and it can never outweigh one extra kind of content.
+ANSWER: mechanism content-kind coverage; scorer scorers/mech_kind_coverage.py</pre>
+
+</div>
+<h2>Attempts (8) — the boundary</h2>
+<div class='chain'>
+<h4>Word count as the measure of effort <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed, hand-written) · 2026-10-05 · strategy <code>dominant-surface-proxy</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> Per-pair margins correlate with route 001 at ρ = 0.96 — the same mechanism in a different unit. Decided by code, no referee reading required.</div><div class='meta'><b>empirical:</b> duplicate-of length-chars rho=0.96 acc=0.641</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: what mechanism separates them?
+5. 🗣️ (← 2) — An answer is made of words; more words means more said.
+6. 👍 (← 3, 5) — Voters reward answers that say more.
+7. 🔢 (← 5, 6) — Count the words of each answer.
+8. ⚖️ (← 7) — The margin is the word-count difference.
+9. 👀 (← 8) — Self-check: words and characters move together, so this may be length in another coat.
+10. 🏁 (← 8) — Conclusion: word count ranks the better answer.
+
+LANDMARKS:
+- Saying more wins votes.
+- Word count measures how much is said.
+
+ANSWER: mechanism word count; scorer scorers/token_count.py</pre>
+
+</div>
+<div class='chain'>
+<h4>Share of the answer that is code <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed, hand-written) · 2026-10-05 · strategy <code>new: structural-signal</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> The mechanism is real but does not reach the verdict: 0.577 pairwise accuracy is below the 0.60 floor. Recorded as evidence that code share is a weaker signal than length on this split.</div><div class='meta'><b>empirical:</b> weak acc=0.577 (floor 0.60)</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: what mechanism separates them?
+5. 📐 (← 2) — Answers are structured: prose, code blocks, lists.
+6. 🧑‍💻 (← 1, 5) — Programming questions want code; an answer that shows code shows a solution.
+7. 📊 (← 5, 6) — Measure the share of each answer that is code.
+8. ⚖️ (← 7) — The margin is the difference in code share.
+9. 👀 (← 8) — Self-check: a one-line correct snippet and a wall of wrong code both score high, so the share may mislead.
+10. 🏁 (← 8) — Conclusion: code share ranks the better answer.
+
+LANDMARKS:
+- Programming answers are judged by whether they show a solution.
+- The share of an answer that is code measures that.
+
+ANSWER: mechanism code share; scorer scorers/code_blocks.py</pre>
+
+</div>
+<div class='chain'>
+<h4>Latent geometry alone <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed; scorer reads one component family of the trained poc4 model, fitted on the train split only) · 2026-10-05 · strategy <code>new: single-family-reader</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> The geometry family (n_effective, anisotropy, eccentricity, drift, …) read linearly ranks the better answer at 0.577, below the floor: real signal, not enough on its own.</div><div class='meta'><b>empirical:</b> weak acc=0.577 (floor 0.60)</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the better answer be told from the worse?
+5. 🌀 (← 2) — The answer is compressed to a latent and routed by the evolved fields.
+6. 📊 (← 5) — Only the geometry of the routing is read: how concentrated and anisotropic the belief is, how it drifts.
+7. ⚖️ (← 6) — A reader fitted on training pairs turns that family alone into a score; the margin is the difference.
+8. 👀 (← 7) — Self-check: the family must both reach the verdict and differ from accepted routes in which pairs it gets right.
+9. 🏁 (← 7, 8) — Conclusion: geometry alone tracks quality weakly.
+
+LANDMARKS:
+- Routing geometry carries some quality signal.
+- Geometry alone does not reach the verdict.
+
+ANSWER: mechanism latent geometry; scorer scorers/mech_geo.py</pre>
+
+</div>
+<div class='chain'>
+<h4>Eigen structure of the routing alone <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed; scorer reads one component family of the trained poc4 model, fitted on the train split only) · 2026-10-05 · strategy <code>new: single-family-reader</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> The five eigen features of the routing distribution read linearly reach 0.565, below the floor.</div><div class='meta'><b>empirical:</b> weak acc=0.565 (floor 0.60)</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the better answer be told from the worse?
+5. 🌀 (← 2) — The answer is compressed to a latent and routed by the evolved fields.
+6. 🔍 (← 5) — Only the eigen decomposition of the routing distribution is read.
+7. ⚖️ (← 6) — A reader fitted on training pairs turns that family alone into a score; the margin is the difference.
+8. 👀 (← 7) — Self-check: the family must both reach the verdict and differ from accepted routes in which pairs it gets right.
+9. 🏁 (← 7, 8) — Conclusion: eigen structure alone tracks quality weakly.
+
+LANDMARKS:
+- The routing&#x27;s eigen spectrum carries some quality signal.
+- Eigen features alone do not reach the verdict.
+
+ANSWER: mechanism eigen structure; scorer scorers/mech_eigen.py</pre>
+
+</div>
+<div class='chain'>
+<h4>Triangulation residuals and evolution alone <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed; scorer reads one component family of the trained poc4 model, fitted on the train split only) · 2026-10-05 · strategy <code>learned-representation-reader</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> Per-pair margins correlate with route 002 (the quality head) at ρ 0.93: the triangulation features read linearly are the same signal the head outputs. Decided by code.</div><div class='meta'><b>empirical:</b> duplicate-of quality-head rho=0.93 acc=0.645</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the better answer be told from the worse?
+5. 🌀 (← 2) — The answer is compressed to a latent and routed by the evolved fields.
+6. 💥 (← 5) — Only the triangulation features are read: per-stage residuals, pairwise disagreement between fields, evolution magnitudes.
+7. ⚖️ (← 6) — A reader fitted on training pairs turns that family alone into a score; the margin is the difference.
+8. 👀 (← 7) — Self-check: the family must both reach the verdict and differ from accepted routes in which pairs it gets right.
+9. 🏁 (← 7, 8) — Conclusion: field disagreement tracks quality — as the quality head already does.
+
+LANDMARKS:
+- Disagreement between the evolved fields tracks quality.
+- The residual reader ranks the same pairs as the network&#x27;s own head.
+
+ANSWER: mechanism field disagreement; scorer scorers/mech_tri.py</pre>
+
+</div>
+<div class='chain'>
+<h4>Gradient-boosted trees over all extracted families <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>Claude Fable 5.1 (seed; scorer reads one component family of the trained poc4 model, fitted on the train split only) · 2026-10-05 · strategy <code>learned-representation-reader</code> · code/so_referee v0 / criterion v2</div>
+<div class='meta'><b>reason:</b> ρ 0.86 with route 002: the same mechanism, read by the project&#x27;s own GBM over geo + eigen + triangulation + curvature features fitted on the train split. Accuracy 0.766 on the held-out pairs — the best scorer on the question by ten points — so it supersedes route 002 as that route&#x27;s best instance. Breadth unchanged. Note: the project&#x27;s 93.5 % figure was cross-validation on features extracted from validation pairs; under the referee&#x27;s protocol the same reader gives 0.766.</div><div class='meta'><b>empirical:</b> duplicate-of quality-head rho=0.86 acc=0.766 — supersedes it as the route&#x27;s best instance (was 0.653)</div><div class='meta'><b>supersedes:</b> route 002</div>
+<pre>1. 📝 (root) — Given: a Stack Overflow question.
+2. 💬 (root) — Given: two answers.
+3. 🏆 (root) — Given: a score gap of at least three.
+4. ❓ (← 1, 2, 3) — Asked: by what mechanism can the better answer be told from the worse?
+5. 🌀 (← 2) — The answer is compressed to a latent and routed by the evolved fields.
+6. 🌲 (← 5) — All extracted families — geometry, eigen, triangulation, stage curvature — are read together by boosted trees fitted on training pairs.
+7. ⚖️ (← 6) — A reader fitted on training pairs turns that family alone into a score; the margin is the difference.
+8. 👀 (← 7) — Self-check: the family must both reach the verdict and differ from accepted routes in which pairs it gets right.
+9. 🏁 (← 7, 8) — Conclusion: the combined learned features rank the better answer well above length, through the mechanism route 002 already names.
+
+LANDMARKS:
+- The combined extracted features of the evolved fields carry the strongest quality signal found.
+- That signal is the quality head&#x27;s signal, read better.
+
+ANSWER: mechanism combined field features; scorer scorers/mech_all_gbm.py</pre>
+
+</div>
+<div class='chain'>
+<h4>(form failure) <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>opus (blind player 1) · 2026-10-05 · strategy <code>unclassified</code> · code/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> the answer is not the last line</div>
+<pre>I wasn&#x27;t allowed to write `scorers/p1_linear_margin_reader.py`, so the scorer file that the ANSWER line below points to doesn&#x27;t exist. If the referee runs now, this route fails. To fix it, grant write access and re-run, or save the code at the bottom of this message to that path yourself. I haven&#x27;t run it, so the 0.60 accuracy threshold is not checked.
+
+CHAIN by blind player 1
+1. 📐 (root) — Each held-out item is a pair of answers to the same Stack Overflow question, and one of them scored at least three points above the other.
+2. 🌳 (root) — A trained model already reads every answer and gives several groups of component features: geometry, eigen codes, triangulation leftovers, how the field changes over steps, curvature, and a quality-head score. All of it was fitted on the train split only.
+3. ❓ (← 1, 2) — Name a mechanism that tells the better answer from the worse one, and back it with a scorer from (question, answer) to a number that gets at least 0.60 accuracy on the 4,000 held-out pairs.
+4. ⚖️ (← 1) — Both answers respond to the same question, so whatever the question itself contributes affects both equally and drops out of the comparison; only how the two answers differ carries signal.
+5. 📊 (← 2) — Each feature group catches a different trace of quality (structure, coherence, how the field settles), so no single group is likely to be the strongest signal by itself.
+6. 🔍 (← 5) — The groups are measured on very different scales, so each feature is first rescaled by how much it varies across train answers, so that no group wins just because its numbers are bigger.
+7. 🎯 (← 4, 6) — On the train pairs, take the high-minus-low difference of the rescaled features and fit one direction along which the better answer tends to sit further out.
+8. 🔗 (← 7) — The direction is fitted to work both ways round (each pair also appears with high and low swapped and the opposite label), so the margin flips sign when the answers are swapped and needs no offset.
+9. ⚠️ (← 7) — The fit includes a penalty that pulls weights toward zero, so features that are noisy or that repeat each other share weight instead of overfitting the train pairs.
+10. ✅ (← 8, 9) — An answer&#x27;s score is how far its rescaled features sit along that direction, and the margin is the better answer&#x27;s score minus the worse answer&#x27;s.
+11. 👀 (← 2, 10) — Check: the fit uses only train rows and the held-out answers are only looked up, so no held-out label leaks into the scorer.
+12. 🏁 (← 3, 10) — The mechanism is a linear margin reader across all the component groups, and its accuracy on the held-out pairs is the evidence for the route.
+
+LANDMARKS:
+- The question&#x27;s contribution is the same for both answers, so only the difference between the answers matters (comparison within the pair).
+- Rescale each component feature by how much it varies so that all groups count on equal terms.
+- One direction, fitted on train pair differences with a penalty and both orderings, ranks answers by how far they sit along it.
+
+ANSWER: mechanism linear-margin-reader; scorer scorers/p1_linear_margin_reader.py
+
+```python
+&quot;&quot;&quot;Blind player 1 route: a linear margin reader over the trained model&#x27;s component features.&quot;&quot;&quot;
+import numpy as np
+import poc4_components as C
+
+_w = _mu = _sd = None
+
+def _stack(feats, q):
+    return np.nan_to_num(np.column_stack([feats, q]), nan=0.0, posinf=0.0, neginf=0.0)
+
+def _fit():
+    global _w, _mu, _sd
+    c = C.load_cache()
+    th = _stack(c[&quot;train_h&quot;], c[&quot;train_qh&quot;]); tl = _stack(c[&quot;train_l&quot;], c[&quot;train_ql&quot;])
+    both = np.vstack([th, tl]); _mu = both.mean(0); _sd = both.std(0); _sd[_sd &lt; 1e-9] = 1.0
+    d = (th - tl) / _sd
+    X = np.vstack([d, -d]); y = np.concatenate([np.ones(len(d)), np.zeros(len(d))])
+    w = np.zeros(X.shape[1]); lam = 1.0
+    for _ in range(50):  # Newton steps on L2-regularised logistic loss
+        p = 1.0 / (1.0 + np.exp(-np.clip(X @ w, -30, 30)))
+        g = X.T @ (p - y) + lam * w
+        H = (X * (p * (1 - p))[:, None]).T @ X + lam * np.eye(X.shape[1])
+        step = np.linalg.solve(H, g); w -= step
+        if np.abs(step).max() &lt; 1e-8:
+            break
+    _w = w
+
+def score(question: str, answer: str) -&gt; float:
+    if _w is None:
+        _fit()
+    c = C.load_cache()
+    try:
+        row, side = C.val_row(answer)
+    except KeyError:
+        return 0.0
+    feats = c[&quot;val_h&quot;][row] if side == &quot;h&quot; else c[&quot;val_l&quot;][row]
+    q = c[&quot;val_qh&quot;][row] if side == &quot;h&quot; else c[&quot;val_ql&quot;][row]
+    x = _stack(feats[None, :], np.array([q]))[0]
+    return float(((x - _mu) / _sd) @ _w)
+```</pre>
+
+</div>
+<div class='chain'>
+<h4>hand-weighted surface cues dominated by answer length <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>opus (blind player 1) · 2026-10-05 · strategy <code>new: hand-set-surface-cue-sum</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> [EMPIRICAL: duplicate-of length-chars rho=0.93 acc=0.668] The chain&#x27;s form is fine and its accuracy (0.668) clears 0.60, but its margins correlate at ρ 0.93 with route 001 (length-chars). Its main landmark, &quot;visible effort, meaning log-scaled length plus runnable code blocks&quot;, is in substance route 001&#x27;s &quot;effort and coverage both grow with length&quot;. At 0.668 against roughly two in three, it is not ≥ 0.05 more accurate, so it does not supersede route 001. The claim in step 11 that it is a separate route only asserts novelty and carries no weight.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: only 0 emoji steps; at least 10 required; no ❓ step stating what is asked</div>
+<pre>CHAIN by blind player 1
+1. 🧑‍💻❓ (root): Each Stack Overflow question comes with two of its own answers, and the referee scores only the text of the question and of each answer.
+2. 🥇➕3️⃣🆚🥉 (root): In each pair, one answer has at least three more votes than the other, and the referee holds out 4,000 such pairs.
+3. 🗳️👀📄 (root): People vote after looking at the page, so whatever they reward has to show on the surface of the answer.
+4. ❓ (← 1, 2, 3): Using only the raw text and no trained model, which mechanism picks the higher-voted answer of a pair more than six times in ten?
+5. 📏 (← 3, 4): Voters tend to reward visible effort, so the answer that explains more usually has more words.
+6. 🔤🧮 (← 5): Counting words on a log scale captures that effort and keeps one very long answer from swamping everything else.
+7. 🪞💻 (← 3, 4): A block of runnable code is something a reader can copy and use, so an answer with one is more likely to earn votes.
+8. 📐📋 (← 3, 7): Lists and links show the answer has been organised and points to references, which adds a smaller signal.
+9. 🎯🔤 (← 1, 4): If an answer reuses the question&#x27;s distinctive terms, it is more likely addressing the question than drifting off topic.
+10. 🧹 (← 1, 6, 9): Removing HTML markup and common filler words first means the counts measure what the answer says, not its formatting or &quot;the&quot; and &quot;and&quot;.
+11. ➕🧩 (← 6, 7, 8, 9, 10): A fixed sum of these hand-set cues needs no fitting and uses no latent or component features, so it is a separate route from the field-evolution voters.
+12. 👀 (← 11): Check: none of the cues reads the model&#x27;s components, percentile ranks or train win-rates, so the route does not depend on the accepted landmarks.
+13. ⚖️ (← 11, 2): The margin is how far the two answers&#x27; cue sums differ, and its sign picks the winner of each held-out pair.
+
+LANDMARKS:
+- Visible effort, meaning log-scaled length plus runnable code blocks, is what voters see and reward.
+- Reusing the question&#x27;s distinctive (rarer, non-filler) terms is a sign the answer is relevant.
+- A fixed, hand-set sum of surface cues, with no training and no model components, ranks the pair.
+
+
+
+ANSWER: mechanism surface-effort-relevance; scorer scorers/surface_effort_relevance.py</pre>
+
+</div>
+</body></html>

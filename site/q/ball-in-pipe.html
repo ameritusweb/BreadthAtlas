@@ -1,0 +1,85 @@
+<html><head><meta charset='utf-8'><title>The ping-pong ball in the pipe</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The ping-pong ball in the pipe</h1>
+<div class='meta'>family: open problem, physical design · status: open · attractor: pour water into the pipe so the ball floats up</div>
+<h3>Question</h3><pre>A ping-pong ball sits at the bottom of a narrow steel pipe that is fixed upright to a concrete floor.
+The pipe is just wider than the ball and about as tall as your forearm. You are in an ordinary office.
+**Describe a way to get the ball out without damaging the pipe or the ball, and the principle it
+relies on.** Each route must rest on a different principle.</pre>
+<h3>Glossary</h3><pre>| emoji | given |
+|---|---|
+| 🏓 | the ball: light, hollow, floats, slightly compressible, smooth |
+| 🧪 | the pipe: narrow, rigid, open at the top, closed by the floor |
+| 🏢 | an office: water, tape, paper, pencils, a vacuum cleaner, straws, chewing gum, string |
+
+| emoji | principle |
+|---|---|
+| 🌊 | buoyancy: fill the pipe, the ball floats up |
+| 🌀 | suction: lower pressure above the ball |
+| 🧲 | adhesion: something sticky on a stick |
+| 🪝 | mechanical grip: a loop or claw that fits the gap |
+| 💨 | airflow: a jet past the ball lifts it (Bernoulli / entrainment) |
+| 🔥 | thermal: warm air inside the ball expands — only if the ball seals the pipe |
+| 🪤 | wedge: friction jaws, two pencils or a folded card |</pre>
+<h2>Accepted routes (2)</h2>
+<div class='chain'>
+<h4>Fill pipe with water, ball floats up <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: buoyancy-flotation</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> First chain on this question, so the frontier is empty. Its new landmarks are that the closed rigid pipe holds water, that the ball&#x27;s density is far below water&#x27;s, that water reaches under the ball through the gap, and that filling to the rim brings the ball within reach. The steps follow from their parents, there is no calculation or step-by-step state tracking, and the answer is sound: a ping-pong ball floats mostly above the waterline, so it can be grasped at the rim.</div>
+<pre>CHAIN by blind player 1
+1. 🏓 (root) — Given: the ball is light, hollow, and floats, and it sits at the bottom of the pipe.
+2. 🧪 (root) — Given: the pipe is narrow, rigid, open at the top, closed at the floor, and just wider than the ball.
+3. 🏢 (root) — Given: an ordinary office has water, cups, a sink or water bottles, tape, paper, and straws.
+4. ❓ (← 1, 2, 3) — Asked: how to get the ball out without damaging the pipe or ball, and which principle it relies on, with each route resting on a different principle.
+5. 🌊 (← 1, 3) — Water is available in the office, in bottles, cups, or from a sink, so the pipe can be filled from the top.
+6. 🧪 (← 2, 5) — Because the pipe is rigid and closed at the floor, it acts as a watertight container, so poured water stays in and its level rises.
+7. 🏓 (← 1, 6) — The ball is hollow and much less dense than water, so the water around it pushes up harder than gravity pulls it down.
+8. 🌊 (← 7) — The upward push of the displaced water is greater than the ball&#x27;s weight, so the ball rises with the water level, and the ball cannot be stuck as it is smooth and not sealed against the wall.
+9. 🧪 (← 2, 8) — The gap between ball and wall is small but nonzero, so water can reach under the ball and lift it rather than only pressing from above.
+10. 🏢 (← 6, 9) — Keep pouring until the water reaches the rim, and the ball floats at the top where a hand can lift it out.
+11. 👀 (← 10) — Self-check: the ball is not damaged by water, and the pipe is not damaged by water, so both constraints hold.
+
+LANDMARKS:
+- The pipe is closed at the bottom and rigid, so it holds water like a cup.
+- The ball is far less dense than water, so the water&#x27;s upward push on it exceeds its weight.
+- Water can get under the ball through the small gap, so the ball is lifted rather than pinned.
+- Raising the water level to the rim floats the ball to where it can be picked out by hand.
+
+ANSWER: Fill the pipe with water from the top; by buoyancy the ball floats up to the rim, where you lift it out by hand.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | pipe | water | invariant | cup | The pipe is closed at the bottom and rigid, so it holds water like a cup.<br>size | ball weight | buoyant force | ≪ | - | The ball is far less dense than water, so the water&#x27;s upward push on it exceeds its weight.<br>structure | water | ball | exists | - | Water can get under the ball through the small gap, so the ball is lifted rather than pinned.<br>construction | water level | ball | reduces-to | - | Raising the water level to the rim floats the ball to where it can be picked out by hand.</div>
+</div>
+<div class='chain'>
+<h4>Sticky tape on extended pencil lifts ball by adhesion <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: adhesive-probe</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is well-formed and contains no simulation. Its steps hold: a pencil fits the bore and can be extended to forearm length, and tape&#x27;s grip easily exceeds the weight of a ball of a few grams. Its new landmarks are that a pencil or stick reaches the ball through the bore, that tape wrapped sticky side out bonds to the ball, and that the adhesive force exceeds the ball&#x27;s weight. Landmark 4 only claims novelty and carries no weight.</div>
+<pre>CHAIN by blind player 2
+1. 🏓 (root) — The ball is light, hollow, smooth and slightly compressible.
+2. 🧪 (root) — The pipe is narrow, rigid, open at the top and closed by the floor.
+3. 🏢 (root) — An office has tape, pencils, string and similar items.
+4. ❓ (← 1, 2, 3) — How can the ball be removed without damaging the pipe or the ball, and what principle does the method use? This route must differ from the &quot;fill with water&quot; route.
+5. 🧲 (← 4) — I choose adhesion as the principle: something sticky on the end of a stick can pull the ball up.
+6. 🩹 (← 3, 5) — Wrap office tape around a pencil tip with the sticky side facing out. It makes a sticky tip and peels off cleanly.
+7. ✏️ (← 2, 3) — A pencil is thinner than the pipe&#x27;s bore, so it fits down the pipe. If the pencil is too short, tape a second pencil or a ruler to it to reach the bottom.
+8. ⚖️ (← 1) — The ball weighs very little, so only a weak grip is needed to hold it.
+9. 👇 (← 6, 7) — Lower the sticky tip until it touches the top of the ball, and press lightly. The ball is slightly compressible and the touch is gentle, so it is not harmed.
+10. 🔗 (← 5, 8, 9) — The tape sticks to the smooth ball surface, and that adhesive force is larger than the ball&#x27;s small weight.
+11. ⬆️ (← 10) — Lift the stick slowly and the ball rises up the pipe with it.
+12. 🤲 (← 11) — At the top, take the ball by hand and peel the tape off gently.
+13. 👀 (← 12) — Self-check: the pipe was never touched or altered, and the ball only met light tape pressure, so neither is damaged.
+
+LANDMARKS:
+- A pencil is thinner than the pipe&#x27;s bore, so it can reach the ball through the gap, and taping pencils together extends its length.
+- Tape wrapped sticky side out on the stick makes a tip that bonds to the smooth ball without damaging it.
+- The ball&#x27;s weight is smaller than the adhesive force, so the ball hangs from the tip when it is lifted.
+- The ball is lifted straight out by the stick, with no water or air flow involved.
+
+ANSWER: Wrap tape sticky side out on a pencil tip (extend it by taping on a second pencil or a ruler if needed), lower it onto the ball, press lightly so it sticks, and lift the ball out. The principle is adhesion: the sticky force on the ball is greater than its tiny weight.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | pencil | pipe bore | ≪ | - | A pencil is thinner than the pipe&#x27;s bore, so it can reach the ball through the gap, and taping pencils together extends its length.<br>construction | sticky tip | ball | exists | - | Tape wrapped sticky side out on the stick makes a tip that bonds to the smooth ball without damaging it.<br>size | ball weight | adhesive force | ≪ | - | The ball&#x27;s weight is smaller than the adhesive force, so the ball hangs from the tip when it is lifted.<br>construction | stick | ball | reduces-to | - | The ball is lifted straight out by the stick, with no water or air flow involved.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

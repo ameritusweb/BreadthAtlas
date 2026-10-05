@@ -1,0 +1,378 @@
+{
+ "shape": "star4",
+ "description": "Four-pointed star slab: alternating sharp tips and reflex valleys.",
+ "panels": [
+  {
+   "view": "A",
+   "angle": 30,
+   "angleShown": true
+  },
+  {
+   "view": "B",
+   "angle": 60,
+   "angleShown": false
+  },
+  {
+   "view": "C",
+   "angle": 150,
+   "angleShown": false
+  },
+  {
+   "view": "D",
+   "angle": 240,
+   "angleShown": false
+  }
+ ],
+ "labels": {
+  "c0.a": "KA",
+  "c0.b": "KL",
+  "c1.a": "HW",
+  "c1.b": "CZ",
+  "c2.a": "GD",
+  "c2.b": "AZ",
+  "c3.a": "QN",
+  "c3.b": "EL",
+  "c4.a": "NZ",
+  "c4.b": "UF",
+  "c5.a": "QA",
+  "c5.b": "HE",
+  "c6.a": "EV",
+  "c6.b": "CY",
+  "c7.a": "XS",
+  "c7.b": "WA"
+ },
+ "points": {
+  "KA": [
+   2,
+   1,
+   0
+  ],
+  "KL": [
+   2,
+   -1,
+   0
+  ],
+  "HW": [
+   0.5656854249492381,
+   1,
+   0.565685424949238
+  ],
+  "CZ": [
+   0.5656854249492381,
+   -1,
+   0.565685424949238
+  ],
+  "GD": [
+   1.2246467991473532e-16,
+   1,
+   2
+  ],
+  "AZ": [
+   1.2246467991473532e-16,
+   -1,
+   2
+  ],
+  "QN": [
+   -0.565685424949238,
+   1,
+   0.5656854249492381
+  ],
+  "EL": [
+   -0.565685424949238,
+   -1,
+   0.5656854249492381
+  ],
+  "NZ": [
+   -2,
+   1,
+   2.4492935982947064e-16
+  ],
+  "UF": [
+   -2,
+   -1,
+   2.4492935982947064e-16
+  ],
+  "QA": [
+   -0.5656854249492381,
+   1,
+   -0.565685424949238
+  ],
+  "HE": [
+   -0.5656854249492381,
+   -1,
+   -0.565685424949238
+  ],
+  "EV": [
+   -3.6739403974420594e-16,
+   1,
+   -2
+  ],
+  "CY": [
+   -3.6739403974420594e-16,
+   -1,
+   -2
+  ],
+  "XS": [
+   0.5656854249492379,
+   1,
+   -0.5656854249492381
+  ],
+  "WA": [
+   0.5656854249492379,
+   -1,
+   -0.5656854249492381
+  ]
+ },
+ "outlineColumnOrder": [
+  [
+   "KA",
+   "KL"
+  ],
+  [
+   "HW",
+   "CZ"
+  ],
+  [
+   "GD",
+   "AZ"
+  ],
+  [
+   "QN",
+   "EL"
+  ],
+  [
+   "NZ",
+   "UF"
+  ],
+  [
+   "QA",
+   "HE"
+  ],
+  [
+   "EV",
+   "CY"
+  ],
+  [
+   "XS",
+   "WA"
+  ]
+ ],
+ "totalArea": 33.720343055023314,
+ "creases": "0-1 0-14 0-2 1-15 1-3 10-11 10-12 11-13 12-13 12-14 13-15 14-15 2-3 2-4 3-5 4-5 4-6 5-7 6-7 6-8 7-9 8-10 8-9 9-11",
+ "faces": [
+  [
+   "KA",
+   "HW",
+   "CZ"
+  ],
+  [
+   "KA",
+   "CZ",
+   "KL"
+  ],
+  [
+   "HW",
+   "GD",
+   "AZ"
+  ],
+  [
+   "HW",
+   "AZ",
+   "CZ"
+  ],
+  [
+   "GD",
+   "QN",
+   "EL"
+  ],
+  [
+   "GD",
+   "EL",
+   "AZ"
+  ],
+  [
+   "QN",
+   "NZ",
+   "UF"
+  ],
+  [
+   "QN",
+   "UF",
+   "EL"
+  ],
+  [
+   "NZ",
+   "QA",
+   "HE"
+  ],
+  [
+   "NZ",
+   "HE",
+   "UF"
+  ],
+  [
+   "QA",
+   "EV",
+   "CY"
+  ],
+  [
+   "QA",
+   "CY",
+   "HE"
+  ],
+  [
+   "EV",
+   "XS",
+   "WA"
+  ],
+  [
+   "EV",
+   "WA",
+   "CY"
+  ],
+  [
+   "XS",
+   "KA",
+   "KL"
+  ],
+  [
+   "XS",
+   "KL",
+   "WA"
+  ],
+  [
+   "XS",
+   "KA",
+   "HW"
+  ],
+  [
+   "WA",
+   "KL",
+   "CZ"
+  ],
+  [
+   "XS",
+   "HW",
+   "GD"
+  ],
+  [
+   "WA",
+   "CZ",
+   "AZ"
+  ],
+  [
+   "XS",
+   "GD",
+   "QN"
+  ],
+  [
+   "WA",
+   "AZ",
+   "EL"
+  ],
+  [
+   "XS",
+   "QN",
+   "NZ"
+  ],
+  [
+   "WA",
+   "EL",
+   "UF"
+  ],
+  [
+   "XS",
+   "NZ",
+   "QA"
+  ],
+  [
+   "WA",
+   "UF",
+   "HE"
+  ],
+  [
+   "QA",
+   "EV",
+   "XS"
+  ],
+  [
+   "HE",
+   "CY",
+   "WA"
+  ]
+ ],
+ "visibility": {
+  "30": {
+   "KA": true,
+   "KL": true,
+   "HW": false,
+   "CZ": false,
+   "GD": true,
+   "AZ": true,
+   "QN": true,
+   "EL": true,
+   "NZ": true,
+   "UF": true,
+   "QA": false,
+   "HE": false,
+   "EV": false,
+   "CY": false,
+   "XS": false,
+   "WA": false
+  },
+  "60": {
+   "KA": false,
+   "KL": false,
+   "HW": false,
+   "CZ": false,
+   "GD": true,
+   "AZ": true,
+   "QN": true,
+   "EL": true,
+   "NZ": true,
+   "UF": true,
+   "QA": false,
+   "HE": false,
+   "EV": true,
+   "CY": true,
+   "XS": false,
+   "WA": false
+  },
+  "150": {
+   "KA": true,
+   "KL": true,
+   "HW": false,
+   "CZ": false,
+   "GD": false,
+   "AZ": false,
+   "QN": false,
+   "EL": false,
+   "NZ": true,
+   "UF": true,
+   "QA": true,
+   "HE": true,
+   "EV": true,
+   "CY": true,
+   "XS": false,
+   "WA": false
+  },
+  "240": {
+   "KA": true,
+   "KL": true,
+   "HW": false,
+   "CZ": false,
+   "GD": true,
+   "AZ": true,
+   "QN": false,
+   "EL": false,
+   "NZ": false,
+   "UF": false,
+   "QA": false,
+   "HE": false,
+   "EV": true,
+   "CY": true,
+   "XS": true,
+   "WA": true
+  }
+ }
+}

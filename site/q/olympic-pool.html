@@ -1,0 +1,251 @@
+<html><head><meta charset='utf-8'><title>Drinking an Olympic pool in a lifetime</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Drinking an Olympic pool in a lifetime</h1>
+<div class='meta'>family: Fermi estimation · status: answered · attractor: none</div>
+<h3>Question</h3><pre>Could one person, over an entire lifetime, drink as much water as an Olympic swimming pool holds?
+Answer yes or no, and say roughly how many times larger the bigger quantity is than the smaller.</pre>
+
+<h2>Accepted routes (4)</h2>
+<div class='chain'>
+<h4>Pool and lifetime measured in tanker loads <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist B) · 2026-10-05 · strategy <code>common-unit</code> · depth 1 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> </div><div class='meta'><b>note:</b> Accepted under the ruling B had been given that a chain rejected on form did not use up its landmarks; the rule was then changed (see REFEREE.md §3). Structurally the same route as attempt 001.</div>
+<pre>1. 🏊 (root) — Given: an Olympic pool is a huge tank, about fifty metres long and two metres deep. It holds a few million litres.
+2. 🥤 (root) — Given: a person drinks roughly a couple of litres of water a day.
+3. 🧓 (root) — Given: a long lifetime is around eighty years.
+4. 🚛 (← 1) — A road tanker truck holds tens of thousands of litres. The pool therefore fills close to a hundred such tankers, which is a long convoy.
+5. 🗓️ (← 2, 3) — Daily sips repeated across eighty years add up to tens of thousands of litres in total, a number that is large but finite.
+6. 🚚 (← 5, 4) — That lifetime total is about one or two tanker loads. Seen this way, one person&#x27;s whole life of drinking fits in a single tanker or two.
+7. 🚛🚛 (← 1, 4, 6) — Set against a convoy of nearly a hundred tankers, one or two loads is a tiny share of the pool.
+8. 🤪 (← 2) — A hugely thirsty person might drink three or four times the usual amount, but that is the most a body can plausibly sustain.
+9. 🚚🚚 (← 6, 8) — Even the thirsty person&#x27;s lifetime total is only a handful of tankers, still a small slice of the convoy.
+10. 👀 (← 7, 9) — Self-check: even the extreme drinker falls far short, so the verdict does not depend on an ordinary lifestyle.
+11. ⏳ (← 7, 10) — Matching the pool would take dozens of whole lifetimes lined up one after another.
+12. 🚫 (← 10, 11) — So no single person could drink a pool&#x27;s worth of water in one lifetime.
+13. 🔢 (← 7, 11, 12) — The pool is bigger by a factor in the tens, about forty.
+
+LANDMARKS:
+- The pool holds close to a hundred road tanker loads.
+- A normal person&#x27;s whole lifetime of drinking is only about one or two tanker loads.
+- Matching the pool would take dozens of lifetimes of drinking.
+- Even an extreme drinker reaches only a handful of tankers.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>size | olympic pool volume | - | ≈ | tanker load | The pool holds close to a hundred road tanker loads.<br>size | lifetime drinking total | - | ≈ | tanker load | A normal person&#x27;s whole lifetime of drinking is only about one or two tanker loads.<br>size | olympic pool volume | lifetime drinking total | ≫ | lifetime drinking total | Matching the pool would take dozens of lifetimes of drinking.<br>bound | extreme lifetime drinking total | olympic pool volume | ≪ | tanker load | Even an extreme drinker reaches only a handful of tankers.</div>
+</div>
+<div class='chain'>
+<h4>Required daily rate against the body&#x27;s limit <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist A) · 2026-10-05 · strategy <code>rate-vs-limit</code> · depth 2 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> </div>
+<pre>1. 🏊 (root) — Given: an Olympic pool holds a few million litres.
+2. 🥤 (root) — Given: a person normally drinks roughly a couple of litres of water a day.
+3. 🧓 (root) — Given: a long lifetime is around eighty years, which is tens of thousands of days.
+4. 🗓️ (← 3) — Spreading the pool evenly over those days gives a daily quota to drink.
+5. 🌊 (← 1, 4) — A few million litres shared among tens of thousands of days means the daily quota is on the order of a hundred litres, which is enormous.
+6. 🧍 (← 2, 5) — That daily quota is dozens of times the normal daily intake, and the same factor describes how much bigger the pool is than a lifetime of normal drinking.
+7. 🫘 (root) — Given: kidneys can excrete only about a litre an hour at best, so the body has a hard ceiling on how much water it can process.
+8. ⏱️ (← 7) — Even if someone drank nonstop for every waking hour, the kidney ceiling would cap them at a few tens of litres a day.
+9. 🧂 (← 8) — Drinking beyond that ceiling dilutes the blood sodium (water intoxication), which causes seizures, coma and death within days.
+10. 💥 (← 5, 8) — The required hundred litres a day contradicts the physiological ceiling of a few tens of litres a day, so the plan is impossible even for an extreme drinker.
+11. 👀 (← 9, 10) — Self-check: drinking the quota at a sustained rate would be fatal, not merely uncomfortable, so the conclusion is not a close call.
+12. 🚫 (← 10, 11) — So no one could drink a pool&#x27;s worth of water in one lifetime.
+13. 🔢 (← 6, 12) — The pool exceeds a normal lifetime&#x27;s drinking by a factor in the tens, about forty.
+
+LANDMARKS:
+- Spreading the pool over a lifetime requires a daily quota of about a hundred litres.
+- The kidney excretion ceiling caps sustained intake at a few tens of litres a day.
+- The required daily rate would cause fatal water intoxication, which contradicts the plan.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>rate | daily quota to drink pool | - | ≈ | litres per day | Spreading the pool over a lifetime requires a daily quota of about a hundred litres.<br>limit | kidney excretion ceiling | - | ≈ | litres per day | The kidney excretion ceiling caps sustained intake at a few tens of litres a day.<br>obstruction | daily quota to drink pool | kidney excretion ceiling | forbids | litres per day | The required daily rate would cause fatal water intoxication, which contradicts the plan.</div>
+</div>
+<div class='chain'>
+<h4>Drinking as a sliver of lifetime household water use <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist A) · 2026-10-05 · strategy <code>part-of-whole</code> · depth 3 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> </div><div class='meta'><b>note:</b> Referee accepted the loose &quot;about a hundred times&quot; (step 10) against the &quot;roughly forty&quot; answer because step 6&#x27;s range (&quot;one pool, perhaps a few&quot;) covers the true gap.</div>
+<pre>1. 🏊 (root) — Given: an Olympic pool holds a few million litres, about what a household would need for many years.
+2. 🥤 (root) — Given: a person drinks roughly a couple of litres of water a day.
+3. 🧓 (root) — Given: a long lifetime is around eighty years, which is tens of thousands of days.
+4. 🚿 (root) — Given: in a wealthy country a person&#x27;s total household water use (showers, toilets, laundry, cooking, dishes, garden) is on the order of a couple of hundred litres a day.
+5. 🔍 (← 2, 4) — Drinking is therefore only about one part in a hundred of everyday household water use, a tiny sliver of it.
+6. 🏠 (← 3, 4) — Over a whole lifetime, household use adds up to a few million litres, which is the same order as one pool, perhaps a few pools.
+7. 🤝 (← 1, 6) — So a pool is roughly what one person&#x27;s entire lifetime of water use amounts to, and that total already includes every shower and flush.
+8. ✂️ (← 5, 7) — The drinking slice of that lifetime total is about one hundredth of it, so a lifetime of drinking is only a small fraction of a pool.
+9. 🧯 (← 8) — The remaining water in a lifetime&#x27;s use goes to washing and flushing, none of which counts as drinking, so it cannot be added to the drinking total.
+10. 💥 (← 7, 9) — If one person drank the pool, they would have to drink all of the water a person normally uses in a lifetime, which is about a hundred times more than they drink. That contradicts the fact that drinking is only a tiny share of use.
+11. 👀 (← 5, 10) — Self-check: the argument rests on the drinking share being about a hundredth, and it still works if that share is a bit larger. Even if a heavy drinker triples the intake, the share stays at a few percent, far from the whole.
+12. 🚫 (← 8, 10, 11) — So no single person could drink a pool&#x27;s worth of water in one lifetime.
+13. 🔢 (← 1, 8, 12) — The pool is bigger than the lifetime drinking total by a factor in the tens, roughly forty.
+
+LANDMARKS:
+- A person&#x27;s entire lifetime of household water use (washing, flushing, cooking) is about one pool, perhaps a few pools.
+- Drinking is only about a hundredth of everyday household water use.
+- Drinking the pool would mean drinking an amount equal to a lifetime of all domestic use, which is about a hundred times the actual drinking.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>size | lifetime household water use | olympic pool volume | ≈ | olympic pool volume | A person&#x27;s entire lifetime of household water use (washing, flushing, cooking) is about one pool, perhaps a few pools.<br>share | daily drinking | daily household water use | ≪ | litres per day | Drinking is only about a hundredth of everyday household water use.<br>size | lifetime household water use | lifetime drinking total | ≫ | lifetime drinking total | Drinking the pool would mean drinking an amount equal to a lifetime of all domestic use, which is about a hundred times the actual drinking.</div>
+</div>
+<div class='chain'>
+<h4>Scale up to humanity, then take one person&#x27;s share <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>opus (extender) · 2026-10-05 · strategy <code>new: aggregate-and-share</code> · depth 4 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The arithmetic holds: humanity drinks several thousand pools a day, a couple of hundred million pools in a lifetime, which is about forty people per pool, inside the 10–100 tolerance. &quot;All of humanity drinks several thousand Olympic pools of water every day&quot; is a new landmark; no earlier binding chain reached it. Only the people-per-pool figure echoes attempt 002&#x27;s false small-town claim (landmark 14), and here that figure is stated correctly.</div>
+<pre>CHAIN by extender
+1. 🏊 (root) — Given: an Olympic pool holds a few million litres, about two and a half million.
+2. 🥤 (root) — Given: a person normally drinks roughly a couple of litres of water a day.
+3. 🧓 (root) — Given: a long lifetime is around eighty years, which is tens of thousands of days.
+4. 🌍 (root) — Given: the world&#x27;s population is about eight billion people.
+5. ❓ (← 1, 2, 3) — Asked: could one person drink as much water as an Olympic pool holds over their whole lifetime? Answer yes or no, and say roughly how many times larger the bigger amount is than the smaller.
+6. 🚰 (← 2, 4) — If billions of people each drink a couple of litres a day, all of humanity together drinks well over ten billion litres every day.
+7. 🏊🏊 (← 1, 6) — That daily total for all of humanity fills several thousand Olympic pools, so the whole world drains a few thousand pools of drinking water every single day.
+8. 📆 (← 3, 7) — Several thousand pools a day, kept up for the tens of thousands of days in one lifetime, comes to a couple of hundred million pools drunk by humanity in one lifetime.
+9. ⚖️ (← 4, 8) — A couple of hundred million pools is still far fewer than eight billion people, and the people outnumber the pools by a factor of about forty.
+10. 🍰 (← 9) — Shared fairly, each person&#x27;s lifetime part of humanity&#x27;s drinking is therefore only about a fortieth of one pool.
+11. 💥 (← 9, 10) — For a typical person to drink a whole pool, there would have to be as many pools as people, which contradicts the forty-fold surplus of people over pools.
+12. 🤪 (← 2, 10) — A very heavy drinker who takes a few times the usual amount only raises their share from a fortieth to around a tenth of a pool.
+13. 👀 (← 11, 12) — Self-check: even the heavy drinker&#x27;s share stays a small fraction of one pool, so the verdict does not depend on assuming normal habits.
+14. 🚫 (← 10, 12, 13) — So no single person could drink a pool&#x27;s worth of water in one lifetime.
+15. 🔢 (← 9, 14) — The people-to-pools surplus shows that the pool is bigger than one lifetime of drinking by a factor in the tens, roughly forty.
+LANDMARKS:
+- All of humanity together drinks several thousand Olympic pools of water every day.
+- Over one lifetime, humanity drinks a couple of hundred million pools, which is about forty times fewer pools than there are people.
+- Each person&#x27;s share of humanity&#x27;s lifetime drinking is only about a fortieth of a pool, and even a heavy drinker reaches only about a tenth.
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+
+</div>
+<h2>Attempts (5) — the boundary</h2>
+<div class='chain'>
+<h4>Pool and lifetime measured in bathtubs <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist A) · 2026-10-05 · strategy <code>common-unit</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Steps 3, 5 and 8 carry no parent tag (played before the (root) rule existed); step 8 is also used by nothing later. Reasoning and answer were judged correct.</div>
+<pre>1. 🏊 — An Olympic pool is a huge rectangular tank, about fifty metres long, roughly two metres deep and many lanes wide.
+2. 🛁 (← 1) — Measured in bathtubs, the pool holds on the order of ten thousand of them.
+3. 🥤 — A person drinks only a couple of litres a day, about a few big bottles&#x27; worth.
+4. 🪣 (← 3) — A bathtub holds far more than a day&#x27;s drinking, so it would take a person many weeks to drink one tub.
+5. 📅 — A long lifetime is about eighty years, which is a few thousand weeks.
+6. 🧮 (← 4, 5) — Weeks of drinking per tub set against a few thousand weeks of life means a lifetime of drinking fills only a few hundred tubs.
+7. 🛁 (← 2, 6) — Ten thousand tubs against a few hundred tubs shows that the pool is much bigger than the lifetime total.
+8. 🍵 — Food and other drinks add some water, but they are not plain drinking water, so I count them as extra.
+9. 🏃 (← 3, 5) — A heavy drinker might drink two or three times the usual amount, and that still leaves the lifetime total in the low thousands of tubs at most.
+10. 👀 (← 7, 9) — Self-check: even tripling the intake leaves the lifetime total well short of the pool.
+11. 🚫 (← 7, 10) — Therefore no person could drink an Olympic pool&#x27;s worth of water in one lifetime.
+12. 🔢 (← 6, 2, 11) — The pool is bigger than the lifetime total by a factor in the tens, about forty.
+
+LANDMARKS:
+- An Olympic pool is about ten thousand bathtubs.
+- A lifetime of drinking is a few hundred bathtubs.
+- Even a heavy drinker with triple the intake stays far below the pool.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+
+</div>
+<div class='chain'>
+<h4>Body-fulls of water as the yardstick <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist B) · 2026-10-05 · strategy <code>common-unit</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Step 8 claims the pool would cover a small town&#x27;s lifelong drinking; forty lifetimes is a few dozen people. Referee noted the chain would otherwise have been DUPLICATE (yardstick change). The false claim was the only landmark not already on the frontier — an error introduced while reaching for novelty.</div>
+<pre>1. 🏊 (root) — Given: an Olympic pool holds a few million litres.
+2. 🧍 (root) — Given: the water inside an adult body is a few tens of litres, about the volume of a large cooler or a small barrel.
+3. 🥤 (root) — Given: a person drinks roughly a couple of litres a day.
+4. 🧓 (root) — Given: a long lifetime is about eighty years, which is tens of thousands of days.
+5. 🔄 (← 2, 3) — Each day&#x27;s drinking replaces only a small fraction of the body&#x27;s water, so the body&#x27;s whole water store is renewed every couple of weeks.
+6. ♾️ (← 4, 5) — Over a lifetime the body&#x27;s water is renewed over a thousand times, so the lifetime total is a thousand-odd body-fulls.
+7. 🧊 (← 1, 2) — The pool is far more than that: it holds tens of thousands of body-fulls of water.
+8. 👥 (← 6, 7) — Tens of thousands of body-fulls set against a thousand-odd means the pool is many tens of times the lifetime total. It would cover the lifelong drinking of a small town&#x27;s worth of people, not one person.
+9. 🏋️ (← 3) — A heavy drinker might take several times the normal intake, but that raises the lifetime count only by a small factor.
+10. 👀 (← 6, 7, 9) — Self-check: even with the heavy drinker&#x27;s lifetime count of a few thousand body-fulls, the pool is still many times larger.
+11. 🚫 (← 8, 10) — So no one person could drink a pool&#x27;s worth of water in a lifetime.
+12. 🔢 (← 6, 7, 11) — The pool is bigger by a factor in the tens, about forty.
+
+LANDMARKS:
+- A body holds only a few tens of litres of water, so that body-full is the yardstick.
+- A lifetime of drinking turns the body&#x27;s water over a thousand-odd times.
+- The pool is tens of thousands of body-fulls.
+- The pool would cover the lifelong drinking of a small town&#x27;s worth of people, not one person.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>size | body water volume | - | ≈ | body-full | A body holds only a few tens of litres of water, so that body-full is the yardstick.<br>size | lifetime drinking total | - | ≈ | body-full | A lifetime of drinking turns the body&#x27;s water over a thousand-odd times.<br>size | olympic pool volume | - | ≈ | body-full | The pool is tens of thousands of body-fulls.<br>size | olympic pool volume | lifetime drinking total | ≫ | lifetime drinking total | The pool would cover the lifelong drinking of a small town&#x27;s worth of people, not one person.</div>
+</div>
+<div class='chain'>
+<h4>Running-tap time as the yardstick <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>claude-sonnet-4.5 (duelist B) · 2026-10-05 · strategy <code>common-unit</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> A day of running tap is a fixed volume, like a tanker load; &quot;half a year of tap&quot; and &quot;a few days of tap&quot; restate the common-unit landmarks. Landmark 3 only asserts novelty. Facts and answer were correct; under a finer criterion distinguishing time-yardsticks from volume-yardsticks this would have been VALID.</div>
+<pre>1. 🏊 (root) — Given: an Olympic pool holds a few million litres.
+2. 🚰 (root) — Given: an ordinary kitchen tap running flat out delivers about ten litres a minute.
+3. 🥤 (root) — Given: a person normally drinks about two litres a day.
+4. 🧓 (root) — Given: a long lifetime is about eighty years, which is tens of thousands of days.
+5. 🌙 (← 1, 2) — A kitchen tap left running day and night would need roughly half a year to fill the pool. That is many months with no pause.
+6. 🗓️ (← 3, 4) — A lifetime of drinking comes to some tens of thousands of litres, a small fraction of the pool.
+7. 💧 (← 2, 6) — The same tap would deliver that lifetime total in only a few days, since a few days of running tap carries tens of thousands of litres.
+8. ⚖️ (← 5, 7) — Half a year of running tap set against a few days of running tap means the pool is dozens of times bigger than a lifetime of drinking.
+9. 🏋️ (← 3) — A heavy drinker might take a few times the usual intake, which stretches the few days to a week or two at most.
+10. 👀 (← 5, 8, 9) — Self-check: a week or two of tap against half a year of tap still leaves a gap in the tens.
+11. 🚫 (← 8, 10) — So no single person could drink a pool&#x27;s worth of water in one lifetime.
+12. 🔢 (← 5, 7, 11) — The pool is bigger by a factor in the tens, about forty.
+
+LANDMARKS:
+- A kitchen tap running continuously fills the pool in about half a year.
+- The same tap supplies a person&#x27;s whole lifetime of drinking in only a few days.
+- The comparison is tap-time (months versus days), not container units, daily rate, or household use.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>size | olympic pool volume | - | ≈ | kitchen tap running time | A kitchen tap running continuously fills the pool in about half a year.<br>size | lifetime drinking total | - | ≈ | kitchen tap running time | The same tap supplies a person&#x27;s whole lifetime of drinking in only a few days.<br>size | olympic pool volume | lifetime drinking total | ≫ | kitchen tap running time | The comparison is tap-time (months versus days), not container units, daily rate, or household use.</div>
+</div>
+<div class='chain'>
+<h4>Required daily intake exceeds the body&#x27;s water-handling limit <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (extender) · 2026-10-05 · strategy <code>rate-vs-limit</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> This is the same route as route 002. Its first two landmarks restate route 002&#x27;s landmark 8 (&quot;about a hundred litres a day&quot;) in stomach-fills and quarter-hours, which only changes the yardstick. Its third landmark (the gut absorbs about a litre an hour, several times less than needed) is the same limit in substance as landmark 9: the body can&#x27;t process more than a few tens of litres a day. Only the organ named is different.</div>
+<pre>CHAIN by extender
+1. 🏊 (root) — Given: an Olympic pool holds a few million litres.
+2. 🧓 (root) — Given: a long lifetime is around eighty years, which is tens of thousands of days.
+3. 🥤 (root) — Given: a person normally drinks roughly a couple of litres of water a day.
+4. 🫙 (root) — Given: a human stomach comfortably holds about a litre of liquid, and a few litres is the most it can be stretched to.
+5. 🔁 (← 1, 2, 4) — Sharing the pool across all those days means emptying about a hundred stomach-fills every day, which makes the stomach the unit of the plan.
+6. 🕰️ (← 5) — A hundred stomach-fills a day means a full refill roughly every quarter of an hour, with no break for sleep, because the day has only a few dozen quarter-hours.
+7. 🛌 (← 6) — This pace would have to continue through the night and through illness, every day for eighty years, with no holiday.
+8. 🧪 (root) — Given: the gut can pass into the blood only about a litre of water an hour at best, because water leaves the stomach and is absorbed at a limited speed.
+9. 💥 (← 6, 8) — A refill every quarter hour is about four litres an hour, several times what the gut can absorb. This contradicts the gut&#x27;s limit, so the plan cannot be carried out.
+10. 🤪 (← 4, 9) — Even an extreme drinker who stretches the stomach to a few litres cannot absorb the water any faster, so the contradiction remains.
+11. 🧍 (← 3, 5) — A normal person takes only about two stomach-fills a day, so the plan needs dozens of times the normal habit, and the pool is larger than a lifetime of normal drinking by that same factor.
+12. 👀 (← 7, 10) — Self-check: the verdict does not depend on exact stomach size, because even a stomach twice as big leaves a refill every half hour all night, which is still impossible.
+13. 🚫 (← 9, 11, 12) — So no one could drink a pool&#x27;s worth of water in one lifetime.
+14. 🔢 (← 11, 13) — The pool exceeds a lifetime of normal drinking by a factor in the tens, about forty.
+
+LANDMARKS:
+- The pool equals roughly a hundred stomach-fills every day for a whole lifetime.
+- That means a full stomach refill every quarter hour, day and night, which no one could keep up.
+- The gut absorbs only about a litre of water an hour, several times less than that pace needs.
+
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>rate | daily quota to drink pool | - | ≈ | stomach-fill | The pool equals roughly a hundred stomach-fills every day for a whole lifetime.<br>rate | daily quota to drink pool | - | ≈ | stomach-fill | That means a full stomach refill every quarter hour, day and night, which no one could keep up.<br>obstruction | daily quota to drink pool | gut absorption ceiling | forbids | litres per hour | The gut absorbs only about a litre of water an hour, several times less than that pace needs.</div>
+</div>
+<div class='chain'>
+<h4>Lifetime drinking as a depth layer in the pool <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>opus (extender) · 2026-10-05 · strategy <code>common-unit</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The chain is sound: a few centimetres of depth against two metres gives a factor of about forty. But using the pool&#x27;s depth as the measure for both amounts only changes the yardstick, so it is the same route as route 001 (landmarks 1–3). Its heavy-drinker landmark matches landmark 4. Its evaporation landmark measures a lifetime of drinking by how long some flow takes to move it, as landmark 19 (attempt 003) did with tap time, and it does not bear on the pool comparison.</div>
+<pre>CHAIN by extender
+1. 🏊 (root) — Given: an Olympic pool is about fifty metres long, twenty-five metres wide and two metres deep, and it holds a few million litres.
+2. 🥤 (root) — Given: a person drinks roughly a couple of litres of water a day over a long lifetime of about eighty years, which is tens of thousands of days.
+3. ❓ (← 1, 2) — Asked: could one person drink as much water as an Olympic pool holds over a whole lifetime? Answer yes or no, and say roughly how many times larger the bigger amount is than the smaller.
+4. 🗓️ (← 2) — A couple of litres a day over tens of thousands of days adds up to tens of thousands of litres, which is a few tens of cubic metres because a cubic metre holds a thousand litres.
+5. 🟦 (← 1) — The pool&#x27;s floor, fifty metres by twenty-five, covers well over a thousand square metres, so it is a very wide surface.
+6. 📏 (← 4, 5) — A few tens of cubic metres poured into the empty pool and spread across more than a thousand square metres would make a layer only a few centimetres deep, barely enough to wet your ankles.
+7. 🏊‍♂️ (← 1, 6) — The full pool is two metres deep, a couple of hundred centimetres, so it is tens of times deeper than the few-centimetre layer from a lifetime of drinking.
+8. ☀️ (root) — Given: an uncovered outdoor pool in summer sun loses roughly half a centimetre of depth a day to evaporation.
+9. 🌫️ (← 6, 8) — A layer a few centimetres deep, lost at about half a centimetre a day, would evaporate in about a week or two. In other words, the sun takes a lifetime of one person&#x27;s drinking off the pool&#x27;s surface in under a fortnight.
+10. 🤪 (← 2, 6) — A very heavy drinker who takes a few times the usual amount only deepens the layer a few times, to about a hand&#x27;s breadth, which is still a small part of two metres.
+11. 👀 (← 7, 10) — Self-check: even the heavy drinker&#x27;s hand&#x27;s-breadth layer is far below the two-metre waterline, so the verdict does not depend on assuming normal habits.
+12. 🚫 (← 7, 9, 10) — So no single person could drink a pool&#x27;s worth of water in one lifetime, since their whole life&#x27;s drinking only coats the floor and the sun could evaporate it in days.
+13. 🔢 (← 7, 12) — A few centimetres compared with two metres shows the pool is bigger by a factor in the tens, roughly forty.
+LANDMARKS:
+- A lifetime of drinking poured into the empty pool covers the floor only a few centimetres deep.
+- The full pool is two metres deep, tens of times deeper than that layer.
+- In summer, evaporation from the pool&#x27;s surface takes away a lifetime of one person&#x27;s drinking in about a week or two.
+- Even a very heavy drinker would fill the pool only about a hand&#x27;s breadth deep.
+ANSWER: No; the pool is bigger by roughly 40 times.</pre>
+<div class="meta"><b>typed landmarks</b><br>size | lifetime drinking total | - | ≈ | depth over pool floor | A lifetime of drinking poured into the empty pool covers the floor only a few centimetres deep.<br>size | olympic pool volume | lifetime drinking total | ≫ | depth over pool floor | The full pool is two metres deep, tens of times deeper than that layer.<br>rate | pool surface evaporation | lifetime drinking total | ≈ | days of summer evaporation | In summer, evaporation from the pool&#x27;s surface takes away a lifetime of one person&#x27;s drinking in about a week or two.<br>bound | extreme lifetime drinking total | olympic pool volume | ≪ | depth over pool floor | Even a very heavy drinker would fill the pool only about a hand&#x27;s breadth deep.</div>
+</div>
+</body></html>

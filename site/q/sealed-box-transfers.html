@@ -1,0 +1,89 @@
+<html><head><meta charset='utf-8'><title>Can transfers empty a sealed collection?</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>Can transfers empty a sealed collection?</h1>
+<div class='meta'>family: conservation, witness persistence · status: answered · attractor: repeatedly emptying individual boxes eventually empties them all</div>
+<h3>Question</h3><pre>A sealed collection of boxes contains at least one counter. Each allowed move takes a counter from one box and places it into a different box in the same collection. Counters cannot be destroyed or leave the collection. Can a sequence of moves make every box empty?</pre>
+
+<h2>Accepted routes (3)</h2>
+<div class='chain'>
+<h4>Conservation of counters blocks reaching the all-empty state <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: conservation-invariant-obstruction</code> · depth 1 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The frontier is empty, so all three landmarks are new: the counter total never changes under a move, at least one counter always exists and sits in some box, and the all-empty state would need zero counters, which is a contradiction. Every step follows from the parents it names. Step 7 extends the invariant by induction instead of listing states, so the chain does not simulate.</div>
+<pre>CHAIN by blind player 1
+1. 📦 (root) — Given: a sealed collection of boxes.
+2. 🔘 (root) — Given: at least one counter is in the collection at the start.
+3. ❓ (← 1, 2) — Asked: can some sequence of moves leave every box empty?
+4. ➡️📦 (root) — Given: a move takes one counter out of one box and puts it into a different box.
+5. 🚫🔥 (root) — Given: counters are never destroyed and never leave the collection.
+6. 🔒 (← 4, 5) — A move only relocates a counter, so the set of counters in the collection is unchanged by every move.
+7. 🔁 (← 6) — By repeating that fact, the same counters are still in the collection after any number of moves.
+8. 🔘➕ (← 2, 7) — The collection started with at least one counter, so at least one counter still exists after any sequence of moves.
+9. 🏠 (← 4, 8) — A counter that exists is always sitting in some box, because each move ends by placing it into a box.
+10. 📭 (root) — Premise: &quot;every box is empty&quot; means no box holds any counter.
+11. 💥 (← 9, 10) — A counter sits in a box, yet no box holds a counter, so the two claims contradict.
+12. 🙅 (← 3, 11) — The all-empty state is unreachable, so the answer to the question is no.
+
+LANDMARKS:
+- A move only relocates a counter, so the set of counters in the collection never changes (a conservation invariant).
+- Since at least one counter exists at the start, one still exists after any moves, and it must sit in some box.
+- &quot;All boxes empty&quot; would need no counter to exist anywhere in the collection, which contradicts the previous point.
+
+ANSWER: No. No sequence of moves can make every box empty.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | the counters in the collection | a move | invariant | - | A move only relocates a counter, so the set of counters in the collection never changes (a conservation invariant).<br>state | a surviving counter | some box | exists | - | Since at least one counter exists at the start, one still exists after any moves, and it must sit in some box.<br>obstruction | the all-empty state | a surviving counter | forbids | - | &quot;All boxes empty&quot; would need no counter to exist anywhere in the collection, which contradicts the previous point.</div>
+</div>
+<div class='chain'>
+<h4>Last move&#x27;s destination box is never empty <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>new: last-step-witness</code> · depth 2 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain never uses the conservation invariant from route 001. It introduces two new landmarks: &quot;every move leaves its destination box nonempty,&quot; and a case split that uses the start position when there are no moves and the last move&#x27;s destination box otherwise. Every step follows from its parents (5→6→9, 2+7→8, 8+9→10), and the answer &quot;No&quot; is correct.</div>
+<pre>CHAIN by blind player 2
+1. 📦 (root) — Given: a sealed collection of boxes, and counters never leave or get destroyed.
+2. 🔘 (root) — Given: at the start there is at least one counter.
+3. ➡️ (root) — Given: each move takes one counter from one box and puts it into a different box.
+4. ❓ (← 1, 2, 3) — Asked: can some sequence of moves leave every box empty?
+5. 🎯 (← 3) — Every move has a destination box, and that box receives a counter.
+6. ➕ (← 5) — Immediately after any move, its destination box holds at least one counter.
+7. 🔀 (← 3) — Split into two cases: the sequence has no moves, or it has at least one move.
+8. 🏁 (← 2, 7) — In the no-move case the starting position is the final one, and it has a counter, so some box is nonempty.
+9. 🔚 (← 6, 7) — In the case with moves, look at the last move. Right after it, its destination box holds a counter.
+10. 💥 (← 8, 9) — In both cases &quot;every box is empty&quot; at the end contradicts a box that holds a counter.
+11. 🚫 (← 4, 10) — So no sequence of moves can leave every box empty.
+
+LANDMARKS:
+- Every move leaves its destination box nonempty, so it cannot end in an empty state.
+- Case split: no moves (the start is nonempty) versus at least one move (the last move&#x27;s destination is nonempty).
+ANSWER: No</pre>
+<div class="meta"><b>typed landmarks</b><br>obstruction | a move | the all-empty state | forbids | - | Every move leaves its destination box nonempty, so it cannot end in an empty state.<br>reduction | the sequence of moves | the last move | reduces-to | - | Case split: no moves (the start is nonempty) versus at least one move (the last move&#x27;s destination is nonempty).</div>
+</div>
+<div class='chain'>
+<h4>Reversible moves isolate the dead-end empty state <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (extender) · 2026-10-05 · strategy <code>new: reversibility-isolates-terminal-state</code> · depth 3 · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain is sound. Any move can be undone by moving the same counter straight back, and no move is possible from the all-empty state. Together these mean the all-empty state could only be reached from itself, and the start holds a counter, so it cannot be reached. The new landmarks are reversibility splitting the states into mutually reachable clusters (step 6) and the all-empty state as an isolated dead end (steps 8–9). Neither is in route 001 (conservation) or route 002 (last move&#x27;s destination is nonempty).</div>
+<pre>CHAIN by extender
+1. 📦 (root) — Given: a sealed collection of boxes.
+2. 🔘 (root) — Given: at the start there is at least one counter in the collection.
+3. ❓ (← 1, 2) — Asked: can some sequence of moves leave every box empty?
+4. ➡️ (root) — Given: a move takes one counter from one box and puts it into a different box.
+5. 🪞 (← 4) — Any move can be undone by moving that same counter straight back, so every move is reversible.
+6. 🕸️ (← 5) — So if one state can reach another, the second can reach the first, and mutually reachable states form closed clusters.
+7. 🈳 (root) — Premise: the all-empty state is the arrangement with no counter in any box.
+8. 🧱 (← 4, 7) — From the all-empty state no move is possible, because a move needs a counter to take.
+9. 🏝️ (← 6, 8) — So the all-empty state is a cluster by itself: if the start could reach it, it could come back, yet nothing leaves it.
+10. 🚩 (← 2, 7) — The starting state holds a counter, so it is a different state from the all-empty one.
+11. 💥 (← 9, 10) — Reaching the all-empty state would require the start to be that very state, which contradicts the start holding a counter.
+12. 🙅 (← 3, 11) — So the all-empty state cannot be reached, and the answer is no.
+
+LANDMARKS:
+- Every move is reversible, so states connected by moves form mutually reachable clusters.
+- The all-empty state is a dead end with no possible move out of it, so by reversibility it is isolated from every other state.
+- The start has a counter, so it lies outside that isolated all-empty state and cannot reach it.
+
+ANSWER: No</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | a move | the states connected by moves | bijects | - | Every move is reversible, so states connected by moves form mutually reachable clusters.<br>obstruction | the all-empty state | the states connected by moves | forbids | - | The all-empty state is a dead end with no possible move out of it, so by reversibility it is isolated from every other state.<br>obstruction | the starting state | the all-empty state | forbids | - | The start has a counter, so it lies outside that isolated all-empty state and cannot reach it.</div>
+</div>
+<h2>Attempts (0) — the boundary</h2>
+</body></html>

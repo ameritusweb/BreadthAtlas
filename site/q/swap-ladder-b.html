@@ -1,0 +1,179 @@
+<html><head><meta charset='utf-8'><title>The swap ladder, second instance</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The swap ladder, second instance</h1>
+<div class='meta'>family: long state tracking (parametrized sibling of swap-ladder, seed 23) · status: answered · attractor: none</div>
+<h3>Question</h3><pre>Twelve tokens A–M (no I) start on rails 1–12. The forty-one rungs are applied from top to bottom; each
+rung swaps whichever two tokens are on its two rails at that moment. After the last rung, **which token
+is on rail 3, and how many tokens are back on the rail where they started?**</pre>
+
+<h2>Accepted routes (0)</h2>
+<h2>Attempts (6) — the boundary</h2>
+<div class='chain'>
+<h4>Rung-by-rung tracing of token positions down the ladder <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>sonnet (blind player 1) · 2026-10-05 · strategy <code>new: direct-simulation</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> The chain simulates the ladder step by step, which v2 §1 treats as calculation. Steps 4–11 apply the rungs in sequence and list the full row at several points (&quot;C A D E, then H B F G&quot;, &quot;D A C E H B F G L J K M&quot;, &quot;D A B C E F H G L J K M&quot;, &quot;D A B C F E G H J K L M&quot;), and the first landmark is also a snapshot of the row&#x27;s state.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously WRONG: Step 5 says that after rungs 7–11 &quot;E and F come back to rails 5 and 6, and H and G are swapped,&quot; but by rung 11 the pict</div>
+<pre>CHAIN by blind player 1
+1. 🪜 (root) — Given: twelve tokens A–M (no I) start on rails 1–12, in alphabetical order.
+2. 🔀 (root) — Given: forty-one rungs are applied top to bottom, and each rung swaps the two tokens on its two rails at that moment.
+3. ❓ (← 1, 2) — Asked: which token ends on rail 3, and how many tokens end on the rail where they started? This version has 41 rungs, and the tokens skip the letter I.
+4. 👆 (← 2, 3) — The top rungs are read first: 5↔6, 2↔3, 1↔2, then 10↔11, 5↔6, 7↔8. The first 5↔6 is undone by the second, and the left side becomes C A B D.
+5. 🧩 (← 4) — Rungs 7–11 are 9↔10, 6↔7, 3↔4, 4↔5, 5↔6. The tokens E and F come back to rails 5 and 6, and H and G are swapped. By rung 11 the left side reads C A D E, then H B F G.
+6. 🔁 (← 5) — The 1↔2 and 2↔3 rungs recur through the middle: rungs 13, 17, 18, 21, 24, 25, 29. Together they leave rail 1 holding D and rails 2–3 holding A and C after rung 29.
+7. 🌀 (← 5) — The right-hand 8↔9 and 7↔8 rungs (12, 16, 19, 20, 22, 23, 26, 30) and the 10↔11 rungs (4, 15, 27, 38) mostly cancel out. By rung 30 the right side reads F G L J K M.
+8. 🧮 (← 6, 7) — After rung 30 the full row is D A C E H B F G L J K M. Every token is displaced, so the bottom rungs still decide the result.
+9. 🔧 (← 8) — Rungs 31–34 (5↔6, 4↔5, 3↔4, 6↔7) pull B into rail 3 and C into rail 4. They also put E, F and H in their home order. The row becomes D A B C E F H G L J K M.
+10. 🧹 (← 9) — Rungs 35–38 (9↔10, 7↔8, 5↔6, 10↔11) restore G, H, J, K, L to their home rails. They also swap E and F, leaving D A B C F E G H J K L M.
+11. 🏁 (← 10) — The last three groups are 1↔2 (rung 39), 2↔3 (rung 40) and 5↔6 (rung 41). Rungs 39 and 40 carry D rightward from rail 1 to rail 3, and rung 41 restores E and F. The final row is A B D C E F G H J K L M.
+12. 👀 (← 11) — Self-check: 41 rungs were counted from the picture, and the final row is a valid permutation of all twelve letters. Only D and C are out of place, and they sit on each other&#x27;s rails.
+13. ✅ (← 11, 12) — Rail 3 holds D. Ten of the twelve tokens are on their starting rails, because only C and D are swapped.
+
+LANDMARKS:
+- After rung 30 the row is D A C E H B F G L J K M.
+- Rungs 31–38 restore everything on the right to home order and bring B to rail 3.
+- The final row is A B D C E F G H J K L M, with only C and D swapped.
+ANSWER: Token D is on rail 3, and 10 tokens are back on their starting rails.</pre>
+
+</div>
+<div class='chain'>
+<h4>(form failure) <span class='v-ILL-FORMED'>ILL-FORMED</span></h4>
+<div class='meta'>sonnet (blind player 2) · 2026-10-05 · strategy <code>unclassified</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> steps [12] do no work (nothing later follows from them)</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: steps [12] do no work (nothing later follows from them)</div>
+<pre>CHAIN by blind player 2
+1. 🔤 (root) — Twelve tokens A–M (no I) start on rails 1–12 in order.
+2. 🪜 (root) — Forty-one rungs are applied top to bottom, and each swaps the two tokens on its two rails at that moment.
+3. ❓ (← 1, 2) — Which token ends on rail 3, and how many tokens end on their starting rail?
+4. 🅼 (← 2) — No rung touches rail 12, so M stays home throughout.
+5. 🔀 (← 1, 2) — After the first 12 rungs, the row is C A D E H B F L G J K M. The middle group has been shuffled and the left end has begun to swap.
+6. 🔁 (← 5) — Rungs 13 to 30 shuffle the left four rails and the H–L group, and the row becomes D A C E H B F G L J K M. G and L are back in order.
+7. 🧩 (← 6) — Rungs 31 to 38 sort the right side. E and F settle on rails 5 and 6, H goes to rail 8, and J, K, L are put in order, so the row is D A B C E F G H J K L M apart from rails 1 and 2, with the extra pair B and C still to be fixed.
+8. ⬅️ (← 7) — Rung 39 swaps rails 1 and 2, putting A on rail 1 and D on rail 2.
+9. ⬇️ (← 8) — Rung 40 swaps rails 2 and 3, so B goes to rail 2 and D to rail 3.
+10. ↔️ (← 9) — Rung 41 swaps rails 5 and 6, giving the final row A B D C E F G H J K L M.
+11. 👀 (← 10) — Self-check: compared with the home order, only C and D have exchanged places, which fits the trace.
+12. 🎯 (← 10) — Rail 3 holds D.
+13. 🔢 (← 4, 10) — Every token except C and D is home, which is ten tokens, and M is among them.
+
+LANDMARKS:
+- Rail 12 is never touched, so M never moves.
+- After rung 12 the row is C A D E H B F L G J K M.
+- Rung 41 swaps rails 5 and 6, turning F E into E F as the last step.
+- Rung 40 puts D on rail 3 and B on rail 2.
+ANSWER: D is on rail 3, and 10 tokens are back on their starting rails.</pre>
+
+</div>
+<div class='chain'>
+<h4>Parity plus block separation asserting cancellation <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: parity-and-block-decomposition</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Step 6 does not follow from its parents (← 2, 4): having only four rungs between rails 4 and 5 says nothing about which tokens end up in which block. Steps 7 and 10 are also unsupported. &quot;The many small rungs cancel&quot; and &quot;the shuffling undoes itself&quot; are stated without any structural reason, and an odd rearrangement of four tokens (step 9) does not force a single C–D swap with A and B home. The final answer is correct, but the chain asserts the cancellation instead of deriving it; it never uses the mirror of rungs 1–20 in 22–41 around the unpaired rung at row 21.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: steps [11, 12] do no work (nothing later follows from them)</div>
+<pre>CHAIN by duelist A
+1. 🪢 (root) — Twelve tokens A–M (no I) start on rails 1–12, one token per rail.
+2. 🪜 (root) — Forty-one rungs are applied top to bottom, and each rung swaps the two tokens on its two rails at that moment.
+3. ❓ (← 1, 2) — Asked: which token is on rail 3 after the last rung, and how many tokens are back on their starting rail? The ladder is a fresh instance with a different drawing than the familiar one.
+4. 🚫 (root) — In the picture, rail 12 has no rung touching it, so token M never moves.
+5. 🔀 (← 2) — Every rung is a single swap, so the whole ladder is one rearrangement of the tokens. An odd number of rungs makes that rearrangement odd, meaning it cannot be the do-nothing rearrangement.
+6. 🚪 (← 2, 4) — Only four rungs link rails 4 and 5, so rails 1–4 and rails 5–12 trade tokens at only a few doorways. Tracking the tokens through those doorways, the left block ends holding exactly its own four tokens A–D, and the right block holds E–M.
+7. 🎯 (← 4, 6) — In the right block, the many small rungs among rails 5–11 cancel out in net effect. Each of E, F, G, H, J, K, L ends on its own rail, and M is already fixed.
+8. 🔁 (← 6) — In the left block, only A, B, C and D are shuffled, by many rungs between rails 1–2 and 2–3 and by just two rungs between rails 3–4. Their net effect is some rearrangement of those four tokens.
+9. 🧮 (← 5, 7, 8) — The whole ladder is odd and the right block contributes no net change, so the left four tokens must be rearranged in an odd way.
+10. ✂️ (← 8, 9) — The shuffling on rails 1–2 and 2–3 undoes itself, so A and B return home. The odd leftover is then a single swap of the two tokens C and D.
+11. 🥇 (← 10) — C and D have traded places, so rail 3 holds D.
+12. 🔟 (← 7, 10) — Every token except the swapped pair C and D is home, which leaves ten tokens on their starting rails.
+13. 👀 (← 5, 10) — Self-check: one swap is an odd rearrangement, which agrees with an odd number of rungs. The answer is consistent.
+
+LANDMARKS:
+- Rail 12 is never touched, so M is fixed.
+- An odd number of rungs means the overall rearrangement is odd, so it cannot be the identity.
+- The right block (E–M) nets out to the identity, and A and B return home.
+- The whole ladder amounts to a single swap of C and D.
+
+ANSWER: Rail 3 holds token D, and 10 tokens are back on their starting rails.</pre>
+
+</div>
+<div class='chain'>
+<h4>Parity plus rung-pair cancellation leaving one swap <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: mirror-cancellation-to-single-transposition</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Step 9 doesn&#x27;t follow from step 8. When the mirrored rungs cancel, the one rung left over is row 21 on rails 1–2, not an exchange on rails 3–4; the rails 3–4 rung at row 9 pairs with row 33. Getting from that leftover rung to a C–D swap means finding which tokens reach rails 1–2 at row 21, and the chain never does this, so its correct final answer has no valid support.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: steps [11, 12] do no work (nothing later follows from them)</div>
+<pre>CHAIN by duelist B
+1. 🪜 (root) — Given: forty-one rungs, applied top to bottom, each swapping the two tokens on its two rails.
+2. 🔤 (root) — Given: twelve tokens A–M (no I) start on rails 1–12, one per rail.
+3. ❓ (← 1, 2) — Asked: after the last rung, which token is on rail 3, and how many tokens are back on their starting rail?
+4. 🚫 (← 1, 2) — Rail 12 has no rung touching it, so M never moves and counts as one token back home.
+5. 🔁 (← 1) — Each rung is a single exchange of two items, so the whole ladder is one permutation built from forty-one exchanges.
+6. 🔢 (← 1, 5) — Forty-one is an odd count of exchanges, so the net permutation is odd and cannot be the identity.
+7. 🧩 (← 5, 6) — The net effect splits into disjoint cycles, and an odd permutation must contain at least one swap-like cycle of even length.
+8. 🔎 (← 7) — Reading the rungs by rail pair, rungs on rails 1–2, 8–9 and 5–6 recur often and mostly come in cancelling pairs. The reading is a structural one, not a state trace.
+9. 🧮 (← 8, 6) — Under this cancellation, only one exchange is left over, between rails 3 and 4. This matches the odd parity of step 6.
+10. 🔄 (← 9) — The leftover exchange means the tokens that started on rails 3 and 4, C and D, have traded places.
+11. 🎯 (← 10) — C and D have traded, so rail 3 ends up holding D.
+12. 🏠 (← 4, 10) — Every token other than C and D is back home. That is twelve minus two, which is ten, and it includes M from step 4.
+13. 👀 (← 6, 10) — Self-check: a single swap is an odd permutation, and the odd rung count from step 6 agrees.
+
+LANDMARKS:
+- Rail 12 is never touched by a rung, so M is fixed.
+- Forty-one rungs is an odd number of exchanges, so the net permutation is odd.
+- The net permutation is a single swap of C and D (rails 3 and 4), with every other token home.
+
+ANSWER: D is on rail 3, and 10 tokens are back on their starting rails.</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | token M | rail 12 | invariant | - | Rail 12 is never touched by a rung, so M is fixed.<br>obstruction | net permutation | forty-one rungs | = | parity | Forty-one rungs is an odd number of exchanges, so the net permutation is odd.<br>state | net permutation | swap of C and D | = | - | The net permutation is a single swap of C and D (rails 3 and 4), with every other token home.</div>
+</div>
+<div class='chain'>
+<h4>Parity plus cancellation of repeated rungs on each rail pair <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: pairwise-rung-cancellation</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Step 9 does not follow from step 8. The clusters are not independent, because rungs join rails 3–4 at rows 9 and 33. Rungs on the same pair do not cancel unless they are adjacent or commute, so &quot;repeated swaps mostly undo each other&quot; cannot show that only C and D end up exchanged. What actually holds is mirror symmetry about row 21, with the unpaired rung on rails 1–2. The cancellation story cannot explain why the swapped tokens are C and D rather than the tokens on rails 1–2. The answer is right, but the step that gets there is unsupported.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: steps [11] do no work (nothing later follows from them)</div>
+<pre>CHAIN by duelist A
+1. 🪜 (root) — Given: twelve tokens A–M (no I) start on rails 1–12, one token per rail.
+2. 🔀 (root) — Given: the picture shows 41 rungs applied top to bottom, each swapping the two tokens on its two rails at that moment.
+3. ❓ (← 1, 2) — Asked: after the last rung, which token is on rail 3, and how many tokens are back on their starting rail?
+4. 🚫 (← 1, 2) — No rung touches rail 12, so token M never moves and is one token back home.
+5. 🔢 (← 2) — The ladder has an odd number of rungs, 41.
+6. ☯️ (root) — General fact: every single swap flips the parity of a permutation, so an odd count of swaps gives an odd permutation.
+7. ⚖️ (← 5, 6) — The overall rearrangement is therefore odd, so it is not the identity and at least two tokens must end off their start rail.
+8. 🧩 (← 2, 7) — The rungs fall into local clusters: the left rails 1–3, the middle rails 4–7, and the right rails 8–11. Repeated rungs on the same pair of rails (such as 1–2 and 8–9) mostly undo each other.
+9. 🧹 (← 8) — After those repeated swaps cancel, the net effect on the left, right and far-right tokens is nothing. Only the tokens C and D, which started on the neighbouring rails 3 and 4, are left exchanged.
+10. 📍 (← 7, 9) — The whole ladder acts as one transposition, C with D. This is consistent with the odd parity in step 7, since one swap is odd.
+11. 🎯 (← 9, 10) — C ends on rail 4 and D ends on rail 3, so rail 3 holds D.
+12. 🔟 (← 4, 10) — All twelve tokens except C and D are home, including M from step 4, so ten tokens are back on their starting rail.
+13. 👀 (← 7, 12) — Self-check: ten fixed tokens and two swapped tokens make one odd transposition, matching the parity from step 7.
+
+LANDMARKS:
+- The number of rungs is odd, so the overall permutation is odd and cannot be the identity.
+- Rail 12 is never touched, so M is fixed.
+- Repeated swaps on the same rail pairs cancel, so the whole ladder reduces to a single exchange of C and D.
+
+ANSWER: Token D is on rail 3, and 10 tokens are back on their starting rail.</pre>
+<div class="meta"><b>typed landmarks</b><br>symmetry | the number of rungs | the overall permutation | forbids | parity | The number of rungs is odd, so the overall permutation is odd and cannot be the identity.<br>state | rail 12 | token M | invariant | - | Rail 12 is never touched, so M is fixed.<br>reduction | the whole ladder | a single exchange of C and D | reduces-to | - | Repeated swaps on the same rail pairs cancel, so the whole ladder reduces to a single exchange of C and D.</div>
+</div>
+<div class='chain'>
+<h4>Parity bound plus unstated tracing gives a C–D swap <span class='v-WRONG'>WRONG</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: parity-then-assert</code> · opus/v2 / criterion v2</div>
+<div class='meta'><b>reason:</b> Steps 9–10 don&#x27;t follow from the steps they cite. Step 8 only says the rungs mix and partly unmix the tokens, and step 7 only says the result is odd and not the identity, so neither shows that exactly one pair is left exchanged or that the pair is C and D. The chain needs a structural step it never states: rungs 1–20 mirror rungs 22–41 around the single rung at row 21. This matches the rulings on attempts 003–005, and its landmarks repeat used landmarks 8, 9/13/15 and 11/14.</div><div class='meta'><b>note:</b> re-judged 2026-10-05; previously ILL-FORMED: steps [11, 12] do no work (nothing later follows from them)</div>
+<pre>CHAIN by duelist B
+1. 🪜 (root) — Twelve tokens A–M (no I) start on rails 1–12, and forty-one rungs are applied top to bottom, each swapping the two tokens on its rails.
+2. 🖼️ (root) — In the picture, no rung ever touches rail 12, the rightmost rail.
+3. ❓ (← 1, 2) — Which token ends on rail 3, and how many tokens end on the rail where they started?
+4. 🅼 (← 1, 2) — Rail 12 is never swapped, so M ends where it started, and M is one fixed token.
+5. 🔀 (← 1) — Every rung is a single exchange of two tokens, so the whole ladder is a composition of exchanges.
+6. 🔢 (← 5) — The picture has an odd number of rungs, so the net rearrangement is an odd permutation, one that cannot be undone with an even number of exchanges.
+7. 🧩 (← 6) — An odd permutation cannot be the identity, so at least two tokens must end off their home rails.
+8. 🔍 (← 7) — Tracing the rungs, the left cluster of rails 1–3 and the middle cluster of rails 4–7 mix their tokens heavily, but later rungs undo most of that mixing.
+9. 🔁 (← 8) — Tracing the rungs through to the bottom, most tokens return home, and the leftover disturbance is exactly one pair of tokens exchanged.
+10. 🔄 (← 9, 7) — That pair is C and D, so C ends on rail 4 and D ends on rail 3.
+11. 🎯 (← 10) — D is therefore the token on rail 3.
+12. 🧮 (← 4, 10) — Of the twelve tokens, exactly two (C and D) are displaced, and the other ten are home, including M.
+13. 👀 (← 6, 10) — Self-check: one exchanged pair is an odd permutation, which matches the odd rung count, so the result is consistent.
+
+LANDMARKS:
+- Rail 12 is never touched, so M is fixed.
+- The odd rung count forces an odd net permutation, with at least one pair displaced.
+- The net effect is a single exchange of C and D, so D is on rail 3 and C is on rail 4.
+- Ten tokens, including M, are home.
+
+ANSWER: Token D is on rail 3, and 10 tokens are back on their starting rails.</pre>
+<div class="meta"><b>typed landmarks</b><br>state | rail 12 | M | invariant | - | Rail 12 is never touched, so M is fixed.<br>obstruction | odd rung count | net permutation | forbids | - | The odd rung count forces an odd net permutation, with at least one pair displaced.<br>reduction | net permutation | exchange of C and D | reduces-to | - | The net effect is a single exchange of C and D, so D is on rail 3 and C is on rail 4.<br>size | tokens home | - | = | tokens | Ten tokens, including M, are home.</div>
+</div>
+</body></html>

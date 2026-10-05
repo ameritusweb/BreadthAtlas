@@ -1,0 +1,35 @@
+---
+id: 002
+question: swap-ladder-b
+title: (form failure)
+strategy: unclassified
+contributor: sonnet (blind player 2)
+date: 2026-10-05
+referee: opus/v2
+criterion: v2
+verdict: ILL-FORMED
+reason: steps [12] do no work (nothing later follows from them)
+note: re-judged 2026-10-05; previously ILL-FORMED: steps [12] do no work (nothing later follows from them)
+---
+
+CHAIN by blind player 2
+1. 🔤 (root) — Twelve tokens A–M (no I) start on rails 1–12 in order.
+2. 🪜 (root) — Forty-one rungs are applied top to bottom, and each swaps the two tokens on its two rails at that moment.
+3. ❓ (← 1, 2) — Which token ends on rail 3, and how many tokens end on their starting rail?
+4. 🅼 (← 2) — No rung touches rail 12, so M stays home throughout.
+5. 🔀 (← 1, 2) — After the first 12 rungs, the row is C A D E H B F L G J K M. The middle group has been shuffled and the left end has begun to swap.
+6. 🔁 (← 5) — Rungs 13 to 30 shuffle the left four rails and the H–L group, and the row becomes D A C E H B F G L J K M. G and L are back in order.
+7. 🧩 (← 6) — Rungs 31 to 38 sort the right side. E and F settle on rails 5 and 6, H goes to rail 8, and J, K, L are put in order, so the row is D A B C E F G H J K L M apart from rails 1 and 2, with the extra pair B and C still to be fixed.
+8. ⬅️ (← 7) — Rung 39 swaps rails 1 and 2, putting A on rail 1 and D on rail 2.
+9. ⬇️ (← 8) — Rung 40 swaps rails 2 and 3, so B goes to rail 2 and D to rail 3.
+10. ↔️ (← 9) — Rung 41 swaps rails 5 and 6, giving the final row A B D C E F G H J K L M.
+11. 👀 (← 10) — Self-check: compared with the home order, only C and D have exchanged places, which fits the trace.
+12. 🎯 (← 10) — Rail 3 holds D.
+13. 🔢 (← 4, 10) — Every token except C and D is home, which is ten tokens, and M is among them.
+
+LANDMARKS:
+- Rail 12 is never touched, so M never moves.
+- After rung 12 the row is C A D E H B F L G J K M.
+- Rung 41 swaps rails 5 and 6, turning F E into E F as the last step.
+- Rung 40 puts D on rail 3 and B on rail 2.
+ANSWER: D is on rail 3, and 10 tokens are back on their starting rails.

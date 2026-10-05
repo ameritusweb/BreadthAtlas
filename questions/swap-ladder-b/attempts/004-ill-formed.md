@@ -1,0 +1,38 @@
+---
+id: 004
+question: swap-ladder-b
+title: Parity plus rung-pair cancellation leaving one swap
+strategy: new: mirror-cancellation-to-single-transposition
+contributor: sonnet (duelist B)
+date: 2026-10-05
+referee: opus/v2
+criterion: v2
+verdict: WRONG
+reason: Step 9 doesn't follow from step 8. When the mirrored rungs cancel, the one rung left over is row 21 on rails 1–2, not an exchange on rails 3–4; the rails 3–4 rung at row 9 pairs with row 33. Getting from that leftover rung to a C–D swap means finding which tokens reach rails 1–2 at row 21, and the chain never does this, so its correct final answer has no valid support.
+note: re-judged 2026-10-05; previously ILL-FORMED: steps [11, 12] do no work (nothing later follows from them)
+typed_1: structure | token M | rail 12 | invariant | - | Rail 12 is never touched by a rung, so M is fixed.
+typed_2: obstruction | net permutation | forty-one rungs | = | parity | Forty-one rungs is an odd number of exchanges, so the net permutation is odd.
+typed_3: state | net permutation | swap of C and D | = | - | The net permutation is a single swap of C and D (rails 3 and 4), with every other token home.
+---
+
+CHAIN by duelist B
+1. 🪜 (root) — Given: forty-one rungs, applied top to bottom, each swapping the two tokens on its two rails.
+2. 🔤 (root) — Given: twelve tokens A–M (no I) start on rails 1–12, one per rail.
+3. ❓ (← 1, 2) — Asked: after the last rung, which token is on rail 3, and how many tokens are back on their starting rail?
+4. 🚫 (← 1, 2) — Rail 12 has no rung touching it, so M never moves and counts as one token back home.
+5. 🔁 (← 1) — Each rung is a single exchange of two items, so the whole ladder is one permutation built from forty-one exchanges.
+6. 🔢 (← 1, 5) — Forty-one is an odd count of exchanges, so the net permutation is odd and cannot be the identity.
+7. 🧩 (← 5, 6) — The net effect splits into disjoint cycles, and an odd permutation must contain at least one swap-like cycle of even length.
+8. 🔎 (← 7) — Reading the rungs by rail pair, rungs on rails 1–2, 8–9 and 5–6 recur often and mostly come in cancelling pairs. The reading is a structural one, not a state trace.
+9. 🧮 (← 8, 6) — Under this cancellation, only one exchange is left over, between rails 3 and 4. This matches the odd parity of step 6.
+10. 🔄 (← 9) — The leftover exchange means the tokens that started on rails 3 and 4, C and D, have traded places.
+11. 🎯 (← 10) — C and D have traded, so rail 3 ends up holding D.
+12. 🏠 (← 4, 10) — Every token other than C and D is back home. That is twelve minus two, which is ten, and it includes M from step 4.
+13. 👀 (← 6, 10) — Self-check: a single swap is an odd permutation, and the odd rung count from step 6 agrees.
+
+LANDMARKS:
+- Rail 12 is never touched by a rung, so M is fixed.
+- Forty-one rungs is an odd number of exchanges, so the net permutation is odd.
+- The net permutation is a single swap of C and D (rails 3 and 4), with every other token home.
+
+ANSWER: D is on rail 3, and 10 tokens are back on their starting rails.

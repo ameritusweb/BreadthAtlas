@@ -1,0 +1,120 @@
+<html><head><meta charset='utf-8'><title>The lockers, with the first student absent</title><style>
+body{font:15px/1.5 system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#1c1e24;background:#fafaf8}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:.4rem .6rem;text-align:left;vertical-align:top}
+th{background:#f0f0ec}code,pre{font-family:ui-monospace,Consolas,monospace}pre{background:#f4f4f1;padding:.8rem;white-space:pre-wrap}
+.v-VALID{color:#1a7f37;font-weight:600}.v-WRONG{color:#b42318;font-weight:600}.v-DUPLICATE{color:#8a6d00;font-weight:600}.v-ILL-FORMED{color:#666;font-weight:600}
+.chain{border-left:4px solid #ddd;padding-left:1rem;margin:1rem 0}.meta{color:#555;font-size:.9em}a{color:#0b57d0}
+</style></head><body>
+<p><a href='../index.html'>← atlas</a></p><h1>The lockers, with the first student absent</h1>
+<div class='meta'>family: altered famous puzzle · status: answered · attractor: the hundred lockers (students 1–100; answer 10, the perfect squares) · discriminator: student 1 is absent, so each locker&#x27;s toggle count is its divisor count MINUS ONE; the parity is inverted relative to the famous game</div>
+<h3>Question</h3><pre>One hundred lockers stand closed in a row. Students numbered 2 to 100 walk past in turn; student k
+toggles (opens if closed, closes if open) every locker whose number is a multiple of k. Student 1 is
+absent, so no one toggles every locker. **How many lockers are open at the end?**</pre>
+
+<h2>Accepted routes (2)</h2>
+<div class='chain'>
+<h4>Divisor-pairing parity, flipped by removing divisor one <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: parity-by-pairing</code> · depth 1 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Every step follows from its parents and the answer of 90 is exact. The frontier was empty, so all four landmarks are new: toggle count equals divisor count minus one, divisor pairing gives squares an odd count, dropping student 1 flips the parity so the non-squares end open, and there are ten squares up to 100.</div>
+<pre>CHAIN by duelist A
+1. 🔒 (root) — Given: there are one hundred lockers in a row, all closed at the start.
+2. 🚶 (root) — Given: students numbered 2 to 100 walk past in turn, and student k toggles every locker whose number is a multiple of k.
+3. 🙅 (root) — Given: student 1 is absent, so no one toggles every locker. This differs from the familiar version.
+4. ❓ (← 1, 2, 3) — Asked: how many lockers are open at the end, when student 1 never toggles?
+5. 🔁 (← 2, 3) — Locker n is toggled once for each divisor of n other than 1, because student 1 is missing.
+6. ⚖️ (← 1, 5) — A locker starts closed, so it ends open exactly when it is toggled an odd number of times.
+7. 🤝 (← 5) — Divisors of n pair up as d with n/d, so the full divisor count is even unless some divisor pairs with itself.
+8. 🟦 (← 7) — Only perfect squares have a self-paired divisor, so squares have an odd number of divisors and non-squares an even number.
+9. ➖ (← 5, 8) — The toggle count is the divisor count with the divisor 1 removed, which flips the parity: non-squares get an odd number of toggles and squares an even number.
+10. 🔓 (← 6, 9) — So the lockers that end open are exactly the non-squares, and the squares stay closed.
+11. 🔟 (← 10) — The perfect squares from 1 up to 100 are the squares of 1 through 10, so there are ten of them.
+12. 👀 (← 9, 10) — Self-check: locker 1 is never toggled, so it stays closed, and it is a square, which agrees with the rule.
+13. 🎯 (← 10, 11) — Of the hundred lockers, the ten squares stay closed and all the rest are open, which gives ninety.
+
+LANDMARKS:
+- Locker n is toggled once per divisor other than 1, so the toggle count is one less than the divisor count.
+- Divisors pair up as d with n/d, so only perfect squares have an odd number of divisors.
+- Dropping student 1 flips the parity, so the open lockers are the non-squares and the squares stay closed.
+- There are ten perfect squares up to 100, so the rest are open.
+
+ANSWER: 90</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | toggle count | divisor count of n | reduces-to | divisor count minus one | Locker n is toggled once per divisor other than 1, so the toggle count is one less than the divisor count.<br>symmetry | divisors of n | perfect squares | = | pairing d with n/d | Divisors pair up as d with n/d, so only perfect squares have an odd number of divisors.<br>state | open lockers | non-squares | = | parity of toggle count | Dropping student 1 flips the parity, so the open lockers are the non-squares and the squares stay closed.<br>size | perfect squares | - | = | squares of 1 through 10 | There are ten perfect squares up to 100, so the rest are open.</div>
+</div>
+<div class='chain'>
+<h4>Divisor-count parity via prime-exponent factorization <span class='v-VALID'>VALID</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: prime-exponent-parity</code> · depth 2 · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> The new landmark is &quot;the divisor count is the product of one more than each prime exponent, so it is odd exactly when every exponent is even.&quot; No earlier binding chain passed through it, because route 001 and attempt 002 reached the square/non-square split by pairing d with n/d. The other two landmarks repeat route 001&#x27;s landmarks 1–3, and all steps follow from their parents, giving the correct answer of 90.</div>
+<pre>CHAIN by duelist B
+1. 🔒 (root) — Given: one hundred lockers stand in a row, all closed at the start.
+2. 🚶 (root) — Given: students 2 to 100 walk past in turn, and student k toggles every locker whose number is a multiple of k; student 1 is absent, so no one toggles every locker, which differs from the familiar version.
+3. ❓ (← 1, 2) — Asked: how many lockers are open at the end, when student 1 never walks?
+4. 🧬 (root) — Given from general knowledge: every number splits uniquely into primes with exponents, and each divisor is made by choosing, for every prime, how many copies of it to keep, from none up to all of them.
+5. 🧮 (← 4) — So the number of divisors of a locker is the product of the per-prime choice counts, where a prime with exponent e offers one more choice than e.
+6. 🔢 (← 5) — A product of whole numbers is odd only when every factor is odd, so the divisor count is odd exactly when every prime&#x27;s exponent is even.
+7. 🟦 (← 6) — All exponents even means the number is a perfect square, built from half of each exponent, and every perfect square has this form, so the divisor count is odd exactly for squares.
+8. ➖ (← 2) — Locker n is toggled by exactly its divisors other than 1, because student 1 is absent, so the toggle count is the divisor count with one removed.
+9. 🔁 (← 1, 7, 8) — A locker starts closed and ends open exactly when toggled an odd number of times, which happens when the divisor count is even, so open lockers are exactly the non-squares.
+10. 🔟 (← 9) — Ten is the largest whole number whose square fits within a hundred, since the square of ten is exactly the last locker number, so ten lockers are squares.
+11. 👀 (← 8, 9) — Self-check: a prime locker has only itself and 1 as divisors, so it is toggled by one student only and ends open, which agrees with primes being non-squares.
+12. 🎯 (← 3, 9, 10) — Of the hundred lockers, the ten squares stay closed and all the others are open, which answers the question.
+LANDMARKS:
+- A number&#x27;s divisor count is the product of one-more-than-each-prime-exponent, so it is odd exactly when every exponent is even.
+- Every exponent being even means the number is a perfect square, so only squares have an odd divisor count.
+- With student 1 absent the toggle count is the divisor count minus one, so the open lockers are exactly the non-squares.
+ANSWER: 90</pre>
+<div class="meta"><b>typed landmarks</b><br>structure | divisor count of n | prime exponents of n | = | product of one-more-than-each-exponent | A number&#x27;s divisor count is the product of one-more-than-each-prime-exponent, so it is odd exactly when every exponent is even.<br>structure | divisors of n | perfect squares | = | all prime exponents even | Every exponent being even means the number is a perfect square, so only squares have an odd divisor count.<br>reduction | toggle count | divisor count of n | reduces-to | divisor count minus one | With student 1 absent the toggle count is the divisor count minus one, so the open lockers are exactly the non-squares.</div>
+</div>
+<h2>Attempts (2) — the boundary</h2>
+<div class='chain'>
+<h4>Familiar game plus student 1, then take complement <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (duelist B) · 2026-10-05 · strategy <code>new: complement-of-known-variant</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Every landmark repeats route 001 in substance. &quot;Student 1&#x27;s absence flips each locker, so our result is the complement of the familiar result&quot; is route 001&#x27;s landmark 3, &quot;dropping student 1 flips the parity&quot;. &quot;The familiar game leaves only the ten perfect squares open&quot; combines route 001&#x27;s landmarks 2 and 4, which cover divisor pairing (only squares get an odd count) and the ten squares up to 100. Framing the argument as the familiar game plus one extra student is a change of presentation, not a new claim about the problem.</div>
+<pre>CHAIN by duelist B
+1. 🔒 (root) — Given: one hundred lockers stand in a row, all closed at the start.
+2. 🚶 (root) — Given: students 2 to 100 walk past in turn, and student k toggles every locker whose number is a multiple of k.
+3. 🙅 (root) — Given: student 1 is absent, so no one toggles every locker. This differs from the familiar version.
+4. ❓ (← 1, 2, 3) — Asked: how many lockers are open at the end when student 1 never walks?
+5. 🧩 (← 2, 3) — Picture the familiar game as our game plus one extra student 1, who toggles every locker exactly once.
+6. 🔀 (← 5) — Only the parity of toggles matters, so one extra toggle on every locker flips every locker&#x27;s final state; our result is the exact opposite of the familiar result.
+7. 🪞 (← 1, 6) — Since all lockers start closed in both games, a locker is open in ours exactly when it is closed in the familiar game.
+8. 🤝 (← 5) — In the familiar game, locker n is toggled once per divisor, and divisors pair up as d with n/d.
+9. 🟦 (← 8) — Pairing leaves an odd count only when a divisor pairs with itself, so only perfect squares are open in the familiar game.
+10. 🔟 (← 9) — The perfect squares from 1 to 100 are the squares of 1 through 10, so there are ten of them.
+11. 🚪 (← 9, 10) — In the familiar game exactly ten lockers are open, and every other locker is closed.
+12. 🔓 (← 7, 11) — So in our game the open lockers are exactly the ones closed in the familiar game, which is every locker except those ten.
+13. 👀 (← 12) — Self-check: locker 1 is never toggled in our game, so it is closed, and it is a square, which agrees.
+14. 🎯 (← 4, 10, 12) — Out of a hundred lockers, all but ten are open, which answers the question.
+LANDMARKS:
+- Student 1 would toggle every locker exactly once, so our final state is the exact opposite of the familiar game&#x27;s final state.
+- A locker is open in our game exactly when it is closed in the familiar game, so the open set is the complement of the familiar open set.
+- The familiar game leaves only the ten perfect squares open, so the complement is all the other lockers.
+ANSWER: 90</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | our game | familiar game | reduces-to | one extra toggle per locker | Student 1 would toggle every locker exactly once, so our final state is the exact opposite of the familiar game&#x27;s final state.<br>symmetry | open lockers | closed lockers of familiar game | = | complement | A locker is open in our game exactly when it is closed in the familiar game, so the open set is the complement of the familiar open set.<br>state | open lockers | non-squares | = | squares of 1 through 10 | The familiar game leaves only the ten perfect squares open, so the complement is all the other lockers.</div>
+</div>
+<div class='chain'>
+<h4>Divisor pairing parity with student one removed <span class='v-DUPLICATE'>DUPLICATE</span></h4>
+<div class='meta'>sonnet (duelist A) · 2026-10-05 · strategy <code>new: divisor-pairing-parity</code> · opus/v1 / criterion v1</div>
+<div class='meta'><b>reason:</b> Every step and the answer of 90 are correct, but the landmarks repeat route 001 (VALID). Splitting the togglers into &quot;own student plus in-between divisors&quot; is the same claim as landmark 1, pairing them for parity is landmark 2, and the squares including locker 1 staying closed is landmarks 3 and 4.</div>
+<pre>CHAIN by duelist A
+1. 🔒 (root) — Given: one hundred lockers stand in a row, all closed at the start.
+2. 🚶 (root) — Given: students 2 to 100 walk past in turn, and student k toggles every locker whose number is a multiple of k. Student 1 is absent, so no one toggles every locker, which differs from the familiar version.
+3. ❓ (← 1, 2) — Asked: how many lockers are open at the end, when student 1 never walks?
+4. 🙋 (← 2) — Any locker n above 1 is toggled once by student n, who walks to their own locker.
+5. 🪜 (← 2) — The only other togglers of locker n are students who divide n and lie strictly between 1 and n, since student 1 is absent.
+6. 🤝 (← 5) — These in-between divisors pair up as d with n/d, and both partners are also strictly between 1 and n, so they come in twos unless one divisor pairs with itself.
+7. 🟦 (← 6) — A non-square has no self-paired divisor, so it has an even number of in-between divisors, and a square has exactly one self-paired divisor, so it has an odd number.
+8. 🔓 (← 1, 4, 7) — A locker starts closed, so a non-square gets one own toggle plus an even number, which is odd, and ends open. A square above 1 gets one plus an odd number, which is even, and stays closed.
+9. 🥇 (← 4) — Locker 1 is not a multiple of any student from 2 to 100, so it is never toggled and stays closed, and it is itself a square.
+10. 🔟 (← 8, 9) — The squares from 1 to 100 are the squares of 1 through 10, so ten lockers stay closed, including locker 1.
+11. 👀 (← 4, 5) — Self-check: a prime locker such as 7 has no in-between divisors, so only its own student toggles it once and it is open, which agrees with primes being non-squares.
+12. 🎯 (← 8, 10) — Of the hundred lockers, the ten squares are closed and every other locker is open, which leaves ninety.
+
+LANDMARKS:
+- Locker n is toggled once by its own student, and every other toggler is a divisor strictly between 1 and n.
+- Those in-between divisors pair off, so non-squares have an even number of them and squares have an odd number, which makes the total toggles odd exactly for non-squares.
+- Locker 1 is never toggled, so it stays closed along with the other nine squares.
+
+ANSWER: 90</pre>
+<div class="meta"><b>typed landmarks</b><br>reduction | toggle count | divisor count of n | reduces-to | divisor count minus one | Locker n is toggled once by its own student, and every other toggler is a divisor strictly between 1 and n.<br>symmetry | divisors of n | perfect squares | = | pairing d with n/d | Those in-between divisors pair off, so non-squares have an even number of them and squares have an odd number, which makes the total toggles odd exactly for non-squares.<br>size | perfect squares | - | = | squares of 1 through 10 | Locker 1 is never toggled, so it stays closed along with the other nine squares.</div>
+</div>
+</body></html>
